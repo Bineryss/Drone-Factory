@@ -8,10 +8,11 @@ package Production.Dronen;
  * 0 = DefaultDrone
  */
 public abstract class Drone {
+    protected String icon = "---";
     protected int id;
 
     //Kosten zum Dronen Produzieren
-    protected int costs;
+    protected int costs[];
     //Produktivitaet der Drone
     protected int producitvity;
 
@@ -33,22 +34,22 @@ public abstract class Drone {
     }
 
     //Resourcenkosten um Drone zu produzieren
-    public int getCosts() {
+    public int[] getCosts() {
         return costs;
     }
 
-    //return uebrig gebliebene work von Gebaeude
-    public int useForce(int work) {
+    //return uebrig gebliebene energy von Gebaeude
+    public int useEnergy(int energy) {
         if (!isDead()) {
-            if (energy - work <= 0) {
-                int tmp = energy;
-                energy = 0;
-                return work - tmp;
+            if (this.energy - energy <= 0) {
+                int tmp = this.energy;
+                this.energy = 0;
+                return energy - tmp;
             }
-            energy -= work;
+            this.energy -= energy;
             return 0;
         }
-        return work;
+        return energy;
     }
 
     //Gibt den Status der Drone an
@@ -58,5 +59,9 @@ public abstract class Drone {
 
     public int getID() {
         return id;
+    }
+
+    public String getIcon() {
+        return this.icon;
     }
 }

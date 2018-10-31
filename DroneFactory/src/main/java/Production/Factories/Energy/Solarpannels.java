@@ -1,12 +1,12 @@
 package Production.Factories.Energy;
 
-import Management.ResourceManagement;
+import Management.Resources.ResourceCosts;
+import Management.Resources.ResourceManagement;
 import Production.Factories.Building;
 
 /**
- *
  * Solarpannel - Produziert Energie
- *
+ * <p>
  * ID: 0
  */
 public class Solarpannels extends Building {
@@ -18,18 +18,17 @@ public class Solarpannels extends Building {
         cc++;
         id = 0;
         sid = cc;
+
         //Kosten Multuiplikatoren -> variable, damit Uprgades das senken koenne?
-        costs = 5;
+        constructionCost = ResourceManagement.generateResourceArray(ResourceCosts.SOLARPANNELSCOSTS);
         construction = 5;
 
         efficency = 10;
     }
 
     public void update() {
-        if(isReady()) {
-            if(energyStorable >= (energy + efficency)) {
-                ResourceManagement.addENERGY(efficency);
-            }
+        if (isReady()) {
+            ResourceManagement.addEnergy(efficency);
         }
     }
 

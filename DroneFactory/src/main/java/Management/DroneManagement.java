@@ -11,6 +11,8 @@ public class DroneManagement {
     private static final int IDCOUNT = 1;
 
     private static List<Drone>[] DRONES = new List[IDCOUNT];
+    private static int[] ENERGY = new int[IDCOUNT];
+
 
 
 
@@ -53,10 +55,30 @@ public class DroneManagement {
      * @return
      */
     public static Drone getDrone(int id) {
+        List<Drone> search = cleanDroneList(id);
+        return search.getContent();
+    }
+
+    public static int availableEnergy(int id) {
+        int availableEnergy = 0;
+        List<Drone> search = cleanDroneList(id);
+        while (search.hasAccess()) {
+            availableEnergy += search.getContent().getEnergy();
+            search.next();
+        }
+        return availableEnergy;
+    }
+
+    private static String getIcon(int id) {
+        List<Drone> search = cleanDroneList(id);
+        return search.getContent().getIcon();
+    }
+
+    private static List<Drone> cleanDroneList(int id) {
         List<Drone> search = DRONES[id];
         removeDead();
         search.toFirst();
-        return search.getContent();
+        return search;
     }
 
     public static void removeDrone(Drone tmp) {
@@ -72,16 +94,10 @@ public class DroneManagement {
     }
 
     public static String print() {
-        String str = "";
+        String str = new String();
         for (int i = 0; i < IDCOUNT; i++) {
-            str += i + ": ";
-            List<Drone> tmp = DRONES[i];
-            tmp.toFirst();
-            while (tmp.hasAccess()) {
-                str += tmp.getContent().toString() + " ";
-                tmp.next();
-            }
-            str += "\n";
+            str += (getIcon(i) + ": Energy left: " + availableEnergy(i));
+            str += ("\n");
         }
         return str;
     }

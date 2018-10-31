@@ -1,6 +1,7 @@
-import Management.BuildingManagement;
+
+/*import Management.BuildingManagement;
 import Management.DroneManagement;
-import Management.ResourceManagement;
+import Management.Resources.ResourceManagement;
 import Production.Dronen.Drone;
 import Production.Dronen.Normal.DefaultDrone;
 import Production.Factories.Building;
@@ -9,13 +10,11 @@ import Production.Factories.Produktion.DroneFactory;
 import Production.Factories.Resources.Extractor;
 import java.util.Scanner;
 
-
 public class TestV2 {
 
     private static void addBulding(Building tmp, Drone drone) {
+        tmp.build(drone.getID());
         BuildingManagement.addBuilding(tmp);
-        Drone[] tmpD = new Drone[]{drone};
-        tmp.build(tmpD);
     }
 
     private static void newDrones(int n) {
@@ -79,7 +78,7 @@ public class TestV2 {
                 ((Extractor) BuildingManagement.getBuilding(new int[]{3, eingabe})).addDrone(0);
                 break;
             case 6:
-                BuildingManagement.getBuilding(new int[]{intEingabe(), intEingabe()}).build(new Drone[]{DroneManagement.getDrone(0)});
+                BuildingManagement.getBuilding(new int[]{intEingabe(), intEingabe()}).build(0);
                 break;
             case 7:
                 eingabe = intEingabe();
@@ -112,4 +111,4 @@ public class TestV2 {
         }
         return ausgabe;
     }
-}
+}*/

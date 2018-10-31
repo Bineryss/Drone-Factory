@@ -1,6 +1,8 @@
 package Production.Factories.Produktion;
 
 import Management.DroneManagement;
+import Management.Resources.ResourceCosts;
+import Management.Resources.ResourceManagement;
 import Production.Dronen.Drone;
 import Production.Factories.Building;
 
@@ -23,19 +25,19 @@ public class DroneFactory extends Building {
     public DroneFactory() {
         super();
         cc++;
-        //Kosten Multuiplikatoren -> variable, damit Uprgades das senken koenne?
         id = 1;
         sid = cc;
 
-        costs = 20;
+        //Kosten Multuiplikatoren -> variable, damit Uprgades das senken koenne?
+        constructionCost = ResourceManagement.generateResourceArray(ResourceCosts.DRONEFACTORYCOSTS);
         construction = 10;
 
         energyUse = 10;
         energy = 0;
         energyStorable = 200;
 
-        resources = 0;
-        resourcesStorable = 100;
+        resources = ResourceManagement.generateResourceArray("");
+        resourcesStorable = ResourceManagement.generateResourceArray(ResourceCosts.DRONEFACTORYSTORABLE);
 
         efficency = 2;
 
@@ -43,7 +45,7 @@ public class DroneFactory extends Building {
         workStatus = 0;
         isWorking = false;
 
-        produceableDronesId = new int[]{1};
+        produceableDronesId = new int[]{0};
     }
 
     /**
@@ -71,11 +73,11 @@ public class DroneFactory extends Building {
     public void startProduction(Drone drone) {
         if(canBeBuild(drone)) {
             if (!isWorking && isReady()) {
-                if (hasResources(drone)) {
+                if (hasResources(drone.getCosts())) {
                     isWorking = true;
                     producedElement = drone;
                     workStatus += drone.getProducetime();
-                    useResources(drone);
+                    useResources(drone.getCosts());
                 } else {
                     throw new IllegalArgumentException("Du hast nicht genuegend Resourcen fuer diese Drone!");
                 }
