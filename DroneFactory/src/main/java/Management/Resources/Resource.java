@@ -1,11 +1,11 @@
 package Management.Resources;
 
 public class Resource {
-    private final String NAME;
+    public final String NAME;
     private final int ID;
 
-    private int maxCapacity;
-    private int count;
+    protected int maxCapacity;
+    protected int count;
 
 
     public Resource(String name, int id) {
@@ -32,7 +32,7 @@ public class Resource {
     }
 
     public void addResources(int count) {
-        if(maxCapacity > (this.count + count)) {
+        if(maxCapacity >= (this.count + count)) {
         this.count += count;
         }else {
             throw new IllegalArgumentException("So viel kannst du nicht lagern!");
@@ -40,7 +40,7 @@ public class Resource {
     }
 
     public int useResources(int count) {
-        if((this.count - count) > 0) {
+        if(hasResources(count)) {
         this.count -= count;
         return count;
         }else {

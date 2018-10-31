@@ -33,6 +33,6 @@ public class Solarpannels extends Building {
     }
 
     public String toString() {
-        return "[ " + ICON + " , E: " + efficency + " ]" + constructionStatus();
+        return "[ " + ICON + "  |E: " + efficency + "| ]" + constructionStatus();
     }
 }

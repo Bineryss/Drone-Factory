@@ -13,10 +13,17 @@ public class ResourceCosts {
     public static String DRONEFACTORYSTORABLE = "0.100,1.50,2.10";
 
 
-
-    public static String CARBONEXTRACTORCOSTS = "0.20,1.5";
-    public static String CARBONEXTRACTORRESOURCES = "0.10,1.5,2.1";
+    public static String CARBONEXTRACTORCOSTS = "0.20";
+    public static String CARBONEXTRACTORRESOURCES = "0.10";
     public static String CARBONEXTRACTORSTORABLE = "0.100";
+
+    public static String GRAPHENEXTRACTORCOSTS = "0.200";
+    public static String GRAPHENEXTRACTORRESOURCES = "1.10";
+    public static String GRAPHENEXTRACTORSTORABLE = "1.50";
+
+    public static String COBALTEXTRACTORCOSTS = "0.400,1.200";
+    public static String COBALTEXTRACTORRESOURCES = "1.2,2.5";
+    public static String COBALTEXTRACTORSTORABLE = "1.20,2.50";
 
 
     /**

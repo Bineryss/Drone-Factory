@@ -1,5 +1,5 @@
 
-/*import Management.BuildingManagement;
+import Management.BuildingManagement;
 import Management.DroneManagement;
 import Management.Resources.ResourceManagement;
 import Production.Dronen.Drone;
@@ -8,6 +8,8 @@ import Production.Factories.Building;
 import Production.Factories.Energy.Solarpannels;
 import Production.Factories.Produktion.DroneFactory;
 import Production.Factories.Resources.Extractor;
+import Production.Factories.Resources.ExtractorTyp;
+
 import java.util.Scanner;
 
 public class TestV2 {
@@ -25,8 +27,9 @@ public class TestV2 {
     }
 
     public static void main(String[] args) {
-        ResourceManagement.addENERGY(100);
-        ResourceManagement.addRESOURCES(20);
+        ResourceManagement.start();
+        ResourceManagement.addEnergy(200);
+        ResourceManagement.addResources(ResourceManagement.generateResourceArray("0.400,1.400,2.400"));
 
         DroneManagement.start();
         BuildingManagement.start();
@@ -67,12 +70,13 @@ public class TestV2 {
                 System.out.println("Labor kommt noch");
                 break;
             case 3:
-                addBulding(new Extractor(), DroneManagement.getDrone(0));
+                addBulding(new Extractor(ExtractorTyp.CARBON), DroneManagement.getDrone(0));
                 break;
             case 4:
                 System.out.println("Storage kommt noch");
                 break;
             case 5:
+                //Extractor aufladen
                 eingabe = intEingabe();
                 BuildingManagement.getBuilding(new int[]{3, eingabe}).loadEnergy(intEingabe());
                 ((Extractor) BuildingManagement.getBuilding(new int[]{3, eingabe})).addDrone(0);
@@ -81,9 +85,10 @@ public class TestV2 {
                 BuildingManagement.getBuilding(new int[]{intEingabe(), intEingabe()}).build(0);
                 break;
             case 7:
+                //Dronefactory Laden
                 eingabe = intEingabe();
                 BuildingManagement.getBuilding(new int[]{1, eingabe}).loadEnergy(intEingabe());
-                BuildingManagement.getBuilding(new int[]{1, eingabe}).loadResources(intEingabe());
+                BuildingManagement.getBuilding(new int[]{1, eingabe}).loadResources(ResourceManagement.generateResourceArray("0.100,1.50,2.10"));
                 break;
             case 8:
                 DroneFactory tmp = ((DroneFactory) BuildingManagement.getBuilding(new int[]{1, intEingabe()}));
@@ -111,4 +116,4 @@ public class TestV2 {
         }
         return ausgabe;
     }
-}*/
+}

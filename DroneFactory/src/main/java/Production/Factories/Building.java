@@ -1,6 +1,7 @@
 package Production.Factories;
 
 import Management.DroneManagement;
+import Management.Resources.Energy;
 import Management.Resources.Resource;
 import Management.Resources.ResourceManagement;
 import Production.Dronen.Drone;
@@ -22,10 +23,9 @@ public abstract class Building {
 
     protected int[] constructionCost;
     protected int construction;
+    protected boolean hasResources;
 
-    protected int energy;
-    protected int energyUse;
-    protected int energyStorable;
+    protected Energy energy;
 
     //TODO: besseres als Integer Array finden! Klasse oder Interface!
     protected int[] resources;
@@ -37,42 +37,42 @@ public abstract class Building {
 
     /**
      * tmp: Drone wird uebergeben und Arbeitet mit ihrer Produktivitaet
-     * Meherer Dronen koennen gleichzeitig arbeiten
      * <p>
      * Wenn Drone keine arbeitskraft mehr, dann wird bau gestopt, neu Drone muss uebergen werden.
      */
     public void build(int droneId) {
-        Drone tmp = DroneManagement.getDrone(droneId);
-        if (ResourceManagement.hasResources(constructionCost)) {
-            construction = tmp.useEnergy(construction);
-            if (tmp.useEnergy(construction) == 0) {
-                ResourceManagement.useResources(constructionCost);
+        if (construction > 0) {
+            Drone tmp = DroneManagement.getDrone(droneId);
+            if (!hasResources) {
+                if (ResourceManagement.hasResources(constructionCost)) {
+                    ResourceManagement.useResources(constructionCost);
+                    hasResources = true;
+                }
             }
+            construction = tmp.useEnergy(construction);
+        } else {
+            System.out.println(("Ist schon fertig gebaut!"));
         }
     }
 
 
     protected boolean hasEnergy() {
-        return (energy - energyUse) >= 0;
+        return energy.hasEnergy();
     }
 
     protected void useEnergy() {
-        if ((energy - energyUse) >= 0) {
-            energy -= energyUse;
-        } else {
-            throw new InputMismatchException("So viel Energie hast du nicht!");
-        }
+        energy.useResources(efficency);
     }
 
-    public void loadEnergy(int energy) {
-        if ((this.energy + energy) <= energyStorable && isReady()) {
+    public void loadEnergy(int ammount) {
+        if (isReady()) {
             try {
-                this.energy += ResourceManagement.useResources(0, energy);
+                ResourceManagement.addEnergy(energy.loadEnergy(ResourceManagement.useEnergy(ammount)));
             } catch (IllegalArgumentException e) {
-                System.out.println("So viel Energie hast du nicht!");
+                System.out.println("So viel Energie kannst du nicht Lagern!");
             }
         } else {
-            throw new IllegalArgumentException("So viel kannst du nicht lagern!");
+            throw new IllegalArgumentException("Gebaude nicht fertig!");
         }
     }
 
@@ -89,7 +89,9 @@ public abstract class Building {
     protected void useResources(int[] ammount) {
         if (hasResources(ammount)) {
             for (int i = 0; i < resources.length; i++) {
-                resources[i] += ammount[i];
+                if(resources[i] >= ammount[i]) {
+                resources[i] -= ammount[i];
+                }
             }
         } else {
             throw new InputMismatchException("So viele Resourcen hast du nicht!");
@@ -118,9 +120,7 @@ public abstract class Building {
     }
 
     private void storeResources(int[] ammount) {
-        for (int i = 0; i < resources.length; i++) {
-            resources[i] += ammount[i];
-        }
+        resources = ResourceManagement.useResources(ammount);
     }
 
 
@@ -129,6 +129,18 @@ public abstract class Building {
             return ": X";
         }
         return "";
+    }
+
+    protected String printResource() {
+        StringBuilder tmp = new StringBuilder();
+        tmp.append(energy + " ");
+        for (int i = 0; i < resourcesStorable.length; i++) {
+            if (resourcesStorable[i] != 0) {
+                tmp.append("| " + ResourceManagement.resourceName(i) + ": " + resources[i] + " |");
+            }
+        }
+        tmp.append("|");
+        return tmp.toString();
     }
 
     protected boolean isReady() {

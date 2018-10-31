@@ -96,7 +96,7 @@ public class DroneManagement {
     public static String print() {
         String str = new String();
         for (int i = 0; i < IDCOUNT; i++) {
-            str += (getIcon(i) + ": Energy left: " + availableEnergy(i));
+            str += (getIcon(i) + ": total Energy: " + availableEnergy(i));
             str += ("\n");
         }
         return str;

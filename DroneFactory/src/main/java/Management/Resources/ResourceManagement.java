@@ -80,6 +80,9 @@ public class ResourceManagement {
         return energy.hasResources(ammount);
     }
 
+    public static String resourceName(int id) {
+        return resources[id].NAME;
+    }
 
     public static String print() {
         StringBuilder str = new StringBuilder();

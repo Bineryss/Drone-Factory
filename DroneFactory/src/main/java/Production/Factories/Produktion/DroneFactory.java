@@ -1,6 +1,8 @@
 package Production.Factories.Produktion;
 
 import Management.DroneManagement;
+import Management.Resources.Energy;
+import Management.Resources.Resource;
 import Management.Resources.ResourceCosts;
 import Management.Resources.ResourceManagement;
 import Production.Dronen.Drone;
@@ -32,9 +34,7 @@ public class DroneFactory extends Building {
         constructionCost = ResourceManagement.generateResourceArray(ResourceCosts.DRONEFACTORYCOSTS);
         construction = 10;
 
-        energyUse = 10;
-        energy = 0;
-        energyStorable = 200;
+        energy = new Energy(200,10);
 
         resources = ResourceManagement.generateResourceArray("");
         resourcesStorable = ResourceManagement.generateResourceArray(ResourceCosts.DRONEFACTORYSTORABLE);
@@ -109,7 +109,7 @@ public class DroneFactory extends Building {
     }
 
     public String toString() {
-        return "[ " + ICON + " , R: " + resources + ", E: " + energy + " (" + isWorkRemaining() + ")]" + constructionStatus();
+        return "[ " + ICON + " || " + printResource() + " (" + isWorkRemaining() + ")]" + constructionStatus();
     }
 
     private String isWorkRemaining() {
