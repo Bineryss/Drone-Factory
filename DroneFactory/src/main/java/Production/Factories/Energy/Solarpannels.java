@@ -26,7 +26,7 @@ public class Solarpannels extends Building {
         efficency = 10;
     }
 
-    public void update() {
+    public void updateBuilding() {
         if (isReady()) {
             ResourceManagement.addEnergy(efficency);
         }

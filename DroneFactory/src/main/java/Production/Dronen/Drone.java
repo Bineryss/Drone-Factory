@@ -1,10 +1,11 @@
 package Production.Dronen;
 
+import Management.Resources.Energy;
+
 /**
- *
  * Eine Drone, verwaltet produktionskosten, erhaltungskosten, produktivität, lebensspanne und noch mehr.
  * Von Ihr koennen spezialisierte Dronen erben.
- *
+ * <p>
  * 0 = DefaultDrone
  */
 public abstract class Drone {
@@ -14,19 +15,21 @@ public abstract class Drone {
     //Kosten zum Dronen Produzieren
     protected int costs[];
     //Produktivitaet der Drone
-    protected int producitvity;
+    protected int efficiency;
 
-    //Energie Kosten beim ruhen
-    protected int idelcosts;
     //Energie Speicher
-    protected int energy;
+    protected Energy energy;
 
     protected int producetime;
 
 
     //Gibt das Energie Level der Drone an
-    public int getEnergy() {
-        return energy;
+    public boolean hasEnergy() {
+        return energy.hasEnergy();
+    }
+
+    public int energyLeft() {
+        return energy.availableEnergy();
     }
 
     public int getProducetime() {
@@ -38,23 +41,24 @@ public abstract class Drone {
         return costs;
     }
 
-    //return uebrig gebliebene energy von Gebaeude
-    public int useEnergy(int energy) {
+    //return die efficiency, mit der am gebauede gearbeitet wird
+    public int work() {
         if (!isDead()) {
-            if (this.energy - energy <= 0) {
-                int tmp = this.energy;
-                this.energy = 0;
-                return energy - tmp;
+            if (hasEnergy()) {
+                energy.useEnergy();
             }
-            this.energy -= energy;
-            return 0;
+            return efficiency;
         }
-        return energy;
+        return 0;
+    }
+
+    public int efficiency() {
+        return efficiency;
     }
 
     //Gibt den Status der Drone an
     public boolean isDead() {
-        return energy == 0;
+        return energy.availableEnergy() == 0;
     }
 
     public int getID() {

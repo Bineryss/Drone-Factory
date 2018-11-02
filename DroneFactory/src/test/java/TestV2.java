@@ -14,8 +14,8 @@ import java.util.Scanner;
 
 public class TestV2 {
 
-    private static void addBulding(Building tmp, Drone drone) {
-        tmp.build(drone.getID());
+    private static void addBulding(Building tmp, Drone drone, int count) {
+        tmp.startConstruction(drone.getID(),count);
         BuildingManagement.addBuilding(tmp);
     }
 
@@ -61,16 +61,16 @@ public class TestV2 {
         int eingabe;
         switch (intEingabe()) {
             case 0:
-                addBulding(new Solarpannels(), DroneManagement.getDrone(0));
+                addBulding(new Solarpannels(), DroneManagement.getDrone(0),1);
                 break;
             case 1:
-                addBulding(new DroneFactory(), DroneManagement.getDrone(0));
+                addBulding(new DroneFactory(), DroneManagement.getDrone(0),1);
                 break;
             case 2:
                 System.out.println("Labor kommt noch");
                 break;
             case 3:
-                addBulding(new Extractor(ExtractorTyp.CARBON), DroneManagement.getDrone(0));
+                addBulding(new Extractor(ExtractorTyp.CARBON), DroneManagement.getDrone(0),1);
                 break;
             case 4:
                 System.out.println("Storage kommt noch");
@@ -82,7 +82,7 @@ public class TestV2 {
                 ((Extractor) BuildingManagement.getBuilding(new int[]{3, eingabe})).addDrone(0);
                 break;
             case 6:
-                BuildingManagement.getBuilding(new int[]{intEingabe(), intEingabe()}).build(0);
+                BuildingManagement.getBuilding(new int[]{intEingabe(), intEingabe()}).startConstruction(0,1);
                 break;
             case 7:
                 //Dronefactory Laden

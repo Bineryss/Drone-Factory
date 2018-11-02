@@ -73,12 +73,12 @@ public class Extractor extends Building {
         transportDrone = null;
     }
 
-    public void update() {
+    public void updateBuilding() {
         if (isReady()) {
-            produceResources();
             if (transportDrone != null && Arrays.equals(resources, resourcesStorable)) {
                 storeResources();
             }
+            produceResources();
         }
     }
 
@@ -86,7 +86,7 @@ public class Extractor extends Building {
         if (!transportDrone.isDead()) {
             ResourceManagement.addResources(resources);
             removeResources();
-            transportDrone.useEnergy(1);
+            transportDrone.work();
         } else {
             System.out.println("Keine Drone mehr!");
             transportDrone = null;
@@ -114,8 +114,12 @@ public class Extractor extends Building {
     //dass soll sich später noch mit dronen aendern, dass die die resourcen abholen!
     private void produceResources() {
         if (!isFull()) {
+            try {
             useEnergy();
             extractResource();
+            } catch (IllegalArgumentException e) {
+                System.out.println("So viel Energie ist nicht vorhanden!");
+            }
         }
     }
 

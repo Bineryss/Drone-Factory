@@ -19,7 +19,7 @@ public class Lab extends Building{
         sid = cc;
     }
 
-    public void update() {
+    public void updateBuilding() {
 
     }
 

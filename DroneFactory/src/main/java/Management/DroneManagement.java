@@ -59,11 +59,25 @@ public class DroneManagement {
         return search.getContent();
     }
 
+    public static Drone[] getDrones(int id, int count) {
+        List<Drone> search = cleanDroneList(id);
+        Drone[] output = new Drone[count];
+
+        search.toFirst();
+        for(int i = 0; i < output.length; i++) {
+            if(search.hasAccess()) {
+                output[i] = search.getContent();
+            }
+            search.next();
+        }
+        return output;
+    }
+
     public static int availableEnergy(int id) {
         int availableEnergy = 0;
         List<Drone> search = cleanDroneList(id);
         while (search.hasAccess()) {
-            availableEnergy += search.getContent().getEnergy();
+            availableEnergy += search.getContent().energyLeft();
             search.next();
         }
         return availableEnergy;

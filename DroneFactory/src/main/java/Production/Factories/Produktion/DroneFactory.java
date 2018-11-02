@@ -56,7 +56,7 @@ public class DroneFactory extends Building {
      * Ist keine Energie mehr vorhanden, wird nicht weitergearbeitet
      *
      */
-    public void update() {
+    public void updateBuilding() {
         if(isWorking && hasEnergy() && isReady()) {
             useEnergy();
             workStatus -= 1 * efficency;

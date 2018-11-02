@@ -13,7 +13,7 @@ public class Resource {
         this.ID = id;
         this.count = 0;
         //TODO: maxCapacity abhaengig von der anzahl an Lagern machen
-        this.maxCapacity = 1000;
+        this.maxCapacity = 100000;
     }
 
     /**

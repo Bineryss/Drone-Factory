@@ -1,4 +1,5 @@
 package Production.Dronen.Normal;
+import Management.Resources.Energy;
 import Management.Resources.ResourceCosts;
 import Management.Resources.ResourceManagement;
 import Production.Dronen.Drone;
@@ -13,9 +14,8 @@ public class DefaultDrone extends Drone {
         super();
         id = 0;
         costs = ResourceManagement.generateResourceArray(ResourceCosts.DEFAULTDRONEKOST);
-        producitvity = 1;
-        energy = 10;
-        idelcosts = 1;
+        efficiency = 1;
+        energy = new Energy(10,1,10);
         producetime = 4;
 
         icon = "<|>";
@@ -26,6 +26,6 @@ public class DefaultDrone extends Drone {
      * @return: " <|> : Symbol einer Drone und uebrige arbeitskraft.
      */
     public String toString() {
-        return icon + " : " + getEnergy();
+        return icon + " : " + energyLeft();
     }
 }

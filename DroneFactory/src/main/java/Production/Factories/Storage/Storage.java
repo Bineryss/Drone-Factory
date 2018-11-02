@@ -6,7 +6,7 @@ public class Storage extends Building {
     public final String ICON = "[__]";
 
 
-    public void update() {
+    public void updateBuilding() {
 
     }
 }

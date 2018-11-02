@@ -2,7 +2,6 @@ package Production.Factories;
 
 import Management.DroneManagement;
 import Management.Resources.Energy;
-import Management.Resources.Resource;
 import Management.Resources.ResourceManagement;
 import Production.Dronen.Drone;
 
@@ -18,12 +17,13 @@ import java.util.InputMismatchException;
 public abstract class Building {
     //ID des Gebaeude Types
     protected int id;
-    //ID des speziellen Gebaeude
+    //ID des speziellen Gebaeudes
     protected int sid;
 
     protected int[] constructionCost;
     protected int construction;
     protected boolean hasResources;
+    protected Drone[] workers;
 
     protected Energy energy;
 
@@ -32,25 +32,43 @@ public abstract class Building {
 
     protected int efficency;
 
-    public abstract void update();
+    public void update() {
+        if (construction != 0) {
+            build();
+        } else {
+            updateBuilding();
+        }
+    }
+
+    public abstract void updateBuilding();
 
     /**
-     * tmp: Drone wird uebergeben und Arbeitet mit ihrer Produktivitaet
+     * droneId: zeigt den Dronen typ, der fuer das bauen genutzt werden soll
      * <p>
      * Wenn Drone keine arbeitskraft mehr, dann wird bau gestopt, neu Drone muss uebergen werden.
      */
-    public void build(int droneId) {
+    public void startConstruction(int droneId, int droneCount) {
         if (construction > 0) {
-            Drone tmp = DroneManagement.getDrone(droneId);
+            workers = DroneManagement.getDrones(droneId, droneCount);
             if (!hasResources) {
                 if (ResourceManagement.hasResources(constructionCost)) {
                     ResourceManagement.useResources(constructionCost);
                     hasResources = true;
                 }
             }
-            construction = tmp.useEnergy(construction);
         } else {
             System.out.println(("Ist schon fertig gebaut!"));
+        }
+    }
+
+    private void build() {
+        for (int i = 0; i < workers.length; i++) {
+            if ((construction - workers[i].efficiency()) > 0) {
+                construction -= workers[i].work();
+            } else {
+                workers[i].work();
+                construction = 0;
+            }
         }
     }
 
@@ -63,10 +81,10 @@ public abstract class Building {
         energy.useResources(efficency);
     }
 
-    public void loadEnergy(int ammount) {
+    public void loadEnergy(int amount) {
         if (isReady()) {
             try {
-                ResourceManagement.addEnergy(energy.loadEnergy(ResourceManagement.useEnergy(ammount)));
+                ResourceManagement.addEnergy(energy.loadEnergy(ResourceManagement.useEnergy(amount)));
             } catch (IllegalArgumentException e) {
                 System.out.println("So viel Energie kannst du nicht Lagern!");
             }
@@ -76,20 +94,20 @@ public abstract class Building {
     }
 
 
-    protected boolean hasResources(int[] ammount) {
+    protected boolean hasResources(int[] amount) {
         for (int i = 0; i < resources.length; i++) {
-            if ((resources[i] - ammount[i]) < 0) {
+            if ((resources[i] - amount[i]) < 0) {
                 return false;
             }
         }
         return true;
     }
 
-    protected void useResources(int[] ammount) {
-        if (hasResources(ammount)) {
+    protected void useResources(int[] amount) {
+        if (hasResources(amount)) {
             for (int i = 0; i < resources.length; i++) {
-                if(resources[i] >= ammount[i]) {
-                resources[i] -= ammount[i];
+                if (resources[i] >= amount[i]) {
+                    resources[i] -= amount[i];
                 }
             }
         } else {
@@ -97,10 +115,10 @@ public abstract class Building {
         }
     }
 
-    public void loadResources(int[] ammount) {
-        if (canStoreResources(ammount) && isReady()) {
+    public void loadResources(int[] amount) {
+        if (canStoreResources(amount) && isReady()) {
             try {
-                storeResources(ammount);
+                storeResources(amount);
             } catch (IllegalArgumentException e) {
                 System.out.println("So viele Resourcen hast du nicht!");
             }
@@ -109,25 +127,26 @@ public abstract class Building {
         }
     }
 
-    private boolean canStoreResources(int[] ammount) {
+    private boolean canStoreResources(int[] amount) {
         for (int i = 0; i < resources.length; i++) {
-            if ((ammount[i] + resources[i]) > resourcesStorable[i]) {
+            if ((amount[i] + resources[i]) > resourcesStorable[i]) {
                 return false;
             }
         }
         return true;
     }
 
-    private void storeResources(int[] ammount) {
-        resources = ResourceManagement.useResources(ammount);
+    private void storeResources(int[] amount) {
+        resources = ResourceManagement.useResources(amount);
     }
 
 
     protected String constructionStatus() {
-        if (construction > 0) {
-            return ": X";
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < construction; i++) {
+            output.append("|");
         }
-        return "";
+        return output.toString();
     }
 
     protected String printResource() {

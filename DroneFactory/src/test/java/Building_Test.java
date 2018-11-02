@@ -28,15 +28,17 @@ public class Building_Test {
 
     @Test
     public void testUpdateExtractor() {
-        Extractor extr = new Extractor(ExtractorTyp.COBALT);
-        extr.build(0);
-        extr.build(0);
+        Extractor extr = new Extractor(ExtractorTyp.CARBON);
+        extr.startConstruction(0,2);
+        for(int i = 0; i < 10; i++) {
+            extr.update();
+        }
         extr.addDrone(0);
         extr.loadEnergy(500);
         System.out.println(ResourceManagement.print());
         System.out.println(extr);
 
-        for(int i = 0; i < 8; i++) {
+        for(int i = 0; i < 100; i++) {
             extr.update();
             System.out.println(i +  ": " + extr);
         }
@@ -49,11 +51,11 @@ public class Building_Test {
     @Test
     public void testUpdateSolarpannels() {
         Solarpannels sol = new Solarpannels();
-        sol.build(0);
+        sol.startConstruction(0,2);
         System.out.println(ResourceManagement.print());
         System.out.println(sol);
 
-        for(int i = 0; i < 3; i++) {
+        for(int i = 0; i < 5; i++) {
             sol.update();
             System.out.println(ResourceManagement.print());
             System.out.println(i +  ": " + sol);
@@ -65,12 +67,19 @@ public class Building_Test {
     @Test
     public void testUpdateDroneFactory() {
         DroneFactory dro = new DroneFactory();
-        dro.build(0);
+        System.out.println(DroneManagement.print());
+        System.out.println();
+
+        dro.startConstruction(0,2);
         System.out.println(ResourceManagement.print());
         System.out.println(DroneManagement.print());
         System.out.println();
         System.out.println(dro);
 
+        for(int i = 0; i < 5; i++) {
+            dro.update();
+            System.out.println(DroneManagement.print());
+        }
         dro.loadEnergy(100);
         dro.loadResources(ResourceManagement.generateResourceArray("0.100,1.50,2.10"));
 
