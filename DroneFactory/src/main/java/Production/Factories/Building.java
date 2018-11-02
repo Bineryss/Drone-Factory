@@ -27,7 +27,6 @@ public abstract class Building {
 
     protected Energy energy;
 
-    //TODO: besseres als Integer Array finden! Klasse oder Interface!
     protected int[] resources;
     protected int[] resourcesStorable;
 

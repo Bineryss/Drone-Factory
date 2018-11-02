@@ -1,7 +1,7 @@
 package Management.Resources;
 
 public class ResourceManagement {
-    public static final int RESOURCESCOUNT = 3;
+    public static final int RESOURCESCOUNT = 8;
 
     private static Resource energy;
     private static Resource[] resources = new Resource[RESOURCESCOUNT];
@@ -11,8 +11,14 @@ public class ResourceManagement {
         energy = new Resource("Energy", -1);
         //TODO: mehr Resorce Typen hinzufuegen
         resources[0] = new Resource("Carbon", 0);
-        resources[1] = new Resource("Graphen", 1);
-        resources[2] = new Resource("Cobalt", 2);
+        resources[1] = new Resource("Silicon",1);
+        resources[2] = new Resource("Graphen", 2);
+        resources[3] = new Resource("Cobalt", 3);
+        resources[4] = new Resource("Deuterium", 4);
+        resources[5] = new Resource("Helium - 3", 5);
+        resources[6] = new Resource("Magnetit", 6);
+        resources[7] = new Resource("Iridium", 7);
+
     }
 
     public static Resource[] getResources() {
