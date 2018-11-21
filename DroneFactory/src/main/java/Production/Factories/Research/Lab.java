@@ -4,10 +4,10 @@ import Production.Factories.Building;
 
 /**
  * Kleines Labor
- *
+ * <p>
  * ID: 2
  */
-public class Lab extends Building{
+public class Lab extends Building {
     public final String ICON = "[*]-O";
     private static int cc = -1;
 

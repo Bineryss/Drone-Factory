@@ -35,7 +35,7 @@ public class ResourceManagement_Test {
         String eingabe = "0.100,2.200";
         int[] erwarte = ResourceManagement.generateResourceArray("0.100,2.200");
         int[] bekommen = ResourceManagement.generateResourceArray(eingabe);
-        for(int i = 0; i < erwarte.length; i++) {
+        for (int i = 0; i < erwarte.length; i++) {
             assert (erwarte[i] == bekommen[i]);
         }
     }

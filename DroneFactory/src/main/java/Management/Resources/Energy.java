@@ -18,6 +18,7 @@ public class Energy extends Resource {
 
     /**
      * Special Constructor for Drones only!
+     *
      * @param maxCapacity
      * @param energyUse
      * @param count
@@ -46,6 +47,10 @@ public class Energy extends Resource {
 
     public boolean hasEnergy() {
         return hasResources(energyUse);
+    }
+
+    public boolean hasMaxEnergy() {
+        return count == maxCapacity;
     }
 
     public int availableEnergy() {

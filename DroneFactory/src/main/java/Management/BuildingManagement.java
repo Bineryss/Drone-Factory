@@ -1,12 +1,11 @@
 package Management;
 
-import List.*;
 import Production.Factories.Building;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 /**
- *
  * Speichert alle Fabriken, Labore, Energie dings in einer Liste.
  * Speichert alle Dronen Typen in einern Liste.
  */
@@ -14,29 +13,26 @@ public class BuildingManagement {
     //Anzahl aller ID`s
     private static final int IDCOUNT = 5;
 
-    private static List<Building>[] BUILDINGS = new List[IDCOUNT];
-
+    private static ArrayList<Building>[] BUILDINGS = new ArrayList[IDCOUNT];
 
 
     public static void start() {
         //Bebaeude Typen werden Ihrer ID zugeordnet
-        for(int i = 0; i < BUILDINGS.length; i++) {
-            BUILDINGS[i] = new List<Building>();
+        for (int i = 0; i < BUILDINGS.length; i++) {
+            BUILDINGS[i] = new ArrayList<Building>();
         }
     }
 
     public static void addBuilding(Building tmp) {
-            BUILDINGS[tmp.getID()].append(tmp);
+        BUILDINGS[tmp.getID()].add(tmp);
     }
 
     public static Building getBuilding(int[] id) {
-        List<Building> search = BUILDINGS[id[0]];
-        search.toFirst();
-        while (search.hasAccess()) {
-            if(search.getContent().getSID() == id[1]) {
-                return search.getContent();
+        ArrayList<Building> search = BUILDINGS[id[0]];
+        for (Building i : search) {
+            if (i.getSID() == id[1]) {
+                return i;
             }
-            search.next();
         }
         throw new InputMismatchException("Die ID existiert nicht!");
     }
@@ -45,11 +41,9 @@ public class BuildingManagement {
         String str = "";
         for (int i = 0; i < IDCOUNT; i++) {
             str += i + ": ";
-            List<Building> tmp = BUILDINGS[i];
-            tmp.toFirst();
-            while (tmp.hasAccess()) {
-                str += tmp.getContent().toString();
-                tmp.next();
+            ArrayList<Building> tmp = BUILDINGS[i];
+            for (Building building : tmp) {
+                str += building.toString();
             }
             str += "\n";
         }
@@ -58,11 +52,9 @@ public class BuildingManagement {
 
     public static void update() {
         for (int i = 0; i < IDCOUNT; i++) {
-            List<Building> tmp = BUILDINGS[i];
-            tmp.toFirst();
-            while (tmp.hasAccess()) {
-                tmp.getContent().update();
-                tmp.next();
+            ArrayList<Building> tmp = BUILDINGS[i];
+            for (Building building : tmp) {
+                building.update();
             }
         }
         print();

@@ -1,7 +1,9 @@
 package Management;
 
-import List.List;
 import Production.Dronen.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Speichert alle Dronen, die Produziert wurden
@@ -10,25 +12,24 @@ public class DroneManagement {
     //Anzahl aller ID`s
     private static final int IDCOUNT = 1;
 
-    private static List<Drone>[] DRONES = new List[IDCOUNT];
+    private static ArrayList<Drone>[] DRONES = new ArrayList[IDCOUNT];
     private static int[] ENERGY = new int[IDCOUNT];
-
-
 
 
     public static void start() {
         //Bebaeude Typen werden Ihrer ID zugeordnet
-        for(int i = 0; i < DRONES.length; i++) {
-            DRONES[i] = new List<Drone>();
+        for (int i = 0; i < DRONES.length; i++) {
+            DRONES[i] = new ArrayList<Drone>();
         }
     }
 
     /**
      * fuegt die Drone anhand ihrer ID in die Richitge Queue an.
+     *
      * @param tmp
      */
     public static void addDrone(Drone tmp) {
-        DRONES[tmp.getID()].append(tmp);
+        DRONES[tmp.getID()].add(tmp);
     }
 
     /**
@@ -36,14 +37,11 @@ public class DroneManagement {
      */
     private static void removeDead() {
         for (int i = 0; i < DRONES.length; i++) {
-            List<Drone> dead = DRONES[i];
-            dead.toFirst();
-            while (dead.hasAccess()) {
-                if (dead.getContent().isDead()) {
+            Iterator<Drone> dead = DRONES[i].iterator();
+            while (dead.hasNext()) {
+                Drone deadDrone = dead.next();
+                if (deadDrone.isDead()) {
                     dead.remove();
-                    dead.next();
-                }else {
-                    dead.next();
                 }
             }
         }
@@ -51,68 +49,77 @@ public class DroneManagement {
 
     /**
      * gibt die 1. Drone, die zu der id gehoert zurueck
+     *
      * @param id
      * @return
      */
     public static Drone getDrone(int id) {
-        List<Drone> search = cleanDroneList(id);
-        return search.getContent();
+        ArrayList<Drone> search = cleanDroneList(id);
+        return search.get(0);
     }
 
-    public static Drone[] getDrones(int id, int count) {
-        List<Drone> search = cleanDroneList(id);
-        Drone[] output = new Drone[count];
-
-        search.toFirst();
-        for(int i = 0; i < output.length; i++) {
-            if(search.hasAccess()) {
-                output[i] = search.getContent();
+    public static Drone getFullDrone(int id) {
+        ArrayList<Drone> search = cleanDroneList(id);
+        for (Drone full : search) {
+            if (full.hasMaxEnergy()) {
+                return full;
             }
-            search.next();
+        }
+        return null;
+    }
+
+    public static Drone[] giveDronesWork(int id, int droneCount) {
+        ArrayList<Drone> search = cleanDroneList(id);
+        Drone[] output = new Drone[droneCount];
+        if (droneCount < search.size()) {
+            for (int i = 0; i < droneCount; i++) {
+                int counter = 0;
+                for (Drone tmp : search) {
+                    if (!tmp.hasWorkToDo()) {
+                        output[i] = tmp;
+                        tmp.occupied();
+                        counter++;
+                    }
+                    if (counter == droneCount) {
+                        return output;
+                    }
+                }
+            }
         }
         return output;
     }
 
     public static int availableEnergy(int id) {
         int availableEnergy = 0;
-        List<Drone> search = cleanDroneList(id);
-        while (search.hasAccess()) {
-            availableEnergy += search.getContent().energyLeft();
-            search.next();
+        ArrayList<Drone> search = cleanDroneList(id);
+        for (Drone tmp : search) {
+            availableEnergy += tmp.energyLeft();
         }
         return availableEnergy;
     }
 
     private static String getIcon(int id) {
-        List<Drone> search = cleanDroneList(id);
-        return search.getContent().getIcon();
+        ArrayList<Drone> search = cleanDroneList(id);
+        return search.get(0).getIcon();
     }
 
-    private static List<Drone> cleanDroneList(int id) {
-        List<Drone> search = DRONES[id];
+    private static ArrayList<Drone> cleanDroneList(int id) {
+        ArrayList<Drone> search = DRONES[id];
         removeDead();
-        search.toFirst();
         return search;
     }
 
-    public static void removeDrone(Drone tmp) {
-        List<Drone> removal = DRONES[tmp.getID()];
-        removal.toFirst();
-        while (removal.hasAccess()) {
-            if(tmp.equals(removal.getContent())) {
-                removal.remove();
-                break;
-            }
-            removal.next();
-        }
+    public static void removeDrone(Drone remove) {
+        ArrayList<Drone> removal = DRONES[remove.getID()];
+        removal.remove(remove);
     }
 
     public static String print() {
-        String str = new String();
+        StringBuilder str = new StringBuilder();
         for (int i = 0; i < IDCOUNT; i++) {
-            str += (getIcon(i) + ": total Energy: " + availableEnergy(i));
-            str += ("\n");
+            str.append(getIcon(i) + ": total Energy: " + availableEnergy(i));
+            str.append("\n");
         }
-        return str;
+        return str.toString();
     }
 }

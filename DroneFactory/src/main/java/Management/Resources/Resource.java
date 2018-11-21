@@ -18,6 +18,7 @@ public class Resource {
 
     /**
      * Special Constructor for defining resource costs only!
+     *
      * @param id
      * @param count
      */
@@ -32,26 +33,26 @@ public class Resource {
     }
 
     public void addResources(int count) {
-        if(maxCapacity >= (this.count + count)) {
-        this.count += count;
-        }else {
+        if (maxCapacity >= (this.count + count)) {
+            this.count += count;
+        } else {
             throw new IllegalArgumentException("So viel kannst du nicht lagern!");
         }
     }
 
     public int useResources(int count) {
-        if(hasResources(count)) {
-        this.count -= count;
-        return count;
-        }else {
+        if (hasResources(count)) {
+            this.count -= count;
+            return count;
+        } else {
             throw new IllegalArgumentException("So viele Resourcen hast du nicht!");
         }
     }
 
     public boolean hasResources(int count) {
-        if(count <= this.count) {
+        if (count <= this.count) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }

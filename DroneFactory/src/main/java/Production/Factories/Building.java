@@ -49,7 +49,7 @@ public abstract class Building {
      */
     public void startConstruction(int droneId, int droneCount) {
         if (construction > 0) {
-            workers = DroneManagement.getDrones(droneId, droneCount);
+            workers = DroneManagement.giveDronesWork(droneId, droneCount);
             if (!hasResources) {
                 if (ResourceManagement.hasResources(constructionCost)) {
                     ResourceManagement.useResources(constructionCost);
@@ -68,6 +68,7 @@ public abstract class Building {
             } else {
                 workers[i].work();
                 construction = 0;
+                workers[i].hasFinishedWork();
             }
         }
     }

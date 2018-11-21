@@ -3,6 +3,7 @@ package Production.Dronen;
 import Management.Resources.Energy;
 
 /**
+ * <h3>Drone</h3>
  * Eine Drone, verwaltet produktionskosten, erhaltungskosten, produktivität, lebensspanne und noch mehr.
  * Von Ihr koennen spezialisierte Dronen erben.
  * <p>
@@ -16,6 +17,7 @@ public abstract class Drone {
     protected int costs[];
     //Produktivitaet der Drone
     protected int efficiency;
+    protected boolean isOccupied;
 
     //Energie Speicher
     protected Energy energy;
@@ -30,6 +32,10 @@ public abstract class Drone {
 
     public int energyLeft() {
         return energy.availableEnergy();
+    }
+
+    public boolean hasMaxEnergy() {
+        return energy.hasMaxEnergy();
     }
 
     public int getProducetime() {
@@ -50,6 +56,17 @@ public abstract class Drone {
             return efficiency;
         }
         return 0;
+    }
+
+    public void occupied() {
+        isOccupied = true;
+    }
+    public boolean hasWorkToDo() {
+        return isOccupied;
+    }
+
+    public void hasFinishedWork() {
+        isOccupied = true;
     }
 
     public int efficiency() {

@@ -2,16 +2,14 @@ package Production.Factories.Produktion;
 
 import Management.DroneManagement;
 import Management.Resources.Energy;
-import Management.Resources.Resource;
 import Management.Resources.ResourceCosts;
 import Management.Resources.ResourceManagement;
 import Production.Dronen.Drone;
 import Production.Factories.Building;
 
 /**
- *
  * Dronefactory - Produziert Dronen aller art.
- *
+ * <p>
  * ID: 1
  */
 public class DroneFactory extends Building {
@@ -32,9 +30,9 @@ public class DroneFactory extends Building {
 
         //Kosten Multuiplikatoren -> variable, damit Uprgades das senken koenne?
         constructionCost = ResourceManagement.generateResourceArray(ResourceCosts.DRONEFACTORYCOSTS);
-        construction = 10;
+        construction = 2;
 
-        energy = new Energy(200,10);
+        energy = new Energy(200, 10);
 
         resources = ResourceManagement.generateResourceArray("");
         resourcesStorable = ResourceManagement.generateResourceArray(ResourceCosts.DRONEFACTORYSTORABLE);
@@ -49,15 +47,13 @@ public class DroneFactory extends Building {
     }
 
     /**
-     *
-     * Jeweils ein Cyclus beudeutet einer Runde
+     * Jeweils ein Zyclus beudeutet einer Runde
      * Die Fabrik benoetigt eine gewisse anzahl an Runden um die entscprechende Drone zu Produzieren
      * Die Fabrik verbraucht pro Runde jeweils einen gewissen betrag an Energie
      * Ist keine Energie mehr vorhanden, wird nicht weitergearbeitet
-     *
      */
     public void updateBuilding() {
-        if(isWorking && hasEnergy() && isReady()) {
+        if (isWorking && hasEnergy() && isReady()) {
             useEnergy();
             workStatus -= 1 * efficency;
             finishDrone();
@@ -65,13 +61,13 @@ public class DroneFactory extends Building {
     }
 
 
-
     /**
      * Started die Produktion einer Drone und verbraucht schonmal die benoetigten Resourcen
+     *
      * @param drone: Typ der Drone
      */
     public void startProduction(Drone drone) {
-        if(canBeBuild(drone)) {
+        if (canBeBuild(drone)) {
             if (!isWorking && isReady()) {
                 if (hasResources(drone.getCosts())) {
                     isWorking = true;
@@ -95,13 +91,14 @@ public class DroneFactory extends Building {
             if (workStatus == 0) {
                 isWorking = false;
                 DroneManagement.addDrone(producedElement);
+                producedElement = null;
             }
         }
     }
 
     private boolean canBeBuild(Drone tmp) {
-        for(int i = 0; i < produceableDronesId.length; i++) {
-            if(tmp.getID() == produceableDronesId[i]) {
+        for (int i = 0; i < produceableDronesId.length; i++) {
+            if (tmp.getID() == produceableDronesId[i]) {
                 return true;
             }
         }
@@ -109,17 +106,22 @@ public class DroneFactory extends Building {
     }
 
     public String toString() {
-        return "[ " + ICON + " || " + printResource() + " (" + isWorkRemaining() + ")]" + constructionStatus();
+        StringBuilder str = new StringBuilder("[ " + ICON + " || " + printResource() + " (");
+        if (producedElement != null) {
+            str.append(isWorkRemaining());
+        }
+        str.append(")]" + constructionStatus());
+        return str.toString();
     }
 
     private String isWorkRemaining() {
-        String str = "";
-        if(isWorking) {
-            str += ": ";
-            for(int i = 0; i < workStatus; i++) {
-                str += "|";
+        StringBuilder str = new StringBuilder(producedElement.getIcon());
+        if (isWorking) {
+            str.append(": ");
+            for (int i = 0; i < workStatus; i++) {
+                str.append("|");
             }
         }
-        return str;
+        return str.toString();
     }
 }

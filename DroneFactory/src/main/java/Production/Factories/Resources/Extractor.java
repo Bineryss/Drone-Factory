@@ -11,7 +11,8 @@ import java.util.Arrays;
 
 
 /**
- * Extractor - Produziert Resourcen, wenn genug Energie vorhanden ist.
+ * <h3>Extractor</h3>
+ * Produziert Resourcen, wenn genug Energie vorhanden ist.
  * <p>
  * ID: 3
  */
@@ -50,7 +51,7 @@ public class Extractor extends Building {
                 constructionCost = ResourceManagement.generateResourceArray(ResourceCosts.GRAPHENEXTRACTORCOSTS);
                 construction = 10;
 
-                energy = new Energy(200,20);
+                energy = new Energy(200, 20);
                 efficency = 2;
 
                 resources = ResourceManagement.generateResourceArray("");
@@ -62,7 +63,7 @@ public class Extractor extends Building {
                 constructionCost = ResourceManagement.generateResourceArray(ResourceCosts.COBALTEXTRACTORCOSTS);
                 construction = 20;
 
-                energy = new Energy(500,40);
+                energy = new Energy(500, 40);
                 efficency = 1;
 
                 resources = ResourceManagement.generateResourceArray("");
@@ -83,7 +84,7 @@ public class Extractor extends Building {
     }
 
     public void storeResources() {
-        if (!transportDrone.isDead()) {
+        if (transportDrone != null && !transportDrone.isDead()) {
             ResourceManagement.addResources(resources);
             removeResources();
             transportDrone.work();
@@ -106,17 +107,19 @@ public class Extractor extends Building {
      */
     public void addDrone(int id) {
         if (transportDrone == null) {
-            transportDrone = DroneManagement.getDrone(id);
+            transportDrone = DroneManagement.getFullDrone(id);
             DroneManagement.removeDrone(transportDrone);
+        } else {
+            DroneManagement.addDrone(transportDrone);
+            transportDrone = DroneManagement.getDrone(id);
         }
     }
 
-    //dass soll sich später noch mit dronen aendern, dass die die resourcen abholen!
     private void produceResources() {
         if (!isFull()) {
             try {
-            useEnergy();
-            extractResource();
+                useEnergy();
+                extractResource();
             } catch (IllegalArgumentException e) {
                 System.out.println("So viel Energie ist nicht vorhanden!");
             }

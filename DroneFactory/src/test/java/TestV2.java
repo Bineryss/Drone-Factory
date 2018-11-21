@@ -50,7 +50,7 @@ public class TestV2 {
             System.out.println(BuildingManagement.print());
             try {
                 run = runEingabe();
-            }catch(Exception e) {
+            }catch(IllegalArgumentException e) {
                 System.out.println("Nicht vorhanden!");
             }
         }while (run);
