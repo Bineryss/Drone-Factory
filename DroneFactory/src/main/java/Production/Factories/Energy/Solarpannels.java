@@ -10,7 +10,6 @@ import Production.Factories.Building;
  * ID: 0
  */
 public class Solarpannels extends Building {
-    public final String ICON = "*~//";
     private static int cc = -1;
 
     public Solarpannels() {
@@ -18,10 +17,11 @@ public class Solarpannels extends Building {
         cc++;
         id = 0;
         sid = cc;
+        ICON = "*~//";
 
         //Kosten Multuiplikatoren -> variable, damit Uprgades das senken koenne?
-        constructionCost = ResourceManagement.generateResourceArray(ResourceCosts.SOLARPANNELSCOSTS);
-        construction = 5;
+        constructionCost = ResourceCosts.SOLARPANNEL.getCosts();
+        construction = ResourceCosts.SOLARPANNEL.getConstructionTime();
 
         efficency = 10;
     }

@@ -4,10 +4,9 @@ import Management.DroneManagement;
 import Management.Resources.Energy;
 import Management.Resources.ResourceCosts;
 import Management.Resources.ResourceManagement;
+import Management.Resources.Storage;
 import Production.Dronen.Drone;
 import Production.Factories.Building;
-
-import java.util.Arrays;
 
 
 /**
@@ -17,66 +16,32 @@ import java.util.Arrays;
  * ID: 3
  */
 public class Extractor extends Building {
-    public final String ICON = "||-O";
     private static int cc = -1;
-
-    private final ExtractorTyp typ;
-    private int[] producableResources;
-
 
     private Drone transportDrone;
 
-    public Extractor(ExtractorTyp typ) {
+    public Extractor() {
         super();
         cc++;
         id = 3;
         sid = cc;
+        ICON = "[|-O";
 
-        this.typ = typ;
         //Kosten Multuiplikatoren -> variable, damit Uprgades das senken koenne?
-        switch (typ) {
-            case CARBON:
-                constructionCost = ResourceManagement.generateResourceArray(ResourceCosts.CARBONEXTRACTORCOSTS);
-                construction = 5;
+        constructionCost = ResourceCosts.EXTRACTOR.getCosts();
+        construction = ResourceCosts.EXTRACTOR.getConstructionTime();
 
-                energy = new Energy(100, 10);
-                efficency = 2;
+        energy = new Energy(100, 10);
+        efficency = 2;
 
-                resources = ResourceManagement.generateResourceArray("");
-                resourcesStorable = ResourceManagement.generateResourceArray(ResourceCosts.CARBONEXTRACTORSTORABLE);
-                producableResources = ResourceManagement.generateResourceArray(ResourceCosts.CARBONEXTRACTORRESOURCES);
-                break;
-
-            case GRAPHEN:
-                constructionCost = ResourceManagement.generateResourceArray(ResourceCosts.GRAPHENEXTRACTORCOSTS);
-                construction = 10;
-
-                energy = new Energy(200, 20);
-                efficency = 2;
-
-                resources = ResourceManagement.generateResourceArray("");
-                resourcesStorable = ResourceManagement.generateResourceArray(ResourceCosts.GRAPHENEXTRACTORRESOURCES);
-                producableResources = ResourceManagement.generateResourceArray(ResourceCosts.GRAPHENEXTRACTORSTORABLE);
-                break;
-
-            case COBALT:
-                constructionCost = ResourceManagement.generateResourceArray(ResourceCosts.COBALTEXTRACTORCOSTS);
-                construction = 20;
-
-                energy = new Energy(500, 40);
-                efficency = 1;
-
-                resources = ResourceManagement.generateResourceArray("");
-                resourcesStorable = ResourceManagement.generateResourceArray(ResourceCosts.COBALTEXTRACTORSTORABLE);
-                producableResources = ResourceManagement.generateResourceArray(ResourceCosts.COBALTEXTRACTORRESOURCES);
-                break;
-        }
+        resources = new Storage(100);
+        resources.setMaxCapacity(ResourceCosts.EXTRACTOR.getMaxCapacity());
         transportDrone = null;
     }
 
     public void updateBuilding() {
         if (isReady()) {
-            if (transportDrone != null && Arrays.equals(resources, resourcesStorable)) {
+            if (transportDrone != null && isFull()) {
                 storeResources();
             }
             produceResources();
@@ -85,7 +50,7 @@ public class Extractor extends Building {
 
     public void storeResources() {
         if (transportDrone != null && !transportDrone.isDead()) {
-            ResourceManagement.addResources(resources);
+            ResourceManagement.addResources(resources.useResources(10));
             removeResources();
             transportDrone.work();
         } else {
@@ -95,9 +60,7 @@ public class Extractor extends Building {
     }
 
     private void removeResources() {
-        for (int i = 0; i < resources.length; i++) {
-            resources[i] = 0;
-        }
+            resources.useResources(resources.getResources());
     }
 
     /**
@@ -127,23 +90,16 @@ public class Extractor extends Building {
     }
 
     private void extractResource() {
-        for (int i = 0; i < resources.length; i++) {
-            if (producableResources[i] != 0) {
-                resources[i] += (producableResources[i] * efficency);
-                if (resources[i] > resourcesStorable[i]) {
-                    resources[i] = resourcesStorable[i];
-                }
-            }
+        if(!resources.addResources(efficency)) {
+            int filled = resources.getResources();
+            int availableSpace = resources.getMaxCapacity() - filled;
+            resources.addResources(availableSpace);
         }
+
     }
 
     private boolean isFull() {
-        for (int i = 0; i < resources.length; i++) {
-            if (resources[i] == resourcesStorable[i] && resourcesStorable[i] != 0) {
-                return true;
-            }
-        }
-        return false;
+        return resources.hasResources(resources.getMaxCapacity());
     }
 
 

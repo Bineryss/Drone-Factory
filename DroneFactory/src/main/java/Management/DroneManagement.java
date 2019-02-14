@@ -17,7 +17,7 @@ public class DroneManagement {
 
 
     public static void start() {
-        //Bebaeude Typen werden Ihrer ID zugeordnet
+        //Dronen Typen werden Ihrer ID zugeordnet
         for (int i = 0; i < DRONES.length; i++) {
             DRONES[i] = new ArrayList<Drone>();
         }
@@ -68,25 +68,21 @@ public class DroneManagement {
         return null;
     }
 
-    public static Drone[] giveDronesWork(int id, int droneCount) {
+    public static ArrayList<Drone> giveDronesWork(int id, int droneCount) {
         ArrayList<Drone> search = cleanDroneList(id);
-        Drone[] output = new Drone[droneCount];
-        if (droneCount < search.size()) {
+        ArrayList<Drone> out = new ArrayList<>();
+        if (droneCount <= search.size()) {
             for (int i = 0; i < droneCount; i++) {
-                int counter = 0;
                 for (Drone tmp : search) {
                     if (!tmp.hasWorkToDo()) {
-                        output[i] = tmp;
+                        out.add(tmp);
                         tmp.occupied();
-                        counter++;
-                    }
-                    if (counter == droneCount) {
-                        return output;
+                        break;
                     }
                 }
             }
         }
-        return output;
+        return out;
     }
 
     public static int availableEnergy(int id) {

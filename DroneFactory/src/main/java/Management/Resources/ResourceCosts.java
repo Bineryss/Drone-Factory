@@ -1,39 +1,46 @@
 package Management.Resources;
 
-public class ResourceCosts {
-
-    //Resources im Format "ID.count,ID.count...."
+public enum ResourceCosts {
 
     /**
      * Building Costs
      */
-    public static String SOLARPANNELSCOSTS = "0.10";
+    SOLARPANNEL(10, 0,5),
 
-    public static String DRONEFACTORYCOSTS = "0.20,1.10";
-    public static String DRONEFACTORYSTORABLE = "0.100,1.50,2.10";
+    DRONEFACTORY(50,100, 20),
 
-
-    public static String CARBONEXTRACTORCOSTS = "0.20";
-    public static String CARBONEXTRACTORRESOURCES = "0.10";
-    public static String CARBONEXTRACTORSTORABLE = "0.100";
-
-    public static String GRAPHENEXTRACTORCOSTS = "0.200";
-    public static String GRAPHENEXTRACTORRESOURCES = "1.10";
-    public static String GRAPHENEXTRACTORSTORABLE = "1.50";
-
-    public static String COBALTEXTRACTORCOSTS = "0.400,1.200";
-    public static String COBALTEXTRACTORRESOURCES = "1.2,2.5";
-    public static String COBALTEXTRACTORSTORABLE = "1.20,2.50";
-
+    EXTRACTOR(20,200, 10),
 
     /**
      * Drone Costs
      */
-    public static String DEFAULTDRONEKOST = "0.10";
+    DEFAULTDRONE(10,10, 4);
 
 
     /**
      * Forschungsprojekte kosten
      */
+
+    private int costs;
+    private int maxCapacity;
+    private int constructionTime;
+
+    ResourceCosts(int costs, int maxCapacity, int constructionTime) {
+        this.costs = costs;
+        this.maxCapacity = maxCapacity;
+        this.constructionTime = constructionTime;
+    }
+
+    public int getCosts() {
+        return costs;
+    }
+
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public int getConstructionTime() {
+        return constructionTime;
+    }
 }
 

@@ -4,7 +4,6 @@ import Production.Dronen.Normal.DefaultDrone;
 import Production.Factories.Energy.Solarpannels;
 import Production.Factories.Produktion.DroneFactory;
 import Production.Factories.Resources.Extractor;
-import Production.Factories.Resources.ExtractorTyp;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,8 +13,7 @@ public class Building_Test {
     public void start() {
         ResourceManagement.start();
         ResourceManagement.addEnergy(500);
-        String resource = "0.400,1.400,2.400";
-        ResourceManagement.addResources(ResourceManagement.generateResourceArray(resource));
+        ResourceManagement.addResources(500);
         DroneManagement.start();
         DroneManagement.addDrone(new DefaultDrone());
         DroneManagement.addDrone(new DefaultDrone());
@@ -28,9 +26,9 @@ public class Building_Test {
 
     @Test
     public void testUpdateExtractor() {
-        Extractor extr = new Extractor(ExtractorTyp.CARBON);
+        Extractor extr = new Extractor();
         extr.startConstruction(0, 2);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 6; i++) {
             extr.update();
         }
         extr.addDrone(0);
@@ -70,7 +68,7 @@ public class Building_Test {
         System.out.println(DroneManagement.print());
         System.out.println();
 
-        dro.startConstruction(0, 2);
+        dro.startConstruction(0, 4);
         System.out.println(ResourceManagement.print());
         System.out.println(DroneManagement.print());
         System.out.println();
@@ -81,7 +79,7 @@ public class Building_Test {
             System.out.println(DroneManagement.print());
         }
         dro.loadEnergy(100);
-        dro.loadResources(ResourceManagement.generateResourceArray("0.100,1.50,2.10"));
+        dro.loadResources(100);
 
         dro.startProduction(new DefaultDrone());
         for (int i = 0; i < 3; i++) {
@@ -94,5 +92,33 @@ public class Building_Test {
         System.out.println(DroneManagement.print());
         System.out.println(dro);
         System.out.println();
+    }
+
+    @Test
+    public void testMultipleBuildings() {
+        Solarpannels sol1 = new Solarpannels();
+        Solarpannels sol2 = new Solarpannels();
+        Solarpannels sol3 = new Solarpannels();
+
+        Solarpannels[] sol = new Solarpannels[]{sol1, sol2, sol3};
+        sol1.startConstruction(0, 2);
+        sol2.startConstruction(0, 1);
+        sol3.startConstruction(0, 1);
+
+        System.out.println("Vor dem Bauen:\n");
+        for (int i = 0; i < 3; i++) {
+            System.out.println(sol[i]);
+        }
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 3; j++) {
+                sol[j].update();
+            }
+        }
+
+        System.out.println("\nNach dem Bauen:");
+        for (int j = 0; j < 3; j++) {
+            System.out.println(sol[j]);
+        }
     }
 }

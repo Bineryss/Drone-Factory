@@ -2,9 +2,12 @@ package Production.Factories;
 
 import Management.DroneManagement;
 import Management.Resources.Energy;
+import Management.Resources.Resource;
 import Management.Resources.ResourceManagement;
+import Management.Resources.Storage;
 import Production.Dronen.Drone;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 /**
@@ -15,20 +18,20 @@ import java.util.InputMismatchException;
  * ID: 0 = Energy, 1 = Production; 2 = Research; 3 = Resources; 4 = Storage
  */
 public abstract class Building {
+    protected String ICON;
     //ID des Gebaeude Types
     protected int id;
     //ID des speziellen Gebaeudes
     protected int sid;
 
-    protected int[] constructionCost;
+    protected int constructionCost;
     protected int construction;
     protected boolean hasResources;
-    protected Drone[] workers;
+    protected ArrayList<Drone> workers;
 
     protected Energy energy;
 
-    protected int[] resources;
-    protected int[] resourcesStorable;
+    protected Resource resources;
 
     protected int efficency;
 
@@ -62,15 +65,25 @@ public abstract class Building {
     }
 
     private void build() {
-        for (int i = 0; i < workers.length; i++) {
-            if ((construction - workers[i].efficiency()) > 0) {
-                construction -= workers[i].work();
+        for (Drone worker: workers) {
+            if ((construction - worker.efficiency()) > 0) {
+                construction -= worker.work();
             } else {
-                workers[i].work();
+                worker.work();
                 construction = 0;
-                workers[i].hasFinishedWork();
+                worker.hasFinishedWork();
+                workers = null;
+                break;
             }
         }
+    }
+
+    public void addMoreWorkers(int droneId, int amount) {
+        workers.addAll(DroneManagement.giveDronesWork(droneId,amount));
+    }
+
+    public boolean isWorking() {
+        return construction == 0;
     }
 
 
@@ -95,28 +108,15 @@ public abstract class Building {
     }
 
 
-    protected boolean hasResources(int[] amount) {
-        for (int i = 0; i < resources.length; i++) {
-            if ((resources[i] - amount[i]) < 0) {
-                return false;
-            }
-        }
-        return true;
+    protected boolean hasResources(int amount) {
+        return resources.hasResources(amount);
     }
 
-    protected void useResources(int[] amount) {
-        if (hasResources(amount)) {
-            for (int i = 0; i < resources.length; i++) {
-                if (resources[i] >= amount[i]) {
-                    resources[i] -= amount[i];
-                }
-            }
-        } else {
-            throw new InputMismatchException("So viele Resourcen hast du nicht!");
-        }
+    protected void useResources(int amount) {
+        resources.useResources(amount);
     }
 
-    public void loadResources(int[] amount) {
+    public void loadResources(int amount) {
         if (canStoreResources(amount) && isReady()) {
             try {
                 storeResources(amount);
@@ -128,37 +128,32 @@ public abstract class Building {
         }
     }
 
-    private boolean canStoreResources(int[] amount) {
-        for (int i = 0; i < resources.length; i++) {
-            if ((amount[i] + resources[i]) > resourcesStorable[i]) {
-                return false;
-            }
-        }
-        return true;
+    private boolean canStoreResources(int amount) {
+        return resources.addResources(amount);
     }
 
-    private void storeResources(int[] amount) {
-        resources = ResourceManagement.useResources(amount);
+    private void storeResources(int amount) {
+        resources.addResources(ResourceManagement.useResources(amount));
     }
 
 
     protected String constructionStatus() {
-        StringBuilder output = new StringBuilder();
-        for (int i = 0; i < construction; i++) {
-            output.append("|");
+        StringBuilder out = new StringBuilder();
+        for (int i = construction; i > 0; i--) {
+            if (i >= 5) {
+                out.append("X");
+                i -= 4;
+            } else {
+                out.append("|");
+            }
         }
-        return output.toString();
+        return out.toString();
     }
 
     protected String printResource() {
         StringBuilder tmp = new StringBuilder();
         tmp.append(energy + " ");
-        for (int i = 0; i < resourcesStorable.length; i++) {
-            if (resourcesStorable[i] != 0) {
-                tmp.append("| " + ResourceManagement.resourceName(i) + ": " + resources[i] + " |");
-            }
-        }
-        tmp.append("|");
+        tmp.append(resources);
         return tmp.toString();
     }
 
@@ -166,12 +161,15 @@ public abstract class Building {
         return construction == 0;
     }
 
-
     public int getSID() {
         return sid;
     }
 
     public int getID() {
         return id;
+    }
+
+    public String getIcon() {
+        return ICON;
     }
 }

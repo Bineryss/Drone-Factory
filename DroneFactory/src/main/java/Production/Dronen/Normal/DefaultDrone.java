@@ -1,8 +1,10 @@
 package Production.Dronen.Normal;
 
 import Management.Resources.Energy;
+import Management.Resources.Resource;
 import Management.Resources.ResourceCosts;
 import Management.Resources.ResourceManagement;
+import Management.Resources.Storage;
 import Production.Dronen.Drone;
 
 /**
@@ -13,11 +15,14 @@ public class DefaultDrone extends Drone {
     public DefaultDrone() {
         super();
         id = 0;
-        costs = ResourceManagement.generateResourceArray(ResourceCosts.DEFAULTDRONEKOST);
+        costs = ResourceCosts.DEFAULTDRONE.getCosts();
         efficiency = 1;
         isOccupied = false;
         energy = new Energy(10, 1, 10);
-        producetime = 4;
+        resource = new Storage(ResourceCosts.DEFAULTDRONE.getMaxCapacity());
+
+
+        producetime = ResourceCosts.DEFAULTDRONE.getConstructionTime();
 
         icon = "<|>";
     }

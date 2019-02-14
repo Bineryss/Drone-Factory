@@ -1,6 +1,8 @@
 package Production.Dronen;
 
 import Management.Resources.Energy;
+import Management.Resources.Resource;
+import Management.Resources.Storage;
 
 /**
  * <h3>Drone</h3>
@@ -14,13 +16,16 @@ public abstract class Drone {
     protected int id;
 
     //Kosten zum Dronen Produzieren
-    protected int costs[];
+    protected int costs;
     //Produktivitaet der Drone
     protected int efficiency;
     protected boolean isOccupied;
 
     //Energie Speicher
     protected Energy energy;
+
+    //Resource Speicher
+    protected Storage resource;
 
     protected int producetime;
 
@@ -43,7 +48,7 @@ public abstract class Drone {
     }
 
     //Resourcenkosten um Drone zu produzieren
-    public int[] getCosts() {
+    public int getCosts() {
         return costs;
     }
 

@@ -2,41 +2,29 @@ package Management.Resources;
 
 public class Resource {
     public final String NAME;
-    private final int ID;
 
     protected int maxCapacity;
     protected int count;
 
 
-    public Resource(String name, int id) {
+    public Resource(String name, int maxCapacity) {
         NAME = name;
-        this.ID = id;
         this.count = 0;
         //TODO: maxCapacity abhaengig von der anzahl an Lagern machen
-        this.maxCapacity = 100000;
+        this.maxCapacity = maxCapacity;
     }
 
-    /**
-     * Special Constructor for defining resource costs only!
-     *
-     * @param id
-     * @param count
-     */
-    public Resource(int id, int count) {
-        NAME = "";
-        this.ID = id;
-        this.count = count;
-    }
-
-    public int resources() {
+    public int getResources() {
         return count;
     }
 
-    public void addResources(int count) {
+    public boolean addResources(int count) {
         if (maxCapacity >= (this.count + count)) {
             this.count += count;
+            return true;
         } else {
-            throw new IllegalArgumentException("So viel kannst du nicht lagern!");
+            return false;
+            //throw new IllegalArgumentException("So viel kannst du nicht lagern!");
         }
     }
 
@@ -57,8 +45,12 @@ public class Resource {
         }
     }
 
-    public int getID() {
-        return ID;
+    public void setMaxCapacity(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
+    }
+
+    public int getMaxCapacity() {
+        return maxCapacity;
     }
 
     public String toString() {

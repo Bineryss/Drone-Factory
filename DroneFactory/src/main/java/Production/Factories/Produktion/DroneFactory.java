@@ -3,7 +3,7 @@ package Production.Factories.Produktion;
 import Management.DroneManagement;
 import Management.Resources.Energy;
 import Management.Resources.ResourceCosts;
-import Management.Resources.ResourceManagement;
+import Management.Resources.Storage;
 import Production.Dronen.Drone;
 import Production.Factories.Building;
 
@@ -13,7 +13,6 @@ import Production.Factories.Building;
  * ID: 1
  */
 public class DroneFactory extends Building {
-    public final String ICON = "|>%|";
     private static int cc = -1;
 
     private int workStatus;
@@ -27,15 +26,16 @@ public class DroneFactory extends Building {
         cc++;
         id = 1;
         sid = cc;
+        ICON = "[>%]";
 
         //Kosten Multuiplikatoren -> variable, damit Uprgades das senken koenne?
-        constructionCost = ResourceManagement.generateResourceArray(ResourceCosts.DRONEFACTORYCOSTS);
-        construction = 2;
+        constructionCost = ResourceCosts.DRONEFACTORY.getCosts();
+        construction = ResourceCosts.DRONEFACTORY.getConstructionTime();
 
         energy = new Energy(200, 10);
 
-        resources = ResourceManagement.generateResourceArray("");
-        resourcesStorable = ResourceManagement.generateResourceArray(ResourceCosts.DRONEFACTORYSTORABLE);
+        resources = new Storage(300);
+        resources.setMaxCapacity(ResourceCosts.DRONEFACTORY.getMaxCapacity());
 
         efficency = 2;
 
@@ -47,7 +47,7 @@ public class DroneFactory extends Building {
     }
 
     /**
-     * Jeweils ein Zyclus beudeutet einer Runde
+     * Jeweils ein Zyclus beudeutet eine Runde
      * Die Fabrik benoetigt eine gewisse anzahl an Runden um die entscprechende Drone zu Produzieren
      * Die Fabrik verbraucht pro Runde jeweils einen gewissen betrag an Energie
      * Ist keine Energie mehr vorhanden, wird nicht weitergearbeitet
