@@ -2,10 +2,13 @@ package Production.Factories.Produktion;
 
 import Management.DroneManagement;
 import Management.Resources.Energy;
-import Management.Resources.ResourceCosts;
+import Management.Type;
 import Management.Resources.Storage;
 import Production.Dronen.Drone;
 import Production.Factories.Building;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Dronefactory - Produziert Dronen aller art.
@@ -18,32 +21,33 @@ public class DroneFactory extends Building {
     private int workStatus;
     private boolean isWorking;
 
-    private static int[] produceableDronesId;
+    private static List<Type> produceableDronesId;
     private Drone producedElement;
 
     public DroneFactory() {
         super();
         cc++;
-        id = 1;
         sid = cc;
-        ICON = "[>%]";
+
+        type = Type.DRONEFACTORY;
 
         //Kosten Multuiplikatoren -> variable, damit Uprgades das senken koenne?
-        constructionCost = ResourceCosts.DRONEFACTORY.getCosts();
-        construction = ResourceCosts.DRONEFACTORY.getConstructionTime();
+        constructionCost = Type.DRONEFACTORY.getCosts();
+        construction = Type.DRONEFACTORY.getConstructionTime();
 
         energy = new Energy(200, 10);
 
-        resources = new Storage(300);
-        resources.setMaxCapacity(ResourceCosts.DRONEFACTORY.getMaxCapacity());
+        storage = new Storage(300);
+        storage.setMaxCapacity(Type.DRONEFACTORY.getMaxCapacity());
 
-        efficency = 2;
+        efficiency = 2;
 
-        efficency = 2;
+        efficiency = 2;
         workStatus = 0;
         isWorking = false;
 
-        produceableDronesId = new int[]{0};
+        produceableDronesId = new LinkedList<>();
+        produceableDronesId.add(Type.DEFAULTDRONE);
     }
 
     /**
@@ -55,7 +59,7 @@ public class DroneFactory extends Building {
     public void updateBuilding() {
         if (isWorking && hasEnergy() && isReady()) {
             useEnergy();
-            workStatus -= 1 * efficency;
+            workStatus -= 1 * efficiency;
             finishDrone();
         }
     }
@@ -97,16 +101,14 @@ public class DroneFactory extends Building {
     }
 
     private boolean canBeBuild(Drone tmp) {
-        for (int i = 0; i < produceableDronesId.length; i++) {
-            if (tmp.getID() == produceableDronesId[i]) {
-                return true;
-            }
+        if (produceableDronesId.contains(tmp.getType())) {
+            return true;
         }
         return false;
     }
 
     public String toString() {
-        StringBuilder str = new StringBuilder("[ " + ICON + " || " + printResource() + " (");
+        StringBuilder str = new StringBuilder("[ " + type.getIcon() + " || " + printResource() + " (");
         if (producedElement != null) {
             str.append(isWorkRemaining());
         }
@@ -115,7 +117,7 @@ public class DroneFactory extends Building {
     }
 
     private String isWorkRemaining() {
-        StringBuilder str = new StringBuilder(producedElement.getIcon());
+        StringBuilder str = new StringBuilder(producedElement.getType().getIcon());
         if (isWorking) {
             str.append(": ");
             for (int i = 0; i < workStatus; i++) {

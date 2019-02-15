@@ -24,7 +24,21 @@ public class BuildingManagement {
     }
 
     public static void addBuilding(Building tmp) {
-        BUILDINGS[tmp.getID()].add(tmp);
+        Type type = tmp.getType();
+        switch (type) {
+            case SOLARPANNEL:
+                BUILDINGS[0].add(tmp);
+                break;
+            case DRONEFACTORY:
+                BUILDINGS[1].add(tmp);
+                break;
+            case EXTRACTOR:
+                BUILDINGS[3].add(tmp);
+                break;
+            case VAULT:
+                BUILDINGS[4].add(tmp);
+                break;
+        }
     }
 
     public static Building getBuilding(int[] id) {

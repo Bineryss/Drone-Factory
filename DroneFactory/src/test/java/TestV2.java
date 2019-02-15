@@ -72,7 +72,7 @@ public class TestV2 {
                 addBulding(new Extractor(), DroneManagement.getDrone(0),1);
                 break;
             case 4:
-                System.out.println("Storage kommt noch");
+                System.out.println("Vault kommt noch");
                 break;
             case 5:
                 //Extractor aufladen

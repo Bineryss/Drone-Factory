@@ -1,9 +1,7 @@
 package Production.Dronen.Normal;
 
 import Management.Resources.Energy;
-import Management.Resources.Resource;
-import Management.Resources.ResourceCosts;
-import Management.Resources.ResourceManagement;
+import Management.Type;
 import Management.Resources.Storage;
 import Production.Dronen.Drone;
 
@@ -14,23 +12,21 @@ public class DefaultDrone extends Drone {
 
     public DefaultDrone() {
         super();
-        id = 0;
-        costs = ResourceCosts.DEFAULTDRONE.getCosts();
+        type = Type.DEFAULTDRONE;
+        costs = Type.DEFAULTDRONE.getCosts();
         efficiency = 1;
         isOccupied = false;
         energy = new Energy(10, 1, 10);
-        resource = new Storage(ResourceCosts.DEFAULTDRONE.getMaxCapacity());
+        resource = new Storage(Type.DEFAULTDRONE.getMaxCapacity());
 
 
-        producetime = ResourceCosts.DEFAULTDRONE.getConstructionTime();
-
-        icon = "<|>";
+        producetime = Type.DEFAULTDRONE.getConstructionTime();
     }
 
     /**
      * @return: " <|> : Symbol einer Drone und uebrige arbeitskraft.
      */
     public String toString() {
-        return icon + " : " + energyLeft();
+        return type.getIcon() + " : " + energyLeft();
     }
 }

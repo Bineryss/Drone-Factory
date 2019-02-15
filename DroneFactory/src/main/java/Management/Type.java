@@ -1,31 +1,38 @@
-package Management.Resources;
+package Management;
 
-public enum ResourceCosts {
+public enum Type {
 
     /**
      * Building Costs
      */
-    SOLARPANNEL(10, 0,5),
+    SOLARPANNEL("*~//",10, 0,5),
 
-    DRONEFACTORY(50,100, 20),
+    DRONEFACTORY("[>%]",50,100, 20),
 
-    EXTRACTOR(20,200, 10),
+    EXTRACTOR("[|-O",20,200, 10),
+
+    VAULT("[__]",40,1000,6),
 
     /**
      * Drone Costs
      */
-    DEFAULTDRONE(10,10, 4);
+    DEFAULTDRONE("<|>",10,10, 4),
+
+    CARRIERDRONE("<_>",20,100,10);
 
 
     /**
      * Forschungsprojekte kosten
      */
 
+    private final String ICON;
+
     private int costs;
     private int maxCapacity;
     private int constructionTime;
 
-    ResourceCosts(int costs, int maxCapacity, int constructionTime) {
+    Type(String ICON, int costs, int maxCapacity, int constructionTime) {
+        this.ICON = ICON;
         this.costs = costs;
         this.maxCapacity = maxCapacity;
         this.constructionTime = constructionTime;
@@ -41,6 +48,10 @@ public enum ResourceCosts {
 
     public int getConstructionTime() {
         return constructionTime;
+    }
+
+    public String getIcon() {
+        return ICON;
     }
 }
 

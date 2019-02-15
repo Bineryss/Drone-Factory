@@ -1,7 +1,7 @@
 package Production.Dronen;
 
+import Management.Type;
 import Management.Resources.Energy;
-import Management.Resources.Resource;
 import Management.Resources.Storage;
 
 /**
@@ -12,8 +12,7 @@ import Management.Resources.Storage;
  * 0 = DefaultDrone
  */
 public abstract class Drone {
-    protected String icon = "---";
-    protected int id;
+    protected Type type;
 
     //Kosten zum Dronen Produzieren
     protected int costs;
@@ -83,11 +82,7 @@ public abstract class Drone {
         return energy.availableEnergy() == 0;
     }
 
-    public int getID() {
-        return id;
-    }
-
-    public String getIcon() {
-        return this.icon;
+    public Type getType() {
+        return type;
     }
 }

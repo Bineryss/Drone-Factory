@@ -2,25 +2,22 @@ package Production.Factories;
 
 import Management.DroneManagement;
 import Management.Resources.Energy;
-import Management.Resources.Resource;
 import Management.Resources.ResourceManagement;
 import Management.Resources.Storage;
+import Management.Type;
 import Production.Dronen.Drone;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 
 /**
  * Interface fuer Gebaeude
  * <p>
  * Speichert die Kosten, Bauzeit,
  * <p>
- * ID: 0 = Energy, 1 = Production; 2 = Research; 3 = Resources; 4 = Storage
+ * ID: 0 = Energy, 1 = Production; 2 = Research; 3 = Resources; 4 = Vault
  */
 public abstract class Building {
-    protected String ICON;
-    //ID des Gebaeude Types
-    protected int id;
+    protected Type type;
     //ID des speziellen Gebaeudes
     protected int sid;
 
@@ -31,12 +28,12 @@ public abstract class Building {
 
     protected Energy energy;
 
-    protected Resource resources;
+    protected Storage storage;
 
-    protected int efficency;
+    protected int efficiency;
 
     public void update() {
-        if (construction != 0) {
+        if (!isReady()) {
             build();
         } else {
             updateBuilding();
@@ -65,7 +62,7 @@ public abstract class Building {
     }
 
     private void build() {
-        for (Drone worker: workers) {
+        for (Drone worker : workers) {
             if ((construction - worker.efficiency()) > 0) {
                 construction -= worker.work();
             } else {
@@ -79,10 +76,10 @@ public abstract class Building {
     }
 
     public void addMoreWorkers(int droneId, int amount) {
-        workers.addAll(DroneManagement.giveDronesWork(droneId,amount));
+        workers.addAll(DroneManagement.giveDronesWork(droneId, amount));
     }
 
-    public boolean isWorking() {
+    public boolean inConstruction() {
         return construction == 0;
     }
 
@@ -92,7 +89,7 @@ public abstract class Building {
     }
 
     protected void useEnergy() {
-        energy.useResources(efficency);
+        energy.useResources(efficiency);
     }
 
     public void loadEnergy(int amount) {
@@ -109,11 +106,11 @@ public abstract class Building {
 
 
     protected boolean hasResources(int amount) {
-        return resources.hasResources(amount);
+        return storage.hasResources(amount);
     }
 
     protected void useResources(int amount) {
-        resources.useResources(amount);
+        storage.useResources(amount);
     }
 
     public void loadResources(int amount) {
@@ -129,11 +126,11 @@ public abstract class Building {
     }
 
     private boolean canStoreResources(int amount) {
-        return resources.addResources(amount);
+        return storage.addResources(amount);
     }
 
     private void storeResources(int amount) {
-        resources.addResources(ResourceManagement.useResources(amount));
+        storage.addResources(ResourceManagement.useResources(amount));
     }
 
 
@@ -153,7 +150,7 @@ public abstract class Building {
     protected String printResource() {
         StringBuilder tmp = new StringBuilder();
         tmp.append(energy + " ");
-        tmp.append(resources);
+        tmp.append(storage);
         return tmp.toString();
     }
 
@@ -165,11 +162,11 @@ public abstract class Building {
         return sid;
     }
 
-    public int getID() {
-        return id;
+    public Type getType() {
+        return type;
     }
 
     public String getIcon() {
-        return ICON;
+        return type.getIcon();
     }
 }

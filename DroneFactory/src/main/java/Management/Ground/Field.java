@@ -2,7 +2,6 @@ package Management.Ground;
 
 import Management.BuildingManagement;
 import Management.DroneManagement;
-import Management.Resources.ResourceManagement;
 import Production.Dronen.Drone;
 import Production.Factories.Building;
 import Production.Factories.Energy.Solarpannels;
@@ -45,7 +44,7 @@ public abstract class Field {
                 addBulding(new Extractor(), DroneManagement.getDrone(droneID), droneCount);
                 break;
             case 4:
-                System.out.println("Storage kommt noch");
+                System.out.println("Vault kommt noch");
                 break;
         }
 
@@ -71,11 +70,11 @@ public abstract class Field {
         System.out.println("--------------------\nAvailable Resources: " + availableResources);
         System.out.println("--------------------");
         if (placedBuilding == null) {
-            System.out.println("Available Buildings:\n0 - Sollarpannel\n1 - Dronefactory\n2 - Lab\n3 - Extractor\n4 - Storage");
+            System.out.println("Available Buildings:\n0 - Sollarpannel\n1 - Dronefactory\n2 - Lab\n3 - Extractor\n4 - Vault");
         } else {
             System.out.println(placedBuilding);
             System.out.println("-----------------");
-            if (placedBuilding.isWorking()) {
+            if (placedBuilding.inConstruction()) {
                 System.out.println(fromatedOptions());
                 finalAction();
             }

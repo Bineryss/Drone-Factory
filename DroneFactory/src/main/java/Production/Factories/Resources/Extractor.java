@@ -2,7 +2,7 @@ package Production.Factories.Resources;
 
 import Management.DroneManagement;
 import Management.Resources.Energy;
-import Management.Resources.ResourceCosts;
+import Management.Type;
 import Management.Resources.ResourceManagement;
 import Management.Resources.Storage;
 import Production.Dronen.Drone;
@@ -23,19 +23,18 @@ public class Extractor extends Building {
     public Extractor() {
         super();
         cc++;
-        id = 3;
         sid = cc;
-        ICON = "[|-O";
+
+        type = Type.EXTRACTOR;
 
         //Kosten Multuiplikatoren -> variable, damit Uprgades das senken koenne?
-        constructionCost = ResourceCosts.EXTRACTOR.getCosts();
-        construction = ResourceCosts.EXTRACTOR.getConstructionTime();
+        constructionCost = Type.EXTRACTOR.getCosts();
+        construction = Type.EXTRACTOR.getConstructionTime();
 
         energy = new Energy(100, 10);
-        efficency = 2;
+        efficiency = 2;
 
-        resources = new Storage(100);
-        resources.setMaxCapacity(ResourceCosts.EXTRACTOR.getMaxCapacity());
+        storage = new Storage(Type.EXTRACTOR.getMaxCapacity());
         transportDrone = null;
     }
 
@@ -50,7 +49,7 @@ public class Extractor extends Building {
 
     public void storeResources() {
         if (transportDrone != null && !transportDrone.isDead()) {
-            ResourceManagement.addResources(resources.useResources(10));
+            ResourceManagement.addResources(storage.useResources(10));
             removeResources();
             transportDrone.work();
         } else {
@@ -60,7 +59,7 @@ public class Extractor extends Building {
     }
 
     private void removeResources() {
-            resources.useResources(resources.getResources());
+        storage.useResources(storage.getResources());
     }
 
     /**
@@ -90,16 +89,16 @@ public class Extractor extends Building {
     }
 
     private void extractResource() {
-        if(!resources.addResources(efficency)) {
-            int filled = resources.getResources();
-            int availableSpace = resources.getMaxCapacity() - filled;
-            resources.addResources(availableSpace);
+        if (!storage.addResources(efficiency)) {
+            int filled = storage.getResources();
+            int availableSpace = storage.getMaxCapacity() - filled;
+            storage.addResources(availableSpace);
         }
 
     }
 
     private boolean isFull() {
-        return resources.hasResources(resources.getMaxCapacity());
+        return storage.hasResources(storage.getMaxCapacity());
     }
 
 
@@ -107,7 +106,7 @@ public class Extractor extends Building {
      * @return: Fertige Ausgabe
      */
     public String toString() {
-        return "[ " + ICON + " |" + printResource() + " (" + printDrone() + ") ]" + constructionStatus();
+        return "[ " + type.getIcon() + " |" + printResource() + " (" + printDrone() + ") ]" + constructionStatus();
     }
 
     private String printDrone() {

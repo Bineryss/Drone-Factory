@@ -1,6 +1,6 @@
 package Production.Factories.Energy;
 
-import Management.Resources.ResourceCosts;
+import Management.Type;
 import Management.Resources.ResourceManagement;
 import Production.Factories.Building;
 
@@ -15,24 +15,24 @@ public class Solarpannels extends Building {
     public Solarpannels() {
         super();
         cc++;
-        id = 0;
         sid = cc;
-        ICON = "*~//";
+
+        type = Type.SOLARPANNEL;
 
         //Kosten Multuiplikatoren -> variable, damit Uprgades das senken koenne?
-        constructionCost = ResourceCosts.SOLARPANNEL.getCosts();
-        construction = ResourceCosts.SOLARPANNEL.getConstructionTime();
+        constructionCost = Type.SOLARPANNEL.getCosts();
+        construction = Type.SOLARPANNEL.getConstructionTime();
 
-        efficency = 10;
+        efficiency = 10;
     }
 
     public void updateBuilding() {
         if (isReady()) {
-            ResourceManagement.addEnergy(efficency);
+            ResourceManagement.addEnergy(efficiency);
         }
     }
 
     public String toString() {
-        return "[ " + ICON + "  |E: " + efficency + "| ]" + constructionStatus();
+        return "[ " + type.getIcon() + "  |E: " + efficiency + "| ]" + constructionStatus();
     }
 }
