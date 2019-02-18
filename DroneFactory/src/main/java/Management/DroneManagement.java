@@ -29,12 +29,7 @@ public class DroneManagement {
      * @param tmp
      */
     public static void addDrone(Drone tmp) {
-        Type type = tmp.getType();
-        switch (type) {
-            case DEFAULTDRONE:
-                DRONES[0].add(tmp);
-                break;
-        }
+        DRONES[typeToId(tmp.getType())].add(tmp);
     }
 
     /**
@@ -73,8 +68,8 @@ public class DroneManagement {
         return null;
     }
 
-    public static ArrayList<Drone> giveDronesWork(int id, int droneCount) {
-        ArrayList<Drone> search = cleanDroneList(id);
+    public static ArrayList<Drone> giveDronesWork(Type id, int droneCount) {
+        ArrayList<Drone> search = cleanDroneList(typeToId(id));
         ArrayList<Drone> out = new ArrayList<>();
         if (droneCount <= search.size()) {
             for (int i = 0; i < droneCount; i++) {
@@ -111,14 +106,10 @@ public class DroneManagement {
     }
 
     public static void removeDrone(Drone remove) {
-        Type type = remove.getType();
-        switch (type) {
-            case DEFAULTDRONE:
-                ArrayList<Drone> removal = DRONES[0];
-                removal.remove(remove);
-                break;
-        }
+        ArrayList<Drone> removal = DRONES[typeToId(remove.getType())];
+        removal.remove(remove);
     }
+
 
     public static String print() {
         StringBuilder str = new StringBuilder();
@@ -127,5 +118,14 @@ public class DroneManagement {
             str.append("\n");
         }
         return str.toString();
+    }
+
+    private static final int typeToId(Type type) {
+        switch (type) {
+            case DEFAULTDRONE:
+                return 0;
+            default:
+                return -1;
+        }
     }
 }

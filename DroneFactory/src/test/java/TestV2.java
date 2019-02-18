@@ -2,6 +2,7 @@
 import Management.BuildingManagement;
 import Management.DroneManagement;
 import Management.Resources.ResourceManagement;
+import Management.Type;
 import Production.Dronen.Drone;
 import Production.Dronen.Normal.DefaultDrone;
 import Production.Factories.Building;
@@ -14,7 +15,7 @@ import java.util.Scanner;
 public class TestV2 {
 
     private static void addBulding(Building tmp, Drone drone, int count) {
-        tmp.startConstruction(drone.getID(),count);
+        tmp.startConstruction(drone.getType(),count);
         BuildingManagement.addBuilding(tmp);
     }
 
@@ -81,7 +82,7 @@ public class TestV2 {
                 ((Extractor) BuildingManagement.getBuilding(new int[]{3, eingabe})).addDrone(0);
                 break;
             case 6:
-                BuildingManagement.getBuilding(new int[]{intEingabe(), intEingabe()}).addMoreWorkers(0,intEingabe());
+                BuildingManagement.getBuilding(new int[]{intEingabe(), intEingabe()}).addMoreWorkers(Type.DEFAULTDRONE,intEingabe());
                 break;
             case 7:
                 //Dronefactory Laden
@@ -92,6 +93,7 @@ public class TestV2 {
             case 8:
                 DroneFactory tmp = ((DroneFactory) BuildingManagement.getBuilding(new int[]{1, intEingabe()}));
                 tmp.startProduction(new DefaultDrone());
+                System.out.println("New Production!");
                 break;
             case 9:
                 return false;

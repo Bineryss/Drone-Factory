@@ -51,7 +51,7 @@ public abstract class Field {
     }
 
     public void addBulding(Building tmp, Drone drone, int count) {
-        tmp.startConstruction(drone.getID(), count);
+        tmp.startConstruction(drone.getType(), count);
         BuildingManagement.addBuilding(tmp);
     }
 

@@ -23,7 +23,7 @@ public class Extractor extends Building {
     public Extractor() {
         super();
         cc++;
-        sid = cc;
+        id = cc;
 
         type = Type.EXTRACTOR;
 
@@ -31,7 +31,7 @@ public class Extractor extends Building {
         constructionCost = Type.EXTRACTOR.getCosts();
         construction = Type.EXTRACTOR.getConstructionTime();
 
-        energy = new Energy(100, 10);
+        energy = new Energy(100, 5);
         efficiency = 2;
 
         storage = new Storage(Type.EXTRACTOR.getMaxCapacity());
@@ -40,7 +40,7 @@ public class Extractor extends Building {
 
     public void updateBuilding() {
         if (isReady()) {
-            if (transportDrone != null && isFull()) {
+            if (transportDrone != null && storage.isFull()) {
                 storeResources();
             }
             produceResources();
@@ -49,7 +49,7 @@ public class Extractor extends Building {
 
     public void storeResources() {
         if (transportDrone != null && !transportDrone.isDead()) {
-            ResourceManagement.addResources(storage.useResources(10));
+            ResourceManagement.addResources(storage.unload());
             removeResources();
             transportDrone.work();
         } else {
@@ -78,9 +78,9 @@ public class Extractor extends Building {
     }
 
     private void produceResources() {
-        if (!isFull()) {
+        if (!storage.isFull()) {
             try {
-                useEnergy();
+                energy.useEnergy();
                 extractResource();
             } catch (IllegalArgumentException e) {
                 System.out.println("So viel Energie ist nicht vorhanden!");
@@ -95,10 +95,6 @@ public class Extractor extends Building {
             storage.addResources(availableSpace);
         }
 
-    }
-
-    private boolean isFull() {
-        return storage.hasResources(storage.getMaxCapacity());
     }
 
 

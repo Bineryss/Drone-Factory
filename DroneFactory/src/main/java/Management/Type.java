@@ -9,6 +9,8 @@ public enum Type {
 
     DRONEFACTORY("[>%]",50,100, 20),
 
+    LABORATORIUM("[*]O", 100,20,20),
+
     EXTRACTOR("[|-O",20,200, 10),
 
     VAULT("[__]",40,1000,6),

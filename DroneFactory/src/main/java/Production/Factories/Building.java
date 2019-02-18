@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public abstract class Building {
     protected Type type;
     //ID des speziellen Gebaeudes
-    protected int sid;
+    protected int id;
 
     protected int constructionCost;
     protected int construction;
@@ -47,7 +47,7 @@ public abstract class Building {
      * <p>
      * Wenn Drone keine arbeitskraft mehr, dann wird bau gestopt, neu Drone muss uebergen werden.
      */
-    public void startConstruction(int droneId, int droneCount) {
+    public void startConstruction(Type droneId, int droneCount) {
         if (construction > 0) {
             workers = DroneManagement.giveDronesWork(droneId, droneCount);
             if (!hasResources) {
@@ -75,21 +75,12 @@ public abstract class Building {
         }
     }
 
-    public void addMoreWorkers(int droneId, int amount) {
-        workers.addAll(DroneManagement.giveDronesWork(droneId, amount));
+    public void addMoreWorkers(Type droneType, int amount) {
+        workers.addAll(DroneManagement.giveDronesWork(droneType, amount));
     }
 
     public boolean inConstruction() {
         return construction == 0;
-    }
-
-
-    protected boolean hasEnergy() {
-        return energy.hasEnergy();
-    }
-
-    protected void useEnergy() {
-        energy.useResources(efficiency);
     }
 
     public void loadEnergy(int amount) {
@@ -104,14 +95,6 @@ public abstract class Building {
         }
     }
 
-
-    protected boolean hasResources(int amount) {
-        return storage.hasResources(amount);
-    }
-
-    protected void useResources(int amount) {
-        storage.useResources(amount);
-    }
 
     public void loadResources(int amount) {
         if (canStoreResources(amount) && isReady()) {
@@ -148,18 +131,15 @@ public abstract class Building {
     }
 
     protected String printResource() {
-        StringBuilder tmp = new StringBuilder();
-        tmp.append(energy + " ");
-        tmp.append(storage);
-        return tmp.toString();
+        return String.format("%s %S", energy, storage);
     }
 
     protected boolean isReady() {
         return construction == 0;
     }
 
-    public int getSID() {
-        return sid;
+    public int getId() {
+        return id;
     }
 
     public Type getType() {

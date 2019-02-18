@@ -1,5 +1,6 @@
 package Production.Factories.Research;
 
+import Management.Type;
 import Production.Factories.Building;
 
 /**
@@ -8,15 +9,15 @@ import Production.Factories.Building;
  * ID: 2
  */
 public class Lab extends Building {
-    public final String ICON = "[*]-O";
     private static int cc = -1;
 
 
     public Lab() {
         super();
         cc++;
-        id = 2;
-        sid = cc;
+        id = cc;
+
+        type = Type.LABORATORIUM;
     }
 
     public void updateBuilding() {
@@ -24,7 +25,7 @@ public class Lab extends Building {
     }
 
     public String toString() {
-        return "[ " + ICON + " ]" + constructionStatus();
+        return "[ " + type.getIcon() + " ]" + constructionStatus();
     }
 
 }

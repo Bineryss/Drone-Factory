@@ -27,8 +27,7 @@ public class DroneFactory extends Building {
     public DroneFactory() {
         super();
         cc++;
-        sid = cc;
-
+        id = cc;
         type = Type.DRONEFACTORY;
 
         //Kosten Multuiplikatoren -> variable, damit Uprgades das senken koenne?
@@ -36,13 +35,10 @@ public class DroneFactory extends Building {
         construction = Type.DRONEFACTORY.getConstructionTime();
 
         energy = new Energy(200, 10);
-
-        storage = new Storage(300);
-        storage.setMaxCapacity(Type.DRONEFACTORY.getMaxCapacity());
+        storage = new Storage(Type.DRONEFACTORY.getMaxCapacity());
 
         efficiency = 2;
 
-        efficiency = 2;
         workStatus = 0;
         isWorking = false;
 
@@ -57,9 +53,9 @@ public class DroneFactory extends Building {
      * Ist keine Energie mehr vorhanden, wird nicht weitergearbeitet
      */
     public void updateBuilding() {
-        if (isWorking && hasEnergy() && isReady()) {
-            useEnergy();
-            workStatus -= 1 * efficiency;
+        if (isWorking && energy.hasEnergy() && isReady()) {
+            energy.useEnergy();
+            workStatus -= efficiency;
             finishDrone();
         }
     }
@@ -73,11 +69,11 @@ public class DroneFactory extends Building {
     public void startProduction(Drone drone) {
         if (canBeBuild(drone)) {
             if (!isWorking && isReady()) {
-                if (hasResources(drone.getCosts())) {
+                if (storage.hasResources(drone.getCosts())) {
                     isWorking = true;
                     producedElement = drone;
                     workStatus += drone.getProducetime();
-                    useResources(drone.getCosts());
+                    storage.useResources(drone.getCosts());
                 } else {
                     throw new IllegalArgumentException("Du hast nicht genuegend Resourcen fuer diese Drone!");
                 }

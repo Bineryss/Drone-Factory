@@ -18,19 +18,19 @@ public class FieldManager {
 
     public static void addBuilding(Building building, int x, int y) {
         if (true) {
-            switch (building.getID()) {
-                case 0:
+            switch (building.getType()) {
+                case SOLARPANNEL:
                     ground[x][y] = new SolarpannelField((Solarpannels) building);
                     break;
-                case 1:
+                case DRONEFACTORY:
                     ground[x][y] = new DroneFactoryField((DroneFactory) building);
                     break;
-                case 2:
+                case LABORATORIUM:
                     break;
-                case 3:
+                case EXTRACTOR:
                     ground[x][y] = new ExtractorField((Extractor) building);
                     break;
-                case 4:
+                case VAULT:
                     break;
             }
         }

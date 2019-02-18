@@ -15,7 +15,7 @@ public class Solarpannels extends Building {
     public Solarpannels() {
         super();
         cc++;
-        sid = cc;
+        id = cc;
 
         type = Type.SOLARPANNEL;
 
@@ -33,6 +33,6 @@ public class Solarpannels extends Building {
     }
 
     public String toString() {
-        return "[ " + type.getIcon() + "  |E: " + efficiency + "| ]" + constructionStatus();
+        return "[ " + type.getIcon() + " || Energy: " + efficiency + "||]" + constructionStatus();
     }
 }

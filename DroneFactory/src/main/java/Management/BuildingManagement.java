@@ -24,27 +24,13 @@ public class BuildingManagement {
     }
 
     public static void addBuilding(Building tmp) {
-        Type type = tmp.getType();
-        switch (type) {
-            case SOLARPANNEL:
-                BUILDINGS[0].add(tmp);
-                break;
-            case DRONEFACTORY:
-                BUILDINGS[1].add(tmp);
-                break;
-            case EXTRACTOR:
-                BUILDINGS[3].add(tmp);
-                break;
-            case VAULT:
-                BUILDINGS[4].add(tmp);
-                break;
-        }
+        BUILDINGS[typeToId(tmp.getType())].add(tmp);
     }
 
     public static Building getBuilding(int[] id) {
         ArrayList<Building> search = BUILDINGS[id[0]];
         for (Building i : search) {
-            if (i.getSID() == id[1]) {
+            if (i.getId() == id[1]) {
                 return i;
             }
         }
@@ -72,5 +58,22 @@ public class BuildingManagement {
             }
         }
         print();
+    }
+
+    private static int typeToId(Type type) {
+        switch (type) {
+            case SOLARPANNEL:
+                return 0;
+            case DRONEFACTORY:
+                return 1;
+            case LABORATORIUM:
+                return 2;
+            case EXTRACTOR:
+                return 3;
+            case VAULT:
+                return 4;
+            default:
+                return -1;
+        }
     }
 }

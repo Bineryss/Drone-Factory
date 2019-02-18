@@ -24,7 +24,6 @@ public class Resource {
             return true;
         } else {
             return false;
-            //throw new IllegalArgumentException("So viel kannst du nicht lagern!");
         }
     }
 
@@ -54,6 +53,6 @@ public class Resource {
     }
 
     public String toString() {
-        return "| " + NAME + ": " + count + " |";
+        return String.format("| %s: %3d |", NAME, count);
     }
 }

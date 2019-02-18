@@ -16,7 +16,7 @@ public class DroneFactoryField extends Field {
     }
 
     public void addBulding(DroneFactory tmp, Drone drone, int count) {
-        tmp.startConstruction(drone.getID(), count);
+        tmp.startConstruction(drone.getType(), count);
         BuildingManagement.addBuilding(tmp);
     }
 

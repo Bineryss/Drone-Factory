@@ -27,7 +27,7 @@ public class Building_Test {
     @Test
     public void testUpdateExtractor() {
         Extractor extr = new Extractor();
-        extr.startConstruction(0, 2);
+        extr.startConstruction(Type.DEFAULTDRONE, 2);
         for (int i = 0; i < 6; i++) {
             extr.update();
         }
@@ -38,7 +38,7 @@ public class Building_Test {
 
         for (int i = 0; i < 20; i++) {
             extr.update();
-            System.out.println(i + ": " + extr);
+            System.out.printf("%2d: %s%n", i, extr);
         }
         extr.storeResources();
         System.out.println(ResourceManagement.print());
@@ -49,14 +49,14 @@ public class Building_Test {
     @Test
     public void testUpdateSolarpannels() {
         Solarpannels sol = new Solarpannels();
-        sol.startConstruction(0, 2);
+        sol.startConstruction(Type.DEFAULTDRONE, 2);
         System.out.println(ResourceManagement.print());
         System.out.println(sol);
 
         for (int i = 0; i < 5; i++) {
             sol.update();
             System.out.println(ResourceManagement.print());
-            System.out.println(i + ": " + sol);
+            System.out.printf("%2d: %s%n", i, sol);
         }
         System.out.println(sol);
         System.out.println();
@@ -68,7 +68,7 @@ public class Building_Test {
         System.out.println(DroneManagement.print());
         System.out.println();
 
-        dro.startConstruction(0, 4);
+        dro.startConstruction(Type.DEFAULTDRONE, 4);
         System.out.println(ResourceManagement.print());
         System.out.println(DroneManagement.print());
         System.out.println();
@@ -101,9 +101,9 @@ public class Building_Test {
         Solarpannels sol3 = new Solarpannels();
 
         Solarpannels[] sol = new Solarpannels[]{sol1, sol2, sol3};
-        sol1.startConstruction(0, 2);
-        sol2.startConstruction(0, 1);
-        sol3.startConstruction(0, 1);
+        sol1.startConstruction(Type.DEFAULTDRONE, 2);
+        sol2.startConstruction(Type.DEFAULTDRONE, 1);
+        sol3.startConstruction(Type.DEFAULTDRONE, 1);
 
         System.out.println("Vor dem Bauen:\n");
         for (int i = 0; i < 3; i++) {
