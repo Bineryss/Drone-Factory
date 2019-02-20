@@ -44,6 +44,43 @@ public abstract class Building {
 
     protected abstract void updateBuilding();
 
+
+    public void connectEnergy(ImportandEnums.EnergyConnection con) {
+        if (isReady()) {
+            EnergyConnection tmp = null;
+            switch (con) {
+                case BATTERIES:
+                    tmp = new Batteries(type);
+                    break;
+                case DIRECTENERGYCONNECT:
+                    //tmp = new DirectEnergyConnection(type);
+                    break;
+            }
+            energy = tmp;
+        }
+    }
+
+    public EnergyConnection getEnergy() {
+        return energy;
+    }
+
+    public void connectStorage(ResourceConnections con) {
+        ResourceConnection tmp = null;
+        switch (con) {
+            case INTERNALSTORAGE:
+                tmp = new InternalStorage(type);
+                break;
+            case DIRECTRESOURCECONNECT:
+                //tmp = new DirectResourceConnection(type);
+                break;
+        }
+        storage = tmp;
+    }
+
+    public ResourceConnection getStorage() {
+        return storage;
+    }
+
     /**
      * droneId: zeigt den Dronen typ, der fuer das bauen genutzt werden soll
      * <p>

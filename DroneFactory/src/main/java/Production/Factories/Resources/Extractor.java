@@ -38,6 +38,7 @@ public class Extractor extends Building {
         transportDrone = null;
     }
 
+    @Override
     public void updateBuilding() {
         if (isReady()) {
             if (transportDrone != null && storage.isFull()) {
