@@ -32,7 +32,7 @@ public class Extractor extends Building {
         construction = Type.EXTRACTOR.getConstructionTime();
 
         energy = new Energy(100, 5);
-        efficiency = 2;
+        efficiency = 5;
 
         storage = new Storage(Type.EXTRACTOR.getMaxCapacity());
         transportDrone = null;
@@ -89,10 +89,8 @@ public class Extractor extends Building {
     }
 
     private void extractResource() {
-        if (!storage.canStore(efficiency)) {
-            int filled = storage.getResources();
-            int availableSpace = storage.getMaxCapacity() - filled;
-            storage.addResources(availableSpace);
+        if (storage.canStore(efficiency)) {
+            storage.addResources(efficiency);
         }
 
     }

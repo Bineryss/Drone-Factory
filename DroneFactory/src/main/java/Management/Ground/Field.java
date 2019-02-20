@@ -13,13 +13,9 @@ import java.util.Scanner;
 public abstract class Field {
 
     protected Building placedBuilding;
-    private String availableResources;
-
 
     public Field(Building placedBuilding) {
         this.placedBuilding = placedBuilding;
-        //TODO: Zufaelig generieren lassen!
-        availableResources = "0.100,1.80,2.50,3.20";
 
     }
 
@@ -67,7 +63,7 @@ public abstract class Field {
     protected abstract void action(int wahl);
 
     public void print() {
-        System.out.println("--------------------\nAvailable Resources: " + availableResources);
+        System.out.println("--------------------\nAvailable Resources: ");
         System.out.println("--------------------");
         if (placedBuilding == null) {
             System.out.println("Available Buildings:\n0 - Sollarpannel\n1 - Dronefactory\n2 - Lab\n3 - Extractor\n4 - Vault");

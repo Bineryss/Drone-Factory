@@ -8,7 +8,7 @@ public class ResourceManagement {
 
     public static void start() {
         energy = new Resource("Energy", 1000);
-        //TODO: mehr Resorce Typen hinzufuegen
+        //mehr Resorce Typen hinzufuegen
         resource = new Resource("Carbon", 1000);
 
 

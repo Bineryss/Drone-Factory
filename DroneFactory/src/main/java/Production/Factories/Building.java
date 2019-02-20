@@ -104,7 +104,7 @@ public abstract class Building {
         if (storage.canStore(amount) && isReady()) {
             storage.addResources(amount);
         } else {
-            throw new IllegalArgumentException("So viel kannst du nicht lagern!");
+            System.out.println("So viel kannst du nicht lagern!");
         }
     }
 

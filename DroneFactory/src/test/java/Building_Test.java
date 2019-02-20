@@ -33,7 +33,7 @@ public class Building_Test {
             extr.update();
         }
         extr.addDrone(0);
-        extr.loadEnergy(500);
+        extr.loadEnergy(100);
         System.out.println(ResourceManagement.print() + "\n");
         System.out.println(extr + "\n");
 
