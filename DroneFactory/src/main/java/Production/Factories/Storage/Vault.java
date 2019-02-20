@@ -1,6 +1,6 @@
 package Production.Factories.Storage;
 
-import Management.Type;
+import ImportandEnums.Type;
 import Production.Factories.Building;
 
 public class Vault extends Building {

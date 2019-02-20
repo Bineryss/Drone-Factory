@@ -1,6 +1,6 @@
 package Production.Dronen;
 
-import Management.Type;
+import ImportandEnums.Type;
 import Management.Resources.Energy;
 import Management.Resources.Storage;
 

@@ -2,7 +2,7 @@ package Production.Factories.Produktion;
 
 import Management.DroneManagement;
 import Management.Resources.Energy;
-import Management.Type;
+import ImportandEnums.Type;
 import Management.Resources.Storage;
 import Production.Dronen.Drone;
 import Production.Factories.Building;

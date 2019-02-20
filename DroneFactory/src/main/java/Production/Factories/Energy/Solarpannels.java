@@ -1,6 +1,6 @@
 package Production.Factories.Energy;
 
-import Management.Type;
+import ImportandEnums.Type;
 import Management.Resources.ResourceManagement;
 import Production.Factories.Building;
 

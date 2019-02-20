@@ -1,6 +1,6 @@
 package Production.Factories.Research;
 
-import Management.Type;
+import ImportandEnums.Type;
 import Production.Factories.Building;
 
 /**

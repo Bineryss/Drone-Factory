@@ -1,7 +1,7 @@
 package Production.Dronen.Normal;
 
 import Management.Resources.Energy;
-import Management.Type;
+import ImportandEnums.Type;
 import Management.Resources.Storage;
 import Production.Dronen.Drone;
 
@@ -16,7 +16,7 @@ public class DefaultDrone extends Drone {
         costs = Type.DEFAULTDRONE.getCosts();
         efficiency = 1;
         isOccupied = false;
-        energy = new Energy(10, 1, 10);
+        energy = new Energy(type.getMaxCapacityEnergy(), type.getEnergyUse(), type.getMaxCapacity());
         resource = new Storage(Type.DEFAULTDRONE.getMaxCapacity());
 
 

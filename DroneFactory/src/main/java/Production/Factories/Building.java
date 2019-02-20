@@ -4,7 +4,7 @@ import Management.DroneManagement;
 import Management.Resources.Energy;
 import Management.Resources.ResourceManagement;
 import Management.Resources.Storage;
-import Management.Type;
+import ImportandEnums.Type;
 import Production.Dronen.Drone;
 
 import java.util.ArrayList;

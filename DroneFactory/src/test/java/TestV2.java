@@ -2,7 +2,7 @@
 import Management.BuildingManagement;
 import Management.DroneManagement;
 import Management.Resources.ResourceManagement;
-import Management.Type;
+import ImportandEnums.Type;
 import Production.Dronen.Drone;
 import Production.Dronen.Normal.DefaultDrone;
 import Production.Factories.Building;
