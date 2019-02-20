@@ -1,9 +1,9 @@
 package Management.Ground.SpecifiedFields;
 
+import ImportandEnums.Type;
 import Management.BuildingManagement;
 import Management.Ground.Field;
 import Production.Dronen.Drone;
-import Production.Dronen.Normal.DefaultDrone;
 import Production.Factories.Produktion.DroneFactory;
 
 public class DroneFactoryField extends Field {
@@ -27,7 +27,7 @@ public class DroneFactoryField extends Field {
                 placedBuilding.loadResources(intResources());
                 break;
             case 1:
-                placedBuilding.startProduction(new DefaultDrone());
+                placedBuilding.startProduction(Type.DEFAULTDRONE);
                 break;
         }
     }

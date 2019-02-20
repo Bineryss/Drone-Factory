@@ -82,7 +82,7 @@ public class Building_Test {
         dro.loadEnergy(100);
         dro.loadResources(100);
 
-        dro.startProduction(new DefaultDrone());
+        dro.startProduction(Type.DEFAULTDRONE);
         for (int i = 0; i < 3; i++) {
             System.out.println();
             System.out.println(ResourceManagement.print());
@@ -111,15 +111,15 @@ public class Building_Test {
             System.out.println(sol[i]);
         }
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 3; j++) {
                 sol[j].update();
             }
+            System.out.println("\nWärend des Baus");
+            for (int k = 0; k < 3; k++) {
+                System.out.println(sol[k]);
+            }
         }
 
-        System.out.println("\nNach dem Bauen:");
-        for (int j = 0; j < 3; j++) {
-            System.out.println(sol[j]);
-        }
     }
 }

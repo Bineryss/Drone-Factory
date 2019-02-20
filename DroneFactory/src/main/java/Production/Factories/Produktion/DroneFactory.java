@@ -1,13 +1,11 @@
 package Production.Factories.Produktion;
 
 import BuildingExtensions.DroneProducerExt;
-import BuildingExtensions.Extension;
 import Management.DroneManagement;
 import Management.Resources.Energy;
 import ImportandEnums.Type;
 import Management.Resources.Storage;
 import Production.Dronen.Drone;
-import Production.Dronen.Normal.DefaultDrone;
 import Production.Factories.Building;
 
 import java.util.LinkedList;
@@ -28,6 +26,7 @@ public class DroneFactory extends Building {
     private Drone producedElement;
 
     private DroneProducerExt prod;
+    private boolean activateProd;
 
 
     public DroneFactory() {
@@ -36,17 +35,14 @@ public class DroneFactory extends Building {
         id = cc;
         type = Type.DRONEFACTORY;
 
-        //Kosten Multuiplikatoren -> variable, damit Uprgades das senken koenne?
         constructionCost = Type.DRONEFACTORY.getCosts();
         construction = Type.DRONEFACTORY.getConstructionTime();
 
         energy = new Energy(200, 10);
         storage = new Storage(Type.DRONEFACTORY.getMaxCapacity());
 
-        efficiency = 2;
+        efficiency = 1;
 
-        workStatus = 0;
-        isWorking = false;
 
         produceableDronesId = new LinkedList<>();
         produceableDronesId.add(Type.DEFAULTDRONE);
@@ -58,23 +54,37 @@ public class DroneFactory extends Building {
      * Die Fabrik verbraucht pro Runde jeweils einen gewissen betrag an Energie
      * Ist keine Energie mehr vorhanden, wird nicht weitergearbeitet
      */
-    public void updateBuilding() {
-        if (isWorking && energy.hasEnergy() && isReady()) {
-            energy.useEnergy();
-            workStatus -= efficiency;
-            finishDrone();
+    @Override
+    protected void updateBuilding() {
+        if (isReady()) {
+            if (isWorking && energy.hasEnergy()) {
+                energy.useEnergy();
+                workStatus -= efficiency;
+                finishDrone();
+            }
+            if (activateProd) {
+                droneExtension();
+            }
         }
     }
 
-    public void addDroneProducerExtension(Drone drone) {
-        prod = new DroneProducerExt(drone);
+    public void addDroneProducerExtension(Type drone) {
+        if (isReady()) {
+            prod = new DroneProducerExt(drone);
+        }
     }
 
     private void droneExtension() {
         if (prod != null) {
-            if (!isWorking) {
-                startProduction(prod.getDrone());
+            if (!isWorking && !prod.isFull()) {
+                startProductionAutomatic(prod.getDroneType());
             }
+        }
+    }
+
+    public void startProduction(Type drone) {
+        if (!activateProd) {
+            startProductionAutomatic(drone);
         }
     }
 
@@ -83,19 +93,19 @@ public class DroneFactory extends Building {
      *
      * @param drone: Typ der Drone
      */
-    public void startProduction(Drone drone) {
+    private void startProductionAutomatic(Type drone) {
         if (canBeBuild(drone)) {
             if (!isWorking && isReady()) {
                 if (storage.hasResources(drone.getCosts())) {
                     isWorking = true;
-                    producedElement = drone;
-                    workStatus += drone.getProducetime();
+                    producedElement = DroneManagement.typeToDrone(drone);
+                    workStatus += drone.getConstructionTime();
                     storage.useResources(drone.getCosts());
                 } else {
-                    throw new IllegalArgumentException("Du hast nicht genuegend Resourcen fuer diese Drone!");
+                    System.out.println("Du hast nicht genuegend Resourcen fuer diese Drone!");
                 }
             } else {
-                throw new IllegalArgumentException("Es wird bereits eine Drone Produziert!");
+                System.out.println("Es wird bereits eine Drone Produziert!");
             }
         }
     }
@@ -107,30 +117,32 @@ public class DroneFactory extends Building {
         if (isWorking) {
             if (workStatus == 0) {
                 isWorking = false;
-                if (prod == null) {
+                if (!activateProd) {
                     DroneManagement.addDrone(producedElement);
-                }else {
-                    prod.addDrone();
+                } else {
+                    prod.addDrone(producedElement);
                 }
                 producedElement = null;
             }
         }
     }
 
-    private boolean canBeBuild(Drone tmp) {
-        if (produceableDronesId.contains(tmp.getType())) {
+    private boolean canBeBuild(Type tmp) {
+        if (produceableDronesId.contains(tmp)) {
             return true;
         }
         return false;
     }
 
     public String toString() {
-        StringBuilder str = new StringBuilder("[ " + type.getIcon() + " || " + printResource() + " (");
+        String print = "[ " + type.getIcon() + " || " + printResource() + " (";
         if (producedElement != null) {
-            str.append(isWorkRemaining());
+            print += isWorkRemaining();
         }
-        str.append(")]" + constructionStatus());
-        return str.toString();
+        print += ") ";
+        print += prod;
+        print += " ]" + constructionStatus();
+        return print;
     }
 
     private String isWorkRemaining() {
@@ -142,5 +154,13 @@ public class DroneFactory extends Building {
             }
         }
         return str.toString();
+    }
+
+    public void activatedProducer() {
+        activateProd = true;
+    }
+
+    public void deactivatedProducer() {
+        activateProd = false;
     }
 }

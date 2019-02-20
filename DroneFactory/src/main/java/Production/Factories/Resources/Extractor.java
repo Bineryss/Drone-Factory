@@ -49,7 +49,7 @@ public class Extractor extends Building {
 
     public void storeResources() {
         if (transportDrone != null && !transportDrone.isDead()) {
-            ResourceManagement.addResources(storage.unload());
+            ResourceManagement.addResources(storage.empty());
             removeResources();
             transportDrone.work();
         } else {
@@ -89,7 +89,7 @@ public class Extractor extends Building {
     }
 
     private void extractResource() {
-        if (!storage.addResources(efficiency)) {
+        if (!storage.canStore(efficiency)) {
             int filled = storage.getResources();
             int availableSpace = storage.getMaxCapacity() - filled;
             storage.addResources(availableSpace);

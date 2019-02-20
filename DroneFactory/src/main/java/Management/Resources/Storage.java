@@ -15,11 +15,7 @@ public class Storage extends Resource{
         return count == maxCapacity;
     }
 
-    public boolean canStoreResources(int ammount) {
-        return addResources(ammount);
-    }
-
-    public int unload() {
+    public int empty() {
         int tmp = count;
         count = 0;
         return tmp;

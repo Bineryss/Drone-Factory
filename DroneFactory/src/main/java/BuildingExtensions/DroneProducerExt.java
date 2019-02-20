@@ -1,19 +1,20 @@
 package BuildingExtensions;
 
+import ImportandEnums.Type;
 import Production.Dronen.Drone;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class DroneProducerExt implements Extension{
-    private static final String ICON = "(>#)";
+    private static final String ICON = "(%s): %d";
     private static int maxDronestorable;
 
-    private Drone factorisedDrone;
+    private Type factorisedDrone;
     private List<Drone> drones;
     private List<DroneTransferExt> transfers;
 
-    public DroneProducerExt(Drone factoricedDrone) {
+    public DroneProducerExt(Type factoricedDrone) {
         maxDronestorable = 5;
         this.factorisedDrone = factoricedDrone;
         drones = new LinkedList<>();
@@ -29,7 +30,7 @@ public class DroneProducerExt implements Extension{
     }
 
 
-    public void setProducion(Drone drone) {
+    public void setProducion(Type drone) {
         factorisedDrone = drone;
     }
 
@@ -38,11 +39,19 @@ public class DroneProducerExt implements Extension{
     }
 
 
-    public Drone getDrone() {
+    public Type getDroneType() {
         return factorisedDrone;
     }
 
     public void addDrone(Drone drone) {
         drones.add(drone);
+    }
+
+    public String toString() {
+        return String.format(ICON, factorisedDrone.getIcon(),drones.size());
+    }
+
+    public boolean isFull() {
+        return drones.size() == maxDronestorable;
     }
 }

@@ -1,5 +1,8 @@
 package ImportandEnums;
 
+import Production.Dronen.Drone;
+import Production.Dronen.Normal.DefaultDrone;
+
 public enum Type {
 
     /**
@@ -7,20 +10,20 @@ public enum Type {
      */
     SOLARPANNEL("*~//", 10, 0, 5, 0, 0),
 
-    DRONEFACTORY("[>%]", 50, 100, 20, 10, 200),
+    DRONEFACTORY("[>%]", 50, 150, 20, 10, 200),
 
     LABORATORIUM("[*]O", 100, 20, 20, 20, 500),
 
     EXTRACTOR("[|-O", 20, 200, 10, 5, 100),
 
-    VAULT("[__]", 40, 1000, 6,1,100),
+    VAULT("[__]", 40, 1000, 6, 1, 100),
 
     /**
      * Drone Costs
      */
-    DEFAULTDRONE("<|>", 10, 10, 4,1,10),
+    DEFAULTDRONE("<|>", 10, 10, 4, 1, 10),
 
-    CARRIERDRONE("<_>", 20, 100, 10,2,10);
+    CARRIERDRONE("<_>", 20, 100, 10, 2, 10);
 
 
     /**
@@ -66,6 +69,10 @@ public enum Type {
 
     public String getIcon() {
         return ICON;
+    }
+
+    public Drone getInstance() {
+        return new DefaultDrone();
     }
 }
 

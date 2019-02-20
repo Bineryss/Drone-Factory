@@ -2,6 +2,7 @@ package Management;
 
 import ImportandEnums.Type;
 import Production.Dronen.*;
+import Production.Dronen.Normal.DefaultDrone;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -111,7 +112,6 @@ public class DroneManagement {
         removal.remove(remove);
     }
 
-
     public static String print() {
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < IDCOUNT; i++) {
@@ -121,12 +121,25 @@ public class DroneManagement {
         return str.toString();
     }
 
-    private static final int typeToId(Type type) {
+    private static int typeToId(Type type) {
         switch (type) {
             case DEFAULTDRONE:
                 return 0;
+            case CARRIERDRONE:
+                return 1;
             default:
                 return -1;
+        }
+    }
+
+    public static final Drone typeToDrone(Type type) {
+        switch (type) {
+            case DEFAULTDRONE:
+                return new DefaultDrone();
+            case CARRIERDRONE:
+                //return new CarrierDrone();
+            default:
+                return null;
         }
     }
 }

@@ -18,12 +18,9 @@ public class Resource {
         return count;
     }
 
-    public boolean addResources(int count) {
-        if (maxCapacity >= (this.count + count)) {
+    public void addResources(int count) {
+        if (canStore(count)) {
             this.count += count;
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -50,6 +47,14 @@ public class Resource {
 
     public int getMaxCapacity() {
         return maxCapacity;
+    }
+
+    public boolean canStore(int ammount) {
+        if (maxCapacity >= (this.count + ammount)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public String toString() {

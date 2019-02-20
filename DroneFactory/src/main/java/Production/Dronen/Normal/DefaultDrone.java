@@ -12,6 +12,7 @@ public class DefaultDrone extends Drone {
 
     public DefaultDrone() {
         super();
+        type = Type.valueOf("DEFAULTDRONE");
         type = Type.DEFAULTDRONE;
         costs = Type.DEFAULTDRONE.getCosts();
         efficiency = 1;

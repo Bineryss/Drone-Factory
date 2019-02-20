@@ -42,7 +42,7 @@ public abstract class Building {
         }
     }
 
-    public abstract void updateBuilding();
+    protected abstract void updateBuilding();
 
     /**
      * droneId: zeigt den Dronen typ, der fuer das bauen genutzt werden soll
@@ -82,42 +82,31 @@ public abstract class Building {
     }
 
     public void addMoreWorkers(Type droneType, int amount) {
-        workers.addAll(DroneManagement.giveDronesWork(droneType, amount));
+        if (workers != null) {
+            workers.addAll(DroneManagement.giveDronesWork(droneType, amount));
+        }
     }
 
 
     public void loadEnergy(int amount) {
         if (isReady()) {
-            try {
-                ResourceManagement.addEnergy(energy.loadEnergy(ResourceManagement.useEnergy(amount)));
-            } catch (IllegalArgumentException e) {
-                System.out.println("So viel Energie kannst du nicht Lagern!");
+            if (energy.canStore(amount)) {
+                energy.loadEnergy(amount);
+            }else {
+                System.out.println("So viel Energie kann nicht gelagert werden!");
             }
         } else {
-            throw new IllegalArgumentException("Gebaude nicht fertig!");
+            System.out.println("Gebaude nicht fertig!");
         }
     }
 
     public void loadResources(int amount) {
-        if (canStoreResources(amount) && isReady()) {
-            try {
-                storeResources(amount);
-            } catch (IllegalArgumentException e) {
-                System.out.println("So viele Resourcen hast du nicht!");
-            }
+        if (storage.canStore(amount) && isReady()) {
+            storage.addResources(amount);
         } else {
             throw new IllegalArgumentException("So viel kannst du nicht lagern!");
         }
     }
-
-    private boolean canStoreResources(int amount) {
-        return storage.addResources(amount);
-    }
-
-    private void storeResources(int amount) {
-        storage.addResources(ResourceManagement.useResources(amount));
-    }
-
 
 
     protected String constructionStatus() {

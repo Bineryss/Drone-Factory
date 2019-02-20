@@ -92,7 +92,7 @@ public class TestV2 {
                 break;
             case 8:
                 DroneFactory tmp = ((DroneFactory) BuildingManagement.getBuilding(new int[]{1, intEingabe()}));
-                tmp.startProduction(new DefaultDrone());
+                tmp.startProduction(Type.DEFAULTDRONE);
                 System.out.println("New Production!");
                 break;
             case 9:
