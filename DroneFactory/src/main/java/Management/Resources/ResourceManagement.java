@@ -43,10 +43,6 @@ public class ResourceManagement {
         energy.addResources(ammount);
     }
 
-    public static boolean hasEnergy(int ammount) {
-        return energy.hasResources(ammount);
-    }
-
     public static String resourceName() {
         return resource.NAME;
     }

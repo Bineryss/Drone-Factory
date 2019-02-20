@@ -3,19 +3,12 @@ package Management.Resources;
 public class Energy extends Resource {
     private int energyUse;
 
-    /**
-     * Special Constructor for defining Energy
-     *
-     * @param maxCapacity: maximum amount of energy storable
-     */
     public Energy(int maxCapacity, int energyUse) {
         super("Energy", -1);
 
         this.maxCapacity = maxCapacity;
-        this.count = 0;
         this.energyUse = energyUse;
     }
-
     /**
      * Special Constructor for Drones only!
      *
@@ -27,7 +20,7 @@ public class Energy extends Resource {
         super("Energy", -1);
 
         this.maxCapacity = maxCapacity;
-        this.count = count;
+        this.count = maxCapacity;
         this.energyUse = energyUse;
     }
 

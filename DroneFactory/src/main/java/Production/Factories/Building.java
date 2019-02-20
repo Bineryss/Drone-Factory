@@ -1,5 +1,6 @@
 package Production.Factories;
 
+import BuildingExtensions.Extension;
 import Management.DroneManagement;
 import Management.Resources.Energy;
 import Management.Resources.ResourceManagement;
@@ -8,6 +9,7 @@ import ImportandEnums.Type;
 import Production.Dronen.Drone;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Interface fuer Gebaeude
@@ -61,6 +63,10 @@ public abstract class Building {
         }
     }
 
+    public boolean inConstruction() {
+        return construction == 0;
+    }
+
     private void build() {
         for (Drone worker : workers) {
             if ((construction - worker.efficiency()) > 0) {
@@ -79,9 +85,6 @@ public abstract class Building {
         workers.addAll(DroneManagement.giveDronesWork(droneType, amount));
     }
 
-    public boolean inConstruction() {
-        return construction == 0;
-    }
 
     public void loadEnergy(int amount) {
         if (isReady()) {
@@ -94,7 +97,6 @@ public abstract class Building {
             throw new IllegalArgumentException("Gebaude nicht fertig!");
         }
     }
-
 
     public void loadResources(int amount) {
         if (canStoreResources(amount) && isReady()) {
@@ -115,6 +117,7 @@ public abstract class Building {
     private void storeResources(int amount) {
         storage.addResources(ResourceManagement.useResources(amount));
     }
+
 
 
     protected String constructionStatus() {

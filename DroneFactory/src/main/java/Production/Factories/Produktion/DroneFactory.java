@@ -1,10 +1,13 @@
 package Production.Factories.Produktion;
 
+import BuildingExtensions.DroneProducerExt;
+import BuildingExtensions.Extension;
 import Management.DroneManagement;
 import Management.Resources.Energy;
 import ImportandEnums.Type;
 import Management.Resources.Storage;
 import Production.Dronen.Drone;
+import Production.Dronen.Normal.DefaultDrone;
 import Production.Factories.Building;
 
 import java.util.LinkedList;
@@ -23,6 +26,9 @@ public class DroneFactory extends Building {
 
     private static List<Type> produceableDronesId;
     private Drone producedElement;
+
+    private DroneProducerExt prod;
+
 
     public DroneFactory() {
         super();
@@ -48,7 +54,7 @@ public class DroneFactory extends Building {
 
     /**
      * Jeweils ein Zyclus beudeutet eine Runde
-     * Die Fabrik benoetigt eine gewisse anzahl an Runden um die entscprechende Drone zu Produzieren
+     * Die Fabrik benoetigt eine gewisse anzahl an Runden um die entschprechende Drone zu Produzieren
      * Die Fabrik verbraucht pro Runde jeweils einen gewissen betrag an Energie
      * Ist keine Energie mehr vorhanden, wird nicht weitergearbeitet
      */
@@ -60,6 +66,17 @@ public class DroneFactory extends Building {
         }
     }
 
+    public void addDroneProducerExtension(Drone drone) {
+        prod = new DroneProducerExt(drone);
+    }
+
+    private void droneExtension() {
+        if (prod != null) {
+            if (!isWorking) {
+                startProduction(prod.getDrone());
+            }
+        }
+    }
 
     /**
      * Started die Produktion einer Drone und verbraucht schonmal die benoetigten Resourcen
@@ -90,7 +107,11 @@ public class DroneFactory extends Building {
         if (isWorking) {
             if (workStatus == 0) {
                 isWorking = false;
-                DroneManagement.addDrone(producedElement);
+                if (prod == null) {
+                    DroneManagement.addDrone(producedElement);
+                }else {
+                    prod.addDrone();
+                }
                 producedElement = null;
             }
         }
