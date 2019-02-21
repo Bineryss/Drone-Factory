@@ -2,9 +2,13 @@ import ImportandEnums.Type;
 import Management.*;
 import Management.Resources.ResourceManagement;
 import Production.Dronen.Normal.DefaultDrone;
+import Production.Factories.Building;
+import Production.Factories.Connector.Batteries;
+import Production.Factories.Connector.InternalStorage;
 import Production.Factories.Energy.Solarpannels;
 import Production.Factories.Produktion.DroneFactory;
 import Production.Factories.Resources.Extractor;
+import SpecificExceptions.BuildingUnfinishedException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,8 +36,14 @@ public class Building_Test {
         for (int i = 0; i < 6; i++) {
             extr.update();
         }
-        extr.addDrone(0);
-        extr.loadEnergy(100);
+        loadBuilding(extr);
+        try {
+        InternalStorage stor = (InternalStorage) extr.getStorage();
+        stor.addTransportDrone(Type.DEFAULTDRONE);
+        } catch (BuildingUnfinishedException e) {
+            assert false;
+        }
+
         System.out.println(ResourceManagement.print() + "\n");
         System.out.println(extr + "\n");
 
@@ -41,7 +51,6 @@ public class Building_Test {
             extr.update();
             System.out.printf("%2d: %s%n", i, extr);
         }
-        extr.storeResources();
         System.out.println(ResourceManagement.print());
         System.out.println(extr);
         System.out.println();
@@ -79,10 +88,14 @@ public class Building_Test {
             dro.update();
             System.out.println(DroneManagement.print());
         }
-        dro.loadEnergy(100);
-        dro.loadResources(100);
+        loadBuilding(dro);
 
+        try{
         dro.startProduction(Type.DEFAULTDRONE);
+        }catch (BuildingUnfinishedException e) {
+            assert false;
+        }
+
         for (int i = 0; i < 3; i++) {
             System.out.println();
             System.out.println(ResourceManagement.print());
@@ -119,6 +132,18 @@ public class Building_Test {
             for (int k = 0; k < 3; k++) {
                 System.out.println(sol[k]);
             }
+        }
+
+    }
+
+    private void loadBuilding(Building building) {
+        try {
+            InternalStorage tmp = (InternalStorage) building.getStorage();
+            tmp.loadResources(100);
+            Batteries bat = (Batteries) building.getEnergy();
+            bat.loadEnergy(100);
+        } catch (BuildingUnfinishedException e) {
+            System.out.println(e.getMessage());
         }
 
     }

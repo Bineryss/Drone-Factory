@@ -2,11 +2,10 @@ package Production.Factories.Produktion;
 
 import BuildingExtensions.DroneProducerExt;
 import Management.DroneManagement;
-import Management.Resources.Energy;
 import ImportandEnums.Type;
-import Management.Resources.Storage;
 import Production.Dronen.Drone;
 import Production.Factories.Building;
+import SpecificExceptions.BuildingUnfinishedException;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,20 +29,9 @@ public class DroneFactory extends Building {
 
 
     public DroneFactory() {
-        super();
+        super(Type.DRONEFACTORY);
         cc++;
         id = cc;
-        type = Type.DRONEFACTORY;
-
-        constructionCost = Type.DRONEFACTORY.getCosts();
-        construction = Type.DRONEFACTORY.getConstructionTime();
-
-        energy = new Energy(200, 10);
-        storage = new Storage(Type.DRONEFACTORY.getMaxCapacity());
-
-        efficiency = 1;
-
-
         produceableDronesId = new LinkedList<>();
         produceableDronesId.add(Type.DEFAULTDRONE);
     }
@@ -82,9 +70,11 @@ public class DroneFactory extends Building {
         }
     }
 
-    public void startProduction(Type drone) {
-        if (!activateProd) {
+    public void startProduction(Type drone) throws BuildingUnfinishedException {
+        if (isReady() && !activateProd) {
             startProductionAutomatic(drone);
+        }else {
+            throw new BuildingUnfinishedException();
         }
     }
 
@@ -100,7 +90,7 @@ public class DroneFactory extends Building {
                     isWorking = true;
                     producedElement = DroneManagement.typeToDrone(drone);
                     workStatus += drone.getConstructionTime();
-                    storage.useResources(drone.getCosts());
+                    storage.removeResources(drone.getCosts());
                 } else {
                     System.out.println("Du hast nicht genuegend Resourcen fuer diese Drone!");
                 }
@@ -128,10 +118,7 @@ public class DroneFactory extends Building {
     }
 
     private boolean canBeBuild(Type tmp) {
-        if (produceableDronesId.contains(tmp)) {
-            return true;
-        }
-        return false;
+        return produceableDronesId.contains(tmp);
     }
 
     public String toString() {

@@ -18,8 +18,8 @@ public class ResourceManagement {
         return resource;
     }
 
-    public static int useResources(int cost) {
-        resource.useResources(cost);
+    public static int removeResources(int cost) {
+        resource.removeResources(cost);
         return cost;
     }
 
@@ -36,7 +36,7 @@ public class ResourceManagement {
     }
 
     public static int useEnergy(int ammount) {
-        return energy.useResources(ammount);
+        return energy.removeResources(ammount);
     }
 
     public static void addEnergy(int ammount) {

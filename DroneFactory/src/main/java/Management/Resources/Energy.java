@@ -35,7 +35,7 @@ public class Energy extends Resource {
     }
 
     public int useEnergy() {
-        return useResources(energyUse);
+        return removeResources(energyUse);
     }
 
     public boolean hasEnergy() {
@@ -48,9 +48,5 @@ public class Energy extends Resource {
 
     public int availableEnergy() {
         return count;
-    }
-
-    public int maxCapacity() {
-        return maxCapacity;
     }
 }

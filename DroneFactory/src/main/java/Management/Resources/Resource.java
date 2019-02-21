@@ -24,13 +24,14 @@ public class Resource {
         }
     }
 
-    public int useResources(int count) {
+    public int removeResources(int count) {
         if (hasResources(count)) {
             this.count -= count;
             return count;
         } else {
-            throw new IllegalArgumentException("So viele Resourcen hast du nicht!");
+            System.out.println("So viele Resourcen hast du nicht!");
         }
+        return 0;
     }
 
     public boolean hasResources(int count) {

@@ -1,14 +1,20 @@
+import ImportandEnums.EnergyConnectionEnum;
+import ImportandEnums.ResourceConnectionsEnum;
 import ImportandEnums.Type;
 import Management.BuildingManagement;
 import Management.DroneManagement;
 import Management.Resources.ResourceManagement;
 import Production.Dronen.Normal.DefaultDrone;
+import Production.Factories.Building;
+import Production.Factories.Connector.Batteries;
+import Production.Factories.Connector.InternalStorage;
 import Production.Factories.Produktion.DroneFactory;
+import SpecificExceptions.BuildingUnfinishedException;
 import org.junit.Before;
 import org.junit.Test;
 
 public class DroneFactory_Test {
-    private DroneFactory test;
+    private DroneFactory droFac;
 
     @Before
     public void start() {
@@ -22,44 +28,68 @@ public class DroneFactory_Test {
         DroneManagement.addDrone(new DefaultDrone());
         DroneManagement.addDrone(new DefaultDrone());
 
-        test = new DroneFactory();
-        test.startConstruction(Type.DEFAULTDRONE, 4);
-        test.update();
-        test.update();
-        test.update();
-        test.update();
-        test.update();
-        System.out.printf("Vor den Tests: %s%n", test);
-        test.loadEnergy(150);
-        test.loadResources(50);
-        System.out.printf("Nach dem Aufladen: %s%n", test);
+        droFac = new DroneFactory();
+        droFac.startConstruction(Type.DEFAULTDRONE, 4);
+        droFac.update();
+        droFac.update();
+        droFac.update();
+        droFac.update();
+        droFac.update();
+        try {
+            droFac.connectEnergy(EnergyConnectionEnum.BATTERIES);
+            droFac.connectStorage(ResourceConnectionsEnum.INTERNALSTORAGE);
+        } catch (BuildingUnfinishedException e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.printf("Vor den Tests: %s%n", droFac);
+
+        loadBuilding(droFac);
+        System.out.printf("Nach dem Aufladen: %s%n", droFac);
     }
 
     @Test
     public void teteDroneFactoryProduce() {
-        test.startProduction(Type.DEFAULTDRONE);
-        System.out.printf("Factory Produziert eine normale Drone: %s%n", test);
-        test.update();
-        System.out.printf("Factory Produziert eine normale Drone: %s%n", test);
-        test.update();
-        test.update();
-        test.update();
-        System.out.printf("Factory hat eine normale Drone Produziert: %s%n", test);
+        try {
+            droFac.startProduction(Type.DEFAULTDRONE);
+        } catch (BuildingUnfinishedException e) {
+            assert false;
+        }
+        System.out.printf("Factory Produziert eine normale Drone: %s%n", droFac);
+        droFac.update();
+        System.out.printf("Factory Produziert eine normale Drone: %s%n", droFac);
+        droFac.update();
+        droFac.update();
+        droFac.update();
+        System.out.printf("Factory hat eine normale Drone Produziert: %s%n", droFac);
     }
 
     @Test
     public void testFactoryExtension() {
-        test.addDroneProducerExtension(Type.DEFAULTDRONE);
-        System.out.println(test);
-        test.activatedProducer();
+        droFac.addDroneProducerExtension(Type.DEFAULTDRONE);
+        System.out.println(droFac);
+        droFac.activatedProducer();
         DroneManagement.print();
         for (int i = 0; i < 25; i++) {
-            test.update();
-            test.loadEnergy(5);
-            test.loadResources(2);
+            droFac.update();
+            loadBuilding(droFac,5,5);
             System.out.print(DroneManagement.print());
-            System.out.printf("%d: Die Factory ist am Produzieren: %s%n", i, test);
+            System.out.printf("%d: Die Factory ist am Produzieren: %s%n", i, droFac);
         }
+    }
+
+    private void loadBuilding(Building building, int energy, int resources) {
+        try {
+            InternalStorage tmp = (InternalStorage) building.getStorage();
+            tmp.loadResources(resources);
+            Batteries bat = (Batteries) building.getEnergy();
+            bat.loadEnergy(energy);
+        } catch (BuildingUnfinishedException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void loadBuilding(Building building) {
+        loadBuilding(building, 100, 100);
     }
 
 

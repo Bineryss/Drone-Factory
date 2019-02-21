@@ -1,7 +1,6 @@
 package Production.Factories.Energy;
 
 import ImportandEnums.Type;
-import Management.Resources.ResourceManagement;
 import Production.Factories.Building;
 
 /**
@@ -13,22 +12,15 @@ public class Solarpannels extends Building {
     private static int cc = -1;
 
     public Solarpannels() {
-        super();
+        super(Type.SOLARPANNEL);
         cc++;
         id = cc;
-
-        type = Type.SOLARPANNEL;
-
-        //Kosten Multuiplikatoren -> variable, damit Uprgades das senken koenne?
-        constructionCost = Type.SOLARPANNEL.getCosts();
-        construction = Type.SOLARPANNEL.getConstructionTime();
-
-        efficiency = 10;
     }
 
+    @Override
     public void updateBuilding() {
         if (isReady()) {
-            ResourceManagement.addEnergy(efficiency);
+            energy.transferEnergy(efficiency);
         }
     }
 

@@ -14,7 +14,7 @@ public class ResourceManagement_Test {
         int testadd = 1000;
 
         ResourceManagement.addResources(testadd);
-        ResourceManagement.useResources(200);
+        ResourceManagement.removeResources(200);
 
         assert (ResourceManagement.getResource().getResources() == 800);
 

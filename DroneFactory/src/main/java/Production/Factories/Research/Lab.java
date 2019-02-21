@@ -13,13 +13,12 @@ public class Lab extends Building {
 
 
     public Lab() {
-        super();
+        super(Type.LABORATORIUM);
         cc++;
         id = cc;
-
-        type = Type.LABORATORIUM;
     }
 
+    @Override
     public void updateBuilding() {
 
     }

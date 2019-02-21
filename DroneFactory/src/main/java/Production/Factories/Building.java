@@ -1,18 +1,22 @@
 package Production.Factories;
 
-import BuildingExtensions.Extension;
+import ImportandEnums.EnergyConnectionEnum;
+import ImportandEnums.ResourceConnectionsEnum;
+import ImportandEnums.Type;
 import Management.DroneManagement;
 import Management.Resources.Energy;
 import Management.Resources.ResourceManagement;
 import Management.Resources.Storage;
 import ImportandEnums.Type;
 import Production.Dronen.Drone;
+import Production.Factories.Connector.*;
+import SpecificExceptions.BuildingUnfinishedException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Interface fuer Gebaeude
+ * Abstrakte Kalsse fuer Gebaeude
  * <p>
  * Speichert die Kosten, Bauzeit,
  * <p>
@@ -22,17 +26,21 @@ public abstract class Building {
     protected Type type;
     //ID des speziellen Gebaeudes
     protected int id;
-
-    protected int constructionCost;
-    protected int construction;
-    protected boolean hasResources;
-    protected ArrayList<Drone> workers;
-
-    protected Energy energy;
-
-    protected Storage storage;
-
+    protected EnergyConnection energy;
+    protected ResourceConnection storage;
     protected int efficiency;
+
+    private int constructionCost;
+    private int construction;
+    private boolean hasResources;
+    private ArrayList<Drone> workers;
+
+    public Building(Type type) {
+        this.type = type;
+        constructionCost = type.getCosts();
+        construction = type.getConstructionTime();
+        efficiency = type.getEfficiency();
+    }
 
     public void update() {
         if (!isReady()) {
@@ -45,7 +53,7 @@ public abstract class Building {
     protected abstract void updateBuilding();
 
 
-    public void connectEnergy(ImportandEnums.EnergyConnection con) {
+    public void connectEnergy(EnergyConnectionEnum con) throws BuildingUnfinishedException {
         if (isReady()) {
             EnergyConnection tmp = null;
             switch (con) {
@@ -53,32 +61,47 @@ public abstract class Building {
                     tmp = new Batteries(type);
                     break;
                 case DIRECTENERGYCONNECT:
-                    //tmp = new DirectEnergyConnection(type);
+                    tmp = new DirectEnergyCon(type);
                     break;
             }
             energy = tmp;
+        } else {
+            throw new BuildingUnfinishedException();
         }
     }
 
-    public EnergyConnection getEnergy() {
-        return energy;
-    }
-
-    public void connectStorage(ResourceConnections con) {
-        ResourceConnection tmp = null;
-        switch (con) {
-            case INTERNALSTORAGE:
-                tmp = new InternalStorage(type);
-                break;
-            case DIRECTRESOURCECONNECT:
-                //tmp = new DirectResourceConnection(type);
-                break;
+    public EnergyConnection getEnergy() throws BuildingUnfinishedException {
+        if (energy != null) {
+            return energy;
+        } else {
+            throw new BuildingUnfinishedException();
         }
-        storage = tmp;
     }
 
-    public ResourceConnection getStorage() {
-        return storage;
+    public void connectStorage(ResourceConnectionsEnum con) throws BuildingUnfinishedException {
+        if (isReady()) {
+            ResourceConnection tmp = null;
+            switch (con) {
+                case INTERNALSTORAGE:
+                    tmp = new InternalStorage(type);
+                    break;
+                case DIRECTRESOURCECONNECT:
+                    //tmp = new DirectResourceConnection(type);
+                    break;
+            }
+            storage = tmp;
+        } else {
+            throw new BuildingUnfinishedException();
+        }
+    }
+
+    public ResourceConnection getStorage() throws BuildingUnfinishedException {
+        if (storage != null) {
+            return storage;
+
+        } else {
+            throw new BuildingUnfinishedException();
+        }
     }
 
     /**
@@ -87,11 +110,11 @@ public abstract class Building {
      * Wenn Drone keine arbeitskraft mehr, dann wird bau gestopt, neu Drone muss uebergen werden.
      */
     public void startConstruction(Type droneId, int droneCount) {
-        if (construction > 0) {
+        if (!inConstruction()) {
             workers = DroneManagement.giveDronesWork(droneId, droneCount);
             if (!hasResources) {
                 if (ResourceManagement.hasResources(constructionCost)) {
-                    ResourceManagement.useResources(constructionCost);
+                    ResourceManagement.removeResources(constructionCost);
                     hasResources = true;
                 }
             }

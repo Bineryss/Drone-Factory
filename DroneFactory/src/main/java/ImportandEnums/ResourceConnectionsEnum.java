@@ -1,6 +1,6 @@
 package ImportandEnums;
 
-public enum ResourceConnections {
+public enum ResourceConnectionsEnum {
 
     INTERNALSTORAGE,
     DIRECTRESOURCECONNECT,

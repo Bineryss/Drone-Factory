@@ -8,11 +8,10 @@ public class Vault extends Building {
 
 
     public Vault() {
-        super();
-        type = Type.VAULT;
+        super(Type.VAULT);
     }
 
-
+    @Override
     public void updateBuilding() {
 
     }

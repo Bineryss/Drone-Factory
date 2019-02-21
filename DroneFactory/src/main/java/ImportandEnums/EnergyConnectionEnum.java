@@ -1,6 +1,6 @@
 package ImportandEnums;
 
-public enum EnergyConnection {
+public enum EnergyConnectionEnum {
 
     BATTERIES,
     DIRECTENERGYCONNECT,
