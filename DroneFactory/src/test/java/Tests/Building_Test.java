@@ -1,6 +1,6 @@
 package Tests;
 
-import ImportandEnums.Type;
+import ImportandEnums.DroneTypes;
 import Management.*;
 import Management.Resources.ResourceManagement;
 import Production.Factories.Building;
@@ -24,24 +24,24 @@ public class Building_Test {
     public void start() {
         resourceManagement.addEnergy(500);
         resourceManagement.addResources(500);
-        droneManagement.addDrone(new DefaultDrone());
-        droneManagement.addDrone(new DefaultDrone());
-        droneManagement.addDrone(new DefaultDrone());
-        droneManagement.addDrone(new DefaultDrone());
+        droneManagement.addDrone(DroneManagement.getBlueprint(DroneTypes.DEFAULTDRONE));
+        droneManagement.addDrone(DroneManagement.getBlueprint(DroneTypes.DEFAULTDRONE));
+        droneManagement.addDrone(DroneManagement.getBlueprint(DroneTypes.DEFAULTDRONE));
+        droneManagement.addDrone(DroneManagement.getBlueprint(DroneTypes.DEFAULTDRONE));
         System.out.println(resourceManagement + "\n");
     }
 
     @Test
     public void testUpdateExtractor() {
         Extractor extr = new Extractor();
-        extr.startConstruction(Type.DEFAULTDRONE, 2);
+        extr.startConstruction(DroneTypes.DEFAULTDRONE, 2);
         for (int i = 0; i < 6; i++) {
             extr.update();
         }
         loadBuilding(extr);
         try {
-        InternalStorage stor = (InternalStorage) extr.getStorage();
-        stor.addTransportDrone(Type.DEFAULTDRONE);
+            InternalStorage stor = (InternalStorage) extr.getStorage();
+            stor.addTransportDrone(DroneTypes.DEFAULTDRONE);
         } catch (BuildingUnfinishedException e) {
             assert false;
         }
@@ -61,7 +61,7 @@ public class Building_Test {
     @Test
     public void testUpdateSolarpannels() {
         Solarpannels sol = new Solarpannels();
-        sol.startConstruction(Type.DEFAULTDRONE, 2);
+        sol.startConstruction(DroneTypes.DEFAULTDRONE, 2);
         System.out.println(resourceManagement);
         System.out.println(sol);
 
@@ -80,7 +80,7 @@ public class Building_Test {
         System.out.println(droneManagement);
         System.out.println();
 
-        dro.startConstruction(Type.DEFAULTDRONE, 4);
+        dro.startConstruction(DroneTypes.DEFAULTDRONE, 4);
         System.out.println(resourceManagement);
         System.out.println(droneManagement);
         System.out.println();
@@ -92,9 +92,9 @@ public class Building_Test {
         }
         loadBuilding(dro);
 
-        try{
-        dro.startProduction(Type.DEFAULTDRONE);
-        }catch (BuildingUnfinishedException e) {
+        try {
+            dro.startProduction(DroneTypes.DEFAULTDRONE);
+        } catch (BuildingUnfinishedException e) {
             assert false;
         }
 
@@ -117,9 +117,9 @@ public class Building_Test {
         Solarpannels sol3 = new Solarpannels();
 
         Solarpannels[] sol = new Solarpannels[]{sol1, sol2, sol3};
-        sol1.startConstruction(Type.DEFAULTDRONE, 2);
-        sol2.startConstruction(Type.DEFAULTDRONE, 1);
-        sol3.startConstruction(Type.DEFAULTDRONE, 1);
+        sol1.startConstruction(DroneTypes.DEFAULTDRONE, 2);
+        sol2.startConstruction(DroneTypes.DEFAULTDRONE, 1);
+        sol3.startConstruction(DroneTypes.DEFAULTDRONE, 1);
 
         System.out.println("Vor dem Bauen:\n");
         for (int i = 0; i < 3; i++) {

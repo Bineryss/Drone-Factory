@@ -1,5 +1,6 @@
 package Production.Factories;
 
+import ImportandEnums.DroneTypes;
 import ImportandEnums.EnergyConnectionEnum;
 import ImportandEnums.ResourceConnectionsEnum;
 import ImportandEnums.Type;
@@ -109,13 +110,13 @@ public abstract class Building {
     }
 
     /**
-     * droneId: zeigt den Dronen typ, der fuer das bauen genutzt werden soll
+     * droneType: zeigt den Dronen typ, der fuer das bauen genutzt werden soll
      * <p>
      * Wenn Drone keine arbeitskraft mehr, dann wird bau gestopt, neu Drone muss uebergen werden.
      */
-    public void startConstruction(Type droneId, int droneCount) {
+    public void startConstruction(DroneTypes droneType, int droneCount) {
         if (!inConstruction()) {
-            workers = droneManagement.giveDronesWork(droneId, droneCount);
+            workers = droneManagement.giveDronesWork(droneType, droneCount);
             if (!hasResources) {
                 if (resourceManagement.hasResources(constructionCost)) {
                     resourceManagement.removeResources(constructionCost);
@@ -145,7 +146,7 @@ public abstract class Building {
         }
     }
 
-    public void addMoreWorkers(Type droneType, int amount) {
+    public void addMoreWorkers(DroneTypes droneType, int amount) {
         if (workers != null) {
             workers.addAll(droneManagement.giveDronesWork(droneType, amount));
         }

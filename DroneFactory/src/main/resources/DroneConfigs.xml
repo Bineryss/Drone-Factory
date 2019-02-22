@@ -3,30 +3,30 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="defaultDrone" class="Production.Dronen.Drone">
+    <bean id="defaultDrone" class="Production.Dronen.Drone" scope="prototype">
         <constructor-arg name="type" value="DEFAULTDRONE"/>
         <constructor-arg name="icon" value="{D}"/>
-        <constructor-arg name="costs"  value="10"/>
+        <constructor-arg name="costs" value="10"/>
         <constructor-arg name="efficiency" value="1"/>
         <constructor-arg name="energyUse" value="1"/>
         <constructor-arg name="energyCapacity" value="10"/>
         <constructor-arg name="resourceCapacity" value="10"/>
         <constructor-arg name="constructionTime" value="4"/>
     </bean>
-    <bean id="buildingDrone" class="Production.Dronen.Drone">
+    <bean id="buildingDrone" class="Production.Dronen.Drone" scope="prototype">
         <constructor-arg name="type" value="BUILDINGDRONE"/>
         <constructor-arg name="icon" value="{B}"/>
-        <constructor-arg name="costs"  value="40"/>
+        <constructor-arg name="costs" value="40"/>
         <constructor-arg name="efficiency" value="5"/>
         <constructor-arg name="energyUse" value="1"/>
         <constructor-arg name="energyCapacity" value="10"/>
         <constructor-arg name="resourceCapacity" value="50"/>
         <constructor-arg name="constructionTime" value="12"/>
     </bean>
-    <bean id="carrierDrone" class="Production.Dronen.Drone">
+    <bean id="carrierDrone" class="Production.Dronen.Drone" scope="prototype">
         <constructor-arg name="type" value="CARRIERDRONE"/>
         <constructor-arg name="icon" value="{C}"/>
-        <constructor-arg name="costs"  value="40"/>
+        <constructor-arg name="costs" value="40"/>
         <constructor-arg name="efficiency" value="0"/>
         <constructor-arg name="energyUse" value="1"/>
         <constructor-arg name="energyCapacity" value="100"/>

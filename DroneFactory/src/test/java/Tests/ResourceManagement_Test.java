@@ -2,6 +2,7 @@ package Tests;
 
 import Management.Resources.ResourceManagement;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.springframework.context.annotation.ComponentScan;
 
 import javax.inject.Inject;
@@ -12,6 +13,7 @@ public class ResourceManagement_Test {
     ResourceManagement resourceManagement;
 
     @Test
+    @DisplayName("Es wird getested ob 200 Resourcen verbracuht werden")
     public void testuseResource() {
         int testadd = 1000;
 

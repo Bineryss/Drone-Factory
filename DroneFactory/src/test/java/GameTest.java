@@ -1,8 +1,8 @@
 
+import ImportandEnums.DroneTypes;
 import Management.BuildingManagement;
 import Management.DroneManagement;
 import Management.Resources.ResourceManagement;
-import ImportandEnums.Type;
 import Production.Dronen.Drone;
 import Production.Factories.Connector.Batteries;
 import Production.Factories.Building;
@@ -37,8 +37,7 @@ public class GameTest {
 
     private void newDrones(int n) {
         for (int i = 0; i < n; i++) {
-            DefaultDrone tmp = new DefaultDrone();
-            droneManagement.addDrone(tmp);
+            droneManagement.addDrone(DroneManagement.getBlueprint(DroneTypes.DEFAULTDRONE));
         }
     }
 
@@ -78,16 +77,16 @@ public class GameTest {
         try {
             switch (intEingabe("Waehle Aktion")) {
                 case 0:
-                    addBulding(new Solarpannels(), droneManagement.getDrone(Type.DEFAULTDRONE), 1);
+                    addBulding(new Solarpannels(), droneManagement.getDrone(DroneTypes.DEFAULTDRONE), 1);
                     break;
                 case 1:
-                    addBulding(new DroneFactory(), droneManagement.getDrone(Type.DEFAULTDRONE), 1);
+                    addBulding(new DroneFactory(), droneManagement.getDrone(DroneTypes.DEFAULTDRONE), 1);
                     break;
                 case 2:
                     System.out.println("Labor kommt noch");
                     break;
                 case 3:
-                    addBulding(new Extractor(), droneManagement.getDrone(Type.DEFAULTDRONE), 1);
+                    addBulding(new Extractor(), droneManagement.getDrone(DroneTypes.DEFAULTDRONE), 1);
                     break;
                 case 4:
                     System.out.println("Vault kommt noch");
@@ -98,10 +97,10 @@ public class GameTest {
                     Batteries tmp = (Batteries) buildingManagement.getBuilding(new int[]{3, eingabe}).getEnergy();
                     tmp.loadEnergy(intEingabe("Anzahl an Energy"));
                     InternalStorage tmpS = (InternalStorage) ((Extractor) buildingManagement.getBuilding(new int[]{3, eingabe})).getStorage();
-                    tmpS.addTransportDrone(Type.DEFAULTDRONE);
+                    tmpS.addTransportDrone(DroneTypes.DEFAULTDRONE);
                     break;
                 case 6:
-                    buildingManagement.getBuilding(new int[]{intEingabe("Waehle Gebaeude Typ"), intEingabe("Waehle Gebaeude")}).addMoreWorkers(Type.DEFAULTDRONE, intEingabe("Anzahl der Dronen"));
+                    buildingManagement.getBuilding(new int[]{intEingabe("Waehle Gebaeude Typ"), intEingabe("Waehle Gebaeude")}).addMoreWorkers(DroneTypes.DEFAULTDRONE, intEingabe("Anzahl der Dronen"));
                     break;
                 case 7:
                     //Dronefactory Laden
@@ -113,7 +112,7 @@ public class GameTest {
                     break;
                 case 8:
                     DroneFactory tmpD = ((DroneFactory) buildingManagement.getBuilding(new int[]{1, intEingabe("Waehle Dronefactory")}));
-                    tmpD.startProduction(Type.DEFAULTDRONE);
+                    tmpD.startProduction(DroneTypes.DEFAULTDRONE);
                     System.out.println("New Production!");
                     break;
                 case 9:

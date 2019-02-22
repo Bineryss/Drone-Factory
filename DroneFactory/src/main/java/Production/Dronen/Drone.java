@@ -4,6 +4,8 @@ import ImportandEnums.DroneTypes;
 import ImportandEnums.Type;
 import Management.Resources.Energy;
 import Management.Resources.Storage;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 /**
  * <h3>Drone</h3>
@@ -94,6 +96,10 @@ public class Drone {
 
     public DroneTypes getType() {
         return type;
+    }
+
+    public String getIcon() {
+        return icon;
     }
 
     public String toString() {

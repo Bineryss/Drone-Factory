@@ -1,15 +1,16 @@
 package Production.Factories.Produktion;
 
 import BuildingExtensions.DroneProducerExt;
+import ImportandEnums.DroneTypes;
 import Management.DroneManagement;
 import ImportandEnums.Type;
 import Production.Dronen.Drone;
 import Production.Factories.Building;
 import SpecificExceptions.BuildingUnfinishedException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Dronefactory - Produziert Dronen aller art.
@@ -25,7 +26,7 @@ public class DroneFactory extends Building {
     private int workStatus;
     private boolean isWorking;
 
-    private static List<Type> produceableDronesId;
+    private static List<DroneTypes> produceableDronesId;
     private Drone producedElement;
 
     private DroneProducerExt prod;
@@ -36,8 +37,7 @@ public class DroneFactory extends Building {
         super(Type.DRONEFACTORY);
         cc++;
         id = cc;
-        produceableDronesId = new LinkedList<>();
-        produceableDronesId.add(Type.DEFAULTDRONE);
+        produceableDronesId = Arrays.asList(DroneTypes.values());
     }
 
     /**
@@ -60,7 +60,7 @@ public class DroneFactory extends Building {
         }
     }
 
-    public void addDroneProducerExtension(Type drone) {
+    public void addDroneProducerExtension(DroneTypes drone) {
         if (isReady()) {
             prod = new DroneProducerExt(drone);
         }
@@ -74,27 +74,28 @@ public class DroneFactory extends Building {
         }
     }
 
-    public void startProduction(Type drone) throws BuildingUnfinishedException {
+    public void startProduction(DroneTypes drone) throws BuildingUnfinishedException {
         if (isReady() && !activateProd) {
             startProductionAutomatic(drone);
-        }else {
+        } else {
             throw new BuildingUnfinishedException();
         }
     }
 
     /**
-     * Started die Produktion einer Drone und verbraucht schonmal die benoetigten Resourcen
+     * Started die Produktion einer Drone und verbraucht direkt die benoetigten Resourcen
      *
      * @param drone: Typ der Drone
      */
-    private void startProductionAutomatic(Type drone) {
-        if (canBeBuild(drone)) {
-            if (!isWorking && isReady()) {
-                if (storage.hasResources(drone.getCosts())) {
+    private void startProductionAutomatic(DroneTypes drone) {
+        if (isReady() && !isWorking) {
+            if (canBeBuild(drone)) {
+                Drone blueprint = DroneManagement.getBlueprint(drone);
+                if (storage.hasResources(blueprint.getCosts())) {
                     isWorking = true;
-                    producedElement = DroneManagement.typeToDrone(drone);
-                    workStatus += drone.getConstructionTime();
-                    storage.removeResources(drone.getCosts());
+                    producedElement = blueprint;
+                    workStatus += blueprint.getConstructionTime();
+                    storage.removeResources(blueprint.getCosts());
                 } else {
                     System.out.println("Du hast nicht genuegend Resourcen fuer diese Drone!");
                 }
@@ -121,7 +122,7 @@ public class DroneFactory extends Building {
         }
     }
 
-    private boolean canBeBuild(Type tmp) {
+    private boolean canBeBuild(DroneTypes tmp) {
         return produceableDronesId.contains(tmp);
     }
 
@@ -137,7 +138,7 @@ public class DroneFactory extends Building {
     }
 
     private String isWorkRemaining() {
-        StringBuilder str = new StringBuilder(producedElement.getType().getIcon());
+        StringBuilder str = new StringBuilder(producedElement.getIcon());
         if (isWorking) {
             str.append(": ");
             for (int i = 0; i < workStatus; i++) {

@@ -1,8 +1,8 @@
 package Tests;
 
+import ImportandEnums.DroneTypes;
 import ImportandEnums.EnergyConnectionEnum;
 import ImportandEnums.ResourceConnectionsEnum;
-import ImportandEnums.Type;
 import Management.BuildingManagement;
 import Management.DroneManagement;
 import Management.Resources.ResourceManagement;
@@ -30,13 +30,13 @@ public class DroneFactory_Test {
     public void start() {
         resourceManagement.addResources(1000);
         resourceManagement.addEnergy(1000);
-        droneManagement.addDrone(new DefaultDrone());
-        droneManagement.addDrone(new DefaultDrone());
-        droneManagement.addDrone(new DefaultDrone());
-        droneManagement.addDrone(new DefaultDrone());
+        droneManagement.addDrone(DroneManagement.getBlueprint(DroneTypes.DEFAULTDRONE));
+        droneManagement.addDrone(DroneManagement.getBlueprint(DroneTypes.DEFAULTDRONE));
+        droneManagement.addDrone(DroneManagement.getBlueprint(DroneTypes.DEFAULTDRONE));
+        droneManagement.addDrone(DroneManagement.getBlueprint(DroneTypes.DEFAULTDRONE));
 
         droFac = new DroneFactory();
-        droFac.startConstruction(Type.DEFAULTDRONE, 4);
+        droFac.startConstruction(DroneTypes.DEFAULTDRONE, 4);
         droFac.update();
         droFac.update();
         droFac.update();
@@ -57,7 +57,7 @@ public class DroneFactory_Test {
     @Test
     public void teteDroneFactoryProduce() {
         try {
-            droFac.startProduction(Type.DEFAULTDRONE);
+            droFac.startProduction(DroneTypes.DEFAULTDRONE);
         } catch (BuildingUnfinishedException e) {
             assert false;
         }
@@ -72,7 +72,7 @@ public class DroneFactory_Test {
 
     @Test
     public void testFactoryExtension() {
-        droFac.addDroneProducerExtension(Type.DEFAULTDRONE);
+        droFac.addDroneProducerExtension(DroneTypes.DEFAULTDRONE);
         System.out.println(droFac);
         droFac.activatedProducer();
         System.out.println(droneManagement);

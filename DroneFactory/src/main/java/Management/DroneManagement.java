@@ -1,50 +1,37 @@
 package Management;
 
-import ImportandEnums.Type;
+import ImportandEnums.DroneTypes;
 import Production.Dronen.*;
-import SpecificExceptions.DuplicatManagementSystemException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.inject.Named;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
  * Speichert alle Dronen, die Produziert wurden
  */
-@Named("droneManagement")
 public class DroneManagement {
-    private static boolean IS_ACTIVE = false;
-    private static final int IDCOUNT = 1;
 
-    private static ArrayList<Drone>[] DRONES = new ArrayList[IDCOUNT];
+    private HashMap<DroneTypes, Drone> drones;
 
-    public DroneManagement() throws DuplicatManagementSystemException {
-        if (!IS_ACTIVE) {
-            //Dronen Typen werden Ihrer ID zugeordnet
-            for (int i = 0; i < DRONES.length; i++) {
-                DRONES[i] = new ArrayList<>();
-                IS_ACTIVE = true;
-            }
-        }else {
-            throw new DuplicatManagementSystemException();
-        }
-    }
 
     /**
-     * fuegt die Drone anhand ihrer ID in die Richitge Queue an.
+     * fuegt die Drone anhand ihrer ID in die Richitge Stelle an.
      *
      * @param tmp
      */
     public void addDrone(Drone tmp) {
-        DRONES[typeToId(tmp.getType())].add(tmp);
+        drones.put(tmp.getType(), tmp);
     }
 
     /**
      * entfernt die 1. Drone, wenn sie keine Energie mehr hat
      */
     private void removeDead() {
-        for (int i = 0; i < DRONES.length; i++) {
-            Iterator<Drone> dead = DRONES[i].iterator();
+        for (int i = 0; i < drones.length; i++) {
+            Iterator<Drone> dead = drones[i].iterator();
             while (dead.hasNext()) {
                 Drone deadDrone = dead.next();
                 if (deadDrone.isDead()) {
@@ -75,7 +62,7 @@ public class DroneManagement {
         return null;
     }
 
-    public ArrayList<Drone> giveDronesWork(Type id, int droneCount) {
+    public ArrayList<Drone> giveDronesWork(DroneTypes id, int droneCount) {
         ArrayList<Drone> search = cleanDroneList(typeToId(id));
         ArrayList<Drone> out = new ArrayList<>();
         if (droneCount <= search.size()) {
@@ -102,49 +89,31 @@ public class DroneManagement {
     }
 
     private String getIcon(int id) {
-        ArrayList<Drone> search = cleanDroneList(id);
-        return search.get(0).getType().getIcon();
+        return getBlueprint()
     }
 
     private ArrayList<Drone> cleanDroneList(int id) {
-        ArrayList<Drone> search = DRONES[id];
+        ArrayList<Drone> search = drones[id];
         removeDead();
         return search;
     }
 
     public void removeDrone(Drone remove) {
-        ArrayList<Drone> removal = DRONES[typeToId(remove.getType())];
+        ArrayList<Drone> removal = drones[typeToId(remove.getType())];
         removal.remove(remove);
     }
 
     public String toString() {
         StringBuilder str = new StringBuilder();
-        for (int i = 0; i < IDCOUNT; i++) {
+        for (int i = 0; i < drones.length; i++) {
             str.append(getIcon(i) + ": total Energy: " + availableEnergy(i));
             str.append("\n");
         }
         return str.toString();
     }
 
-    private int typeToId(Type type) {
-        switch (type) {
-            case DEFAULTDRONE:
-                return 0;
-            case CARRIERDRONE:
-                return 1;
-            default:
-                return -1;
-        }
-    }
-
-    public static final Drone typeToDrone(Type type) {
-        switch (type) {
-            case DEFAULTDRONE:
-                return new DefaultDrone();
-            case CARRIERDRONE:
-                //return new CarrierDrone();
-            default:
-                return null;
-        }
+    public static Drone getBlueprint(DroneTypes type) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("DroneConfig.xml");
+        return (Drone) context.getBean(type.getXmlName());
     }
 }
