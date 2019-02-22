@@ -5,13 +5,13 @@ import ImportandEnums.EnergyConnectionEnum;
 import ImportandEnums.ResourceConnectionsEnum;
 import ImportandEnums.Type;
 import Management.DroneManagement;
-import Management.Resources.Energy;
 import Management.Resources.ResourceManagement;
 import Management.Resources.Storage;
 import ImportandEnums.Type;
 import Production.Dronen.Drone;
 import Production.Factories.Connector.*;
 import SpecificExceptions.BuildingUnfinishedException;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,7 @@ import java.util.List;
  * Speichert die Kosten, Bauzeit,
  * <p>
  */
+@ComponentScan("Management")
 public abstract class Building {
     @Inject
     DroneManagement droneManagement;
@@ -40,7 +41,7 @@ public abstract class Building {
     private boolean hasResources;
     private ArrayList<Drone> workers;
 
-    public Building(Type type) {
+    protected Building(Type type) {
         this.type = type;
         constructionCost = type.getCosts();
         construction = type.getConstructionTime();

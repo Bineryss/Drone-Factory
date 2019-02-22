@@ -7,14 +7,28 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Speichert alle Dronen, die Produziert wurden
  */
 public class DroneManagement {
+    private class DroneKey {
+        DroneTypes type;
+        int number;
 
-    private HashMap<DroneTypes, Drone> drones;
+        DroneKey(DroneTypes type, int number) {
+            this.type = type;
+            this.number = number;
+        }
+    }
+
+    private int droneCount;
+    private HashMap<DroneKey, Drone> drones;
+
+    public DroneManagement() {
+        drones = new HashMap<>();
+        droneCount = 0;
+    }
 
 
     /**
@@ -23,19 +37,18 @@ public class DroneManagement {
      * @param tmp
      */
     public void addDrone(Drone tmp) {
-        drones.put(tmp.getType(), tmp);
+        drones.put(new DroneKey(tmp.getType(), droneCount), tmp);
+        droneCount++;
     }
 
     /**
      * entfernt die 1. Drone, wenn sie keine Energie mehr hat
      */
     private void removeDead() {
-        for (int i = 0; i < drones.length; i++) {
-            Iterator<Drone> dead = drones[i].iterator();
-            while (dead.hasNext()) {
-                Drone deadDrone = dead.next();
-                if (deadDrone.isDead()) {
-                    dead.remove();
+        for (DroneKey key: drones.keySet()) {
+            if(key != null) {
+                if(drones.get(key).isDead()) {
+                    drones.remove(key);
                 }
             }
         }
@@ -63,7 +76,7 @@ public class DroneManagement {
     }
 
     public ArrayList<Drone> giveDronesWork(DroneTypes id, int droneCount) {
-        ArrayList<Drone> search = cleanDroneList(typeToId(id));
+        ArrayList<Drone> search = cleanDroneList(id);
         ArrayList<Drone> out = new ArrayList<>();
         if (droneCount <= search.size()) {
             for (int i = 0; i < droneCount; i++) {
@@ -79,7 +92,7 @@ public class DroneManagement {
         return out;
     }
 
-    public int availableEnergy(int id) {
+    public int availableEnergy(DroneTypes id) {
         int availableEnergy = 0;
         ArrayList<Drone> search = cleanDroneList(id);
         for (Drone tmp : search) {
@@ -88,32 +101,44 @@ public class DroneManagement {
         return availableEnergy;
     }
 
-    private String getIcon(int id) {
-        return getBlueprint()
+    private String getIcon(DroneTypes id) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("DroneConfig.xml");
+        Drone tmp = (Drone) context.getBean(id.getXmlName());
+        return tmp.getIcon();
     }
 
-    private ArrayList<Drone> cleanDroneList(int id) {
-        ArrayList<Drone> search = drones[id];
-        removeDead();
+    private ArrayList<Drone> cleanDroneList(DroneTypes id) {
+        ArrayList<Drone> search = new ArrayList<>();
+        for (DroneKey key: drones.keySet()) {
+            if(key != null && key.type == id) {
+                search.add(drones.get(key));
+            }
+        }
         return search;
     }
 
     public void removeDrone(Drone remove) {
-        ArrayList<Drone> removal = drones[typeToId(remove.getType())];
-        removal.remove(remove);
+        for (DroneKey key: drones.keySet()) {
+            if(key != null && key.type == remove.getType()) {
+                if(drones.get(key).equals(remove)) {
+                    drones.remove(key);
+                }
+            }
+        }
     }
 
     public String toString() {
-        StringBuilder str = new StringBuilder();
-        for (int i = 0; i < drones.length; i++) {
-            str.append(getIcon(i) + ": total Energy: " + availableEnergy(i));
-            str.append("\n");
+        String out = "";
+        for (DroneKey key: drones.keySet()) {
+            if(key != null) {
+                out += drones.get(key);
+            }
         }
-        return str.toString();
+        return out;
     }
 
     public static Drone getBlueprint(DroneTypes type) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("DroneConfig.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("DroneConfigs.xml");
         return (Drone) context.getBean(type.getXmlName());
     }
 }

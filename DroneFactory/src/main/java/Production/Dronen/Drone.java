@@ -103,7 +103,7 @@ public class Drone {
     }
 
     public String toString() {
-        return icon + " : " + energyLeft();
+        return icon + ":" + energyLeft();
     }
 
 }

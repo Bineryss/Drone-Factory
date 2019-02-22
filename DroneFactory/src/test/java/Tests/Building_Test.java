@@ -1,8 +1,7 @@
 package Tests;
 
 import ImportandEnums.DroneTypes;
-import Management.*;
-import Management.Resources.ResourceManagement;
+import Management.DroneManagement;
 import Production.Factories.Building;
 import Production.Factories.Connector.Batteries;
 import Production.Factories.Connector.InternalStorage;
@@ -13,12 +12,7 @@ import SpecificExceptions.BuildingUnfinishedException;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.inject.Inject;
-
-public class Building_Test {
-    DroneManagement droneManagement;
-    @Inject
-    ResourceManagement resourceManagement;
+public class Building_Test extends TestSetup {
 
     @Before
     public void start() {

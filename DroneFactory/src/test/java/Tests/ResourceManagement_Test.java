@@ -1,16 +1,20 @@
 package Tests;
 
 import Management.Resources.ResourceManagement;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.inject.Inject;
-
-@ComponentScan("Management.Resources")
 public class ResourceManagement_Test {
-    @Inject
     ResourceManagement resourceManagement;
+
+    @Before
+    public void setup() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("ManagementSystems.xml");
+        resourceManagement = (ResourceManagement) context.getBean("resourceManagement");
+    }
 
     @Test
     @DisplayName("Es wird getested ob 200 Resourcen verbracuht werden")

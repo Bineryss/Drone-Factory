@@ -1,27 +1,14 @@
 package Management.Resources;
 
-import SpecificExceptions.DuplicatManagementSystemException;
-
-import javax.inject.Named;
-
-@Named("resourceManagement")
 public class ResourceManagement {
-    private static boolean IS_ACTIVE = false;
 
     private static Resource energy;
     private static Resource resource;
 
-    public ResourceManagement() throws DuplicatManagementSystemException {
-        if (!IS_ACTIVE) {
-            //mehr Resorce Typen hinzufuegen
-            energy = new Resource("Energy", 1000);
-            resource = new Resource("Carbon", 1000);
-            IS_ACTIVE = true;
-        } else {
-            throw new DuplicatManagementSystemException();
-        }
-
-
+    private ResourceManagement() {
+        //mehr Resorce Typen hinzufuegen
+        energy = new Resource("Energy", 1000);
+        resource = new Resource("Carbon", 1000);
     }
 
     public Resource getResource() {
