@@ -2,7 +2,6 @@ package Management;
 
 import ImportandEnums.Type;
 import Production.Dronen.*;
-import Production.Dronen.Normal.DefaultDrone;
 import SpecificExceptions.DuplicatManagementSystemException;
 
 import javax.inject.Named;

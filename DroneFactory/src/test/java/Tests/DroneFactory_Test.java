@@ -6,7 +6,6 @@ import ImportandEnums.Type;
 import Management.BuildingManagement;
 import Management.DroneManagement;
 import Management.Resources.ResourceManagement;
-import Production.Dronen.Normal.DefaultDrone;
 import Production.Factories.Building;
 import Production.Factories.Connector.Batteries;
 import Production.Factories.Connector.InternalStorage;

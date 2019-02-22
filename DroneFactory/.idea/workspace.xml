@@ -2,25 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc0b14ce-42a6-412a-8c62-b37407a83f57" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/SpecificExceptions/DuplicatManagementSystemException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Tests/ResourceManagement_Test.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/config/Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ImportandEnums/DroneTypes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/DroneConfigs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Management/BuildingManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Management/BuildingManagement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Management/DroneManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Management/DroneManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Management/Resources/ResourceManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Management/Resources/ResourceManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Production/Factories/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Production/Factories/Building.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Production/Factories/Connector/Batteries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Production/Factories/Connector/Batteries.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Production/Factories/Connector/DirectEnergyCon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Production/Factories/Connector/DirectEnergyCon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Production/Factories/Connector/InternalStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Production/Factories/Connector/InternalStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Production/Factories/Produktion/DroneFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Production/Factories/Produktion/DroneFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Building_Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Tests/Building_Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/DroneFactory_Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Tests/DroneFactory_Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/DroneManagement_Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Tests/DroneManagement_Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Field_Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Tests/Field_Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ResourceManagement_Test.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TestV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/GameTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Production/Dronen/Drone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Production/Dronen/Drone.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Production/Dronen/Normal/BuildingDrone.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Production/Dronen/Normal/DefaultDrone.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/GameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/GameTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Tests/Building_Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Tests/Building_Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Tests/DroneFactory_Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Tests/DroneFactory_Test.java" afterDir="false" />
     </list>
     <list id="6bbddb5b-8cb0-466e-940c-e81062610e47" name="switched storage and energy to a &quot;Connection&quot;" comment="in future updates the System can be switched as needed">
       <change beforePath="$PROJECT_DIR$/src/main/java/ImportandEnums/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ImportandEnums/Type.java" afterDir="false" />
@@ -62,114 +53,25 @@
     <favorites_list name="DronenProduktion" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="vertical" split-proportion="0.2857143">
+    <splitter split-orientation="horizontal" split-proportion="0.3754417">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/test/java/Tests/DroneFactory_Test.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1323">
-                  <caret line="78" column="42" selection-start-line="78" selection-start-column="42" selection-end-line="78" selection-end-column="42" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/test/java/Tests/Building_Test.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1869">
-                  <caret line="103" column="49" selection-start-line="103" selection-start-column="49" selection-end-line="103" selection-end-column="49" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/test/java/Tests/ResourceManagement_Test.java">
+            <entry file="file://$PROJECT_DIR$/src/main/resources/DroneConfigs.xml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="168">
-                  <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
+                <state relative-caret-position="588">
+                  <caret line="28" column="51" lean-forward="true" selection-start-line="28" selection-start-column="51" selection-end-line="28" selection-end-column="51" />
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/test/java/GameTest.java">
+            <entry file="file://$PROJECT_DIR$/src/main/java/Production/Dronen/Drone.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="42">
-                  <caret line="18" selection-start-line="18" selection-end-line="18" />
+                <state relative-caret-position="231">
+                  <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
                   <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/test/java/config/Config.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="84">
-                  <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/Management/Resources/ResourceManagement.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="84">
-                  <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="method#removeResources#0;class#ResourceManagement#0" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/Management/BuildingManagement.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="168">
-                  <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="method#getBuilding#0;class#BuildingManagement#0" />
-                    <element signature="method#typeToId#0;class#BuildingManagement#0" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/Management/DroneManagement.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="252">
-                  <caret line="19" column="54" selection-start-line="19" selection-start-column="54" selection-end-line="19" selection-end-column="54" />
-                  <folding>
-                    <element signature="docComment;method#addDrone#0;class#DroneManagement#0" />
-                    <element signature="docComment;method#removeDead#0;class#DroneManagement#0" />
-                    <element signature="method#removeDead#0;class#DroneManagement#0" />
-                    <element signature="docComment;method#getDrone#0;class#DroneManagement#0" />
-                    <element signature="method#getFullDrone#0;class#DroneManagement#0" />
-                    <element signature="method#giveDronesWork#0;class#DroneManagement#0" />
-                    <element signature="method#availableEnergy#0;class#DroneManagement#0" />
-                    <element signature="method#getIcon#0;class#DroneManagement#0" />
-                    <element signature="method#removeDrone#0;class#DroneManagement#0" />
-                    <element signature="method#toString#0;class#DroneManagement#0" />
-                    <element signature="method#typeToId#0;class#DroneManagement#0" />
-                    <element signature="method#typeToDrone#0;class#DroneManagement#0" />
+                    <element signature="method#work#0;class#Drone#0" />
                   </folding>
                 </state>
               </provider>
@@ -178,12 +80,35 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+        <leaf>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/pom.xml">
+            <entry file="file://$PROJECT_DIR$/src/main/java/ImportandEnums/Type.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="694">
-                  <caret line="78" column="21" selection-start-line="78" selection-start-column="21" selection-end-line="78" selection-end-column="21" />
+                <state relative-caret-position="336">
+                  <caret line="16" column="41" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="16" selection-end-column="41" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/ImportandEnums/DroneTypes.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="84">
+                  <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/Production/Dronen/Drone.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="567">
+                  <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
+                  <folding>
+                    <element signature="method#work#0;class#Drone#0" />
+                    <element signature="e#2267#2268#0" expanded="true" />
+                    <element signature="e#2318#2319#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -196,8 +121,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Enum" />
         <option value="Class" />
+        <option value="spring-beans.schema" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -219,14 +145,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/Production/Dronen/Normal/DefaultDrone.java" />
-        <option value="$PROJECT_DIR$/src/main/java/BuildingExtensions/DroneProducerExt.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Management/Resources/Storage.java" />
         <option value="$PROJECT_DIR$/src/main/java/ImportandEnums/DroneType.java" />
         <option value="$PROJECT_DIR$/src/main/java/Production/Factories/EnergyConsmer.java" />
         <option value="$PROJECT_DIR$/src/main/java/Production/Factories/EnergyConsumer.java" />
         <option value="$PROJECT_DIR$/src/main/java/Production/Factories/ResourcConsumer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ImportandEnums/Type.java" />
         <option value="$PROJECT_DIR$/src/main/java/ImportandEnums/Connections.java" />
         <option value="$PROJECT_DIR$/src/main/java/ImportandEnums/EnergyConnection.java" />
         <option value="$PROJECT_DIR$/src/main/java/ImportandEnums/ResourceConnections.java" />
@@ -268,45 +190,21 @@
         <option value="$PROJECT_DIR$/src/test/java/ResourceManagement_Test.java" />
         <option value="$PROJECT_DIR$/src/main/java/GameTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/GameTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/Tests/ResourceManagement_Test.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/test/java/Tests/ResourceManagement_Test.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ImportandEnums/Type.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Production/Dronen/Drone.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ImportandEnums/DroneTypes.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/DroneConfigs.xml" />
       </list>
     </option>
   </component>
   <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/main/java/Production/Factories/Building.java">
-      <ranges>
-        <range start1="6" end1="7" start2="6" end2="6" changelist="6bbddb5b-8cb0-466e-940c-e81062610e47" />
-        <range start1="8" end1="10" start2="7" end2="7" changelist="6bbddb5b-8cb0-466e-940c-e81062610e47" />
-        <range start1="14" end1="14" start2="11" end2="12" changelist="6bbddb5b-8cb0-466e-940c-e81062610e47" />
-        <range start1="15" end1="16" start2="13" end2="13" changelist="6bbddb5b-8cb0-466e-940c-e81062610e47" />
-        <range start1="22" end1="23" start2="19" end2="19" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="25" end1="25" start2="21" end2="26" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="113" end1="114" start2="114" end2="115" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="115" end1="117" start2="116" end2="118" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="145" end1="146" start2="146" end2="147" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="149" end1="171" start2="150" end2="150" changelist="6bbddb5b-8cb0-466e-940c-e81062610e47" />
-      </ranges>
-    </file>
     <file path="$PROJECT_DIR$/src/main/java/Management/DroneManagement.java">
       <ranges>
-        <range start1="5" end1="5" start2="5" end2="6" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="6" end1="6" start2="7" end2="8" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="12" end1="12" start2="14" end2="15" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="13" end1="14" start2="16" end2="17" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="17" end1="18" start2="20" end2="20" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="19" end1="24" start2="21" end2="30" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="32" end1="33" start2="38" end2="39" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="39" end1="40" start2="45" end2="46" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="57" end1="59" start2="63" end2="65" changelist="6bbddb5b-8cb0-466e-940c-e81062610e47" />
-        <range start1="62" end1="64" start2="68" end2="70" changelist="6bbddb5b-8cb0-466e-940c-e81062610e47" />
-        <range start1="72" end1="73" start2="78" end2="79" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="89" end1="90" start2="95" end2="96" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="98" end1="99" start2="104" end2="105" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="103" end1="104" start2="109" end2="110" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="109" end1="110" start2="115" end2="116" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="114" end1="115" start2="120" end2="121" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
-        <range start1="123" end1="124" start2="129" end2="130" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
+        <range start1="4" end1="5" start2="4" end2="4" changelist="dc0b14ce-42a6-412a-8c62-b37407a83f57" />
+        <range start1="63" end1="65" start2="62" end2="64" changelist="6bbddb5b-8cb0-466e-940c-e81062610e47" />
+        <range start1="68" end1="70" start2="67" end2="69" changelist="6bbddb5b-8cb0-466e-940c-e81062610e47" />
       </ranges>
     </file>
   </component>
@@ -349,7 +247,7 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
-    <option name="width" value="1864" />
+    <option name="width" value="759" />
     <option name="height" value="1407" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -391,7 +289,31 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ImportandEnums" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DroneFactory" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DroneFactory" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="Production" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DroneFactory" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DroneFactory" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Production" type="462c0819:PsiDirectoryNode" />
+              <item name="Dronen" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DroneFactory" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DroneFactory" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DroneFactory" type="b2602c69:ProjectViewProjectNode" />
@@ -418,7 +340,7 @@
     <property name="TODO_SCOPE" value="All Places" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550838379985" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550844091691" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -432,6 +354,9 @@
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\I014600\Documents\Java\Drone-Factory\DroneFactory\src\main" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\I014600\Documents\Java\Drone-Factory\DroneFactory\src\test\java\Tests" />
@@ -577,7 +502,7 @@
       <workItem from="1550751803302" duration="51000" />
       <workItem from="1550825802882" duration="6938000" />
       <workItem from="1550838081487" duration="693000" />
-      <workItem from="1550839538746" duration="605000" />
+      <workItem from="1550839538746" duration="2457000" />
     </task>
     <task id="LOCAL-00001" summary="Opened in IntelliJ">
       <created>1540643748108</created>
@@ -698,7 +623,14 @@
       <option name="project" value="LOCAL" />
       <updated>1550751332518</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="broken! started using Spring">
+      <created>1550842335068</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1550842335069</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -734,7 +666,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="203970000" />
+    <option name="totallyTimeSpent" value="205822000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -746,21 +678,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1713" y="0" width="1734" height="1407" extended-state="0" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="3456" height="1416" extended-state="6" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="Capture Tool" order="1" />
       <window_info id="UI Designer" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.27042577" side_tool="true" weight="0.11804452" />
       <window_info id="Image Layers" order="4" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.8174274" visible="true" weight="0.1786141" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.8174274" visible="true" weight="0.17844523" />
       <window_info id="Structure" order="6" sideWeight="0.18257262" side_tool="true" weight="0.16931684" />
       <window_info anchor="bottom" id="Event Log" order="0" sideWeight="0.5019873" side_tool="true" weight="0.31410757" />
       <window_info anchor="bottom" id="Database Changes" order="1" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="2" sideWeight="0.49841017" weight="0.3187841" />
       <window_info anchor="bottom" id="Message" order="3" />
-      <window_info anchor="bottom" id="Find" order="4" weight="0.32735777" />
+      <window_info anchor="bottom" id="Find" order="4" weight="0.32731554" />
       <window_info anchor="bottom" id="Run" order="5" sideWeight="0.49801272" weight="0.32501948" />
       <window_info anchor="bottom" id="Debug" order="6" weight="0.3452845" />
       <window_info anchor="bottom" id="Messages" order="7" sideWeight="0.49841017" weight="0.22915043" />
@@ -784,6 +715,42 @@
       <window_info anchor="right" id="Maven" order="10" weight="0.19957197" />
       <window_info anchor="right" x="0" y="0" width="434" height="856" id="Documentation" order="11" side_tool="true" weight="0.32979977" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Designer" order="0" />
+      <window_info id="Capture Tool" order="1" />
+      <window_info id="UI Designer" order="2" />
+      <window_info id="Favorites" order="3" sideWeight="0.27042577" side_tool="true" weight="0.11804452" />
+      <window_info id="Image Layers" order="4" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" sideWeight="0.8174274" visible="true" weight="0.1786141" />
+      <window_info id="Structure" order="6" sideWeight="0.18257262" side_tool="true" weight="0.16931684" />
+      <window_info anchor="bottom" id="Event Log" order="0" sideWeight="0.5019873" side_tool="true" weight="0.31410757" />
+      <window_info anchor="bottom" id="Database Changes" order="1" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="2" sideWeight="0.49841017" weight="0.3187841" />
+      <window_info anchor="bottom" id="Message" order="3" />
+      <window_info anchor="bottom" id="Find" order="4" weight="0.32731554" />
+      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.49801272" weight="0.32501948" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.3452845" />
+      <window_info anchor="bottom" id="Messages" order="7" sideWeight="0.49841017" weight="0.22915043" />
+      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49960256" weight="0.3289166" />
+      <window_info anchor="bottom" id="TODO" order="11" sideWeight="0.49880764" weight="0.3219018" />
+      <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.3299532" />
+      <window_info anchor="bottom" id="Docker" order="13" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Spring" order="14" />
+      <window_info anchor="right" id="Capture Analysis" order="0" />
+      <window_info anchor="right" id="Theme Preview" order="1" />
+      <window_info anchor="right" id="Database" order="2" weight="0.32979977" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.13076311" />
+      <window_info anchor="right" id="Maven Projects" order="5" weight="0.32979977" />
+      <window_info anchor="right" id="Palette" order="6" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="7" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="8" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="9" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="10" weight="0.19957197" />
+      <window_info anchor="right" x="0" y="0" width="434" height="856" id="Documentation" order="11" side_tool="true" weight="0.32979977" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -846,7 +813,8 @@
     <MESSAGE value="unfinished! switched storage and energy to a &quot;Connection&quot; -&gt; now the storage model can be switched if needed" />
     <MESSAGE value="unfinished! further refined the new &quot;Connections&quot;" />
     <MESSAGE value="&quot;Connections&quot; is fully implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;Connections&quot; is fully implemented" />
+    <MESSAGE value="broken! started using Spring" />
+    <option name="LAST_COMMIT_MESSAGE" value="broken! started using Spring" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
@@ -865,52 +833,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/Production/Dronen/Drone.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1105">
-          <caret line="85" column="19" selection-start-line="85" selection-start-column="19" selection-end-line="85" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#work#0;class#Drone#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Production/Dronen/Normal/DefaultDrone.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BuildingExtensions/DroneProducerExt.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="603">
-          <caret line="54" column="15" selection-start-line="54" selection-start-column="15" selection-end-line="54" selection-end-column="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#836#837#0" expanded="true" />
-            <element signature="e#875#876#0" expanded="true" />
-            <element signature="e#933#934#0" expanded="true" />
-            <element signature="e#972#973#0" expanded="true" />
-            <element signature="e#1004#1005#0" expanded="true" />
-            <element signature="e#1042#1043#0" expanded="true" />
-            <element signature="e#1083#1084#0" expanded="true" />
-            <element signature="e#1116#1117#0" expanded="true" />
-            <element signature="e#1243#1244#0" expanded="true" />
-            <element signature="e#1269#1270#0" expanded="true" />
-            <element signature="e#1294#1295#0" expanded="true" />
-            <element signature="e#1351#1352#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/DEV/PaaS/lib/m3-repository/junit/junit/4.13-beta-2/junit-4.13-beta-2.jar!/org/junit/internal/runners/model/ReflectiveCallable.class" />
-    <entry file="jar://C:/DEV/PaaS/lib/m3-repository/junit/junit/4.13-beta-2/junit-4.13-beta-2.jar!/org/junit/runners/model/FrameworkMethod.class" />
-    <entry file="jar://C:/DEV/PaaS/lib/m3-repository/junit/junit/4.13-beta-2/junit-4.13-beta-2.jar!/org/junit/internal/runners/statements/RunBefores.class" />
     <entry file="file://$PROJECT_DIR$/src/main/java/ImportandEnums/ExtensionEnum.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="63">
@@ -936,13 +858,6 @@
             <element signature="e#217#218#0" expanded="true" />
             <element signature="e#260#261#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ImportandEnums/Type.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="3" column="76" selection-start-line="3" selection-start-column="76" selection-end-line="3" selection-end-column="76" />
         </state>
       </provider>
     </entry>
@@ -1561,26 +1476,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/Tests/DroneFactory_Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1323">
-          <caret line="78" column="42" selection-start-line="78" selection-start-column="42" selection-end-line="78" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/Tests/Building_Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1869">
-          <caret line="103" column="49" selection-start-line="103" selection-start-column="49" selection-end-line="103" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/GameTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
@@ -1645,20 +1540,90 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="35" column="40" selection-start-line="35" selection-start-column="40" selection-end-line="35" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/Tests/ResourceManagement_Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+        <state relative-caret-position="147">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="file://$PROJECT_DIR$/src/test/java/Tests/Building_Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="694">
-          <caret line="78" column="21" selection-start-line="78" selection-start-column="21" selection-end-line="78" selection-end-column="21" />
+        <state relative-caret-position="684">
+          <caret line="103" column="49" selection-start-line="103" selection-start-column="49" selection-end-line="103" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/spring.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/Tests/DroneFactory_Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1449">
+          <caret line="78" column="42" selection-start-line="78" selection-start-column="42" selection-end-line="78" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Production/Dronen/Normal/DefaultDrone.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Production/Dronen/Drone.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
+          <folding>
+            <element signature="method#work#0;class#Drone#0" />
+            <element signature="e#2267#2268#0" expanded="true" />
+            <element signature="e#2318#2319#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ImportandEnums/DroneTypes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Production/Dronen/Normal/BuildingDrone.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/DroneConfigs.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="28" column="51" lean-forward="true" selection-start-line="28" selection-start-column="51" selection-end-line="28" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ImportandEnums/Type.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="16" column="41" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="16" selection-end-column="41" />
         </state>
       </provider>
     </entry>

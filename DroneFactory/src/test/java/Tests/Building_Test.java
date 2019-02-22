@@ -3,7 +3,6 @@ package Tests;
 import ImportandEnums.Type;
 import Management.*;
 import Management.Resources.ResourceManagement;
-import Production.Dronen.Normal.DefaultDrone;
 import Production.Factories.Building;
 import Production.Factories.Connector.Batteries;
 import Production.Factories.Connector.InternalStorage;

@@ -4,7 +4,6 @@ import Management.DroneManagement;
 import Management.Resources.ResourceManagement;
 import ImportandEnums.Type;
 import Production.Dronen.Drone;
-import Production.Dronen.Normal.DefaultDrone;
 import Production.Factories.Connector.Batteries;
 import Production.Factories.Building;
 import Production.Factories.Energy.Solarpannels;
