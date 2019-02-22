@@ -7,6 +7,7 @@ import Production.Dronen.Drone;
 import Production.Factories.Building;
 import SpecificExceptions.BuildingUnfinishedException;
 
+import javax.inject.Inject;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,6 +17,9 @@ import java.util.List;
  * ID: 1
  */
 public class DroneFactory extends Building {
+    @Inject
+    DroneManagement droneManagement;
+
     private static int cc = -1;
 
     private int workStatus;
@@ -108,7 +112,7 @@ public class DroneFactory extends Building {
             if (workStatus == 0) {
                 isWorking = false;
                 if (!activateProd) {
-                    DroneManagement.addDrone(producedElement);
+                    droneManagement.addDrone(producedElement);
                 } else {
                     prod.addDrone(producedElement);
                 }

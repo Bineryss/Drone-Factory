@@ -6,6 +6,8 @@ import Management.Resources.ResourceManagement;
 import Management.Resources.Storage;
 import Production.Dronen.Drone;
 
+import javax.inject.Inject;
+
 /**
  * Die Grundanbindung, an das Resourcemanagement.
  *
@@ -13,6 +15,11 @@ import Production.Dronen.Drone;
  *
  */
 public class InternalStorage implements ResourceConnection {
+    @Inject
+    ResourceManagement resourceManagement;
+    @Inject
+    DroneManagement droneManagement;
+
     private Storage storage;
     private Drone transportDrone;
 
@@ -24,7 +31,7 @@ public class InternalStorage implements ResourceConnection {
     @Override
     public void storeResources(int amount) {
         if (transportDrone != null && !transportDrone.isDead()) {
-            ResourceManagement.addResources(storage.empty());
+            resourceManagement.addResources(storage.empty());
             transportDrone.work();
         } else {
             System.out.println("Keine Drone mehr!");
@@ -67,7 +74,7 @@ public class InternalStorage implements ResourceConnection {
      * @param drone: Typ der Drone
      */
     public void addTransportDrone(Type drone) {
-        transportDrone = DroneManagement.getFullDrone(drone);
+        transportDrone = droneManagement.getFullDrone(drone);
     }
 
     public String toString() {

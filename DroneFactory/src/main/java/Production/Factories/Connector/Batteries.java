@@ -32,4 +32,9 @@ public class Batteries implements EnergyConnection {
     public void loadEnergy(int amount) {
         energy.loadEnergy(amount);
     }
+
+    @Override
+    public String toString() {
+        return energy.toString();
+    }
 }

@@ -1,3 +1,5 @@
+package Tests;
+
 import ImportandEnums.Type;
 import Management.*;
 import Management.Resources.ResourceManagement;
@@ -12,21 +14,22 @@ import SpecificExceptions.BuildingUnfinishedException;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.inject.Inject;
+
 public class Building_Test {
+    DroneManagement droneManagement;
+    @Inject
+    ResourceManagement resourceManagement;
 
     @Before
     public void start() {
-        ResourceManagement.start();
-        ResourceManagement.addEnergy(500);
-        ResourceManagement.addResources(500);
-        DroneManagement.start();
-        DroneManagement.addDrone(new DefaultDrone());
-        DroneManagement.addDrone(new DefaultDrone());
-        DroneManagement.addDrone(new DefaultDrone());
-        DroneManagement.addDrone(new DefaultDrone());
-        System.out.println(ResourceManagement.print());
-        System.out.println();
-
+        resourceManagement.addEnergy(500);
+        resourceManagement.addResources(500);
+        droneManagement.addDrone(new DefaultDrone());
+        droneManagement.addDrone(new DefaultDrone());
+        droneManagement.addDrone(new DefaultDrone());
+        droneManagement.addDrone(new DefaultDrone());
+        System.out.println(resourceManagement + "\n");
     }
 
     @Test
@@ -44,14 +47,14 @@ public class Building_Test {
             assert false;
         }
 
-        System.out.println(ResourceManagement.print() + "\n");
+        System.out.println(resourceManagement + "\n");
         System.out.println(extr + "\n");
 
         for (int i = 0; i < 20; i++) {
             extr.update();
             System.out.printf("%2d: %s%n", i, extr);
         }
-        System.out.println(ResourceManagement.print());
+        System.out.println(resourceManagement);
         System.out.println(extr);
         System.out.println();
     }
@@ -60,12 +63,12 @@ public class Building_Test {
     public void testUpdateSolarpannels() {
         Solarpannels sol = new Solarpannels();
         sol.startConstruction(Type.DEFAULTDRONE, 2);
-        System.out.println(ResourceManagement.print());
+        System.out.println(resourceManagement);
         System.out.println(sol);
 
         for (int i = 0; i < 5; i++) {
             sol.update();
-            System.out.println(ResourceManagement.print());
+            System.out.println(resourceManagement);
             System.out.printf("%2d: %s%n", i, sol);
         }
         System.out.println(sol);
@@ -75,18 +78,18 @@ public class Building_Test {
     @Test
     public void testUpdateDroneFactory() {
         DroneFactory dro = new DroneFactory();
-        System.out.println(DroneManagement.print());
+        System.out.println(droneManagement);
         System.out.println();
 
         dro.startConstruction(Type.DEFAULTDRONE, 4);
-        System.out.println(ResourceManagement.print());
-        System.out.println(DroneManagement.print());
+        System.out.println(resourceManagement);
+        System.out.println(droneManagement);
         System.out.println();
         System.out.println(dro);
 
         for (int i = 0; i < 5; i++) {
             dro.update();
-            System.out.println(DroneManagement.print());
+            System.out.println(droneManagement);
         }
         loadBuilding(dro);
 
@@ -98,12 +101,12 @@ public class Building_Test {
 
         for (int i = 0; i < 3; i++) {
             System.out.println();
-            System.out.println(ResourceManagement.print());
+            System.out.println(resourceManagement);
             System.out.println(i + ": " + dro);
             dro.update();
         }
         System.out.println();
-        System.out.println(DroneManagement.print());
+        System.out.println(droneManagement);
         System.out.println(dro);
         System.out.println();
     }

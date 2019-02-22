@@ -20,9 +20,13 @@ import java.util.List;
  * <p>
  * Speichert die Kosten, Bauzeit,
  * <p>
- * ID: 0 = Energy, 1 = Production; 2 = Research; 3 = Resources; 4 = Vault
  */
 public abstract class Building {
+    @Inject
+    DroneManagement droneManagement;
+    @Inject
+    ResourceManagement resourceManagement;
+
     protected Type type;
     //ID des speziellen Gebaeudes
     protected int id;
@@ -111,10 +115,10 @@ public abstract class Building {
      */
     public void startConstruction(Type droneId, int droneCount) {
         if (!inConstruction()) {
-            workers = DroneManagement.giveDronesWork(droneId, droneCount);
+            workers = droneManagement.giveDronesWork(droneId, droneCount);
             if (!hasResources) {
-                if (ResourceManagement.hasResources(constructionCost)) {
-                    ResourceManagement.removeResources(constructionCost);
+                if (resourceManagement.hasResources(constructionCost)) {
+                    resourceManagement.removeResources(constructionCost);
                     hasResources = true;
                 }
             }
@@ -143,7 +147,7 @@ public abstract class Building {
 
     public void addMoreWorkers(Type droneType, int amount) {
         if (workers != null) {
-            workers.addAll(DroneManagement.giveDronesWork(droneType, amount));
+            workers.addAll(droneManagement.giveDronesWork(droneType, amount));
         }
     }
 

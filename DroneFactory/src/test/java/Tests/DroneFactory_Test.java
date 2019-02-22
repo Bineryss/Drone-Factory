@@ -1,3 +1,5 @@
+package Tests;
+
 import ImportandEnums.EnergyConnectionEnum;
 import ImportandEnums.ResourceConnectionsEnum;
 import ImportandEnums.Type;
@@ -13,20 +15,26 @@ import SpecificExceptions.BuildingUnfinishedException;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.inject.Inject;
+
 public class DroneFactory_Test {
+    @Inject
+    DroneManagement droneManagement;
+    @Inject
+    BuildingManagement buildingManagement;
+    @Inject
+    ResourceManagement resourceManagement;
+
     private DroneFactory droFac;
 
     @Before
     public void start() {
-        DroneManagement.start();
-        ResourceManagement.start();
-        ResourceManagement.addResources(1000);
-        ResourceManagement.addEnergy(1000);
-        BuildingManagement.start();
-        DroneManagement.addDrone(new DefaultDrone());
-        DroneManagement.addDrone(new DefaultDrone());
-        DroneManagement.addDrone(new DefaultDrone());
-        DroneManagement.addDrone(new DefaultDrone());
+        resourceManagement.addResources(1000);
+        resourceManagement.addEnergy(1000);
+        droneManagement.addDrone(new DefaultDrone());
+        droneManagement.addDrone(new DefaultDrone());
+        droneManagement.addDrone(new DefaultDrone());
+        droneManagement.addDrone(new DefaultDrone());
 
         droFac = new DroneFactory();
         droFac.startConstruction(Type.DEFAULTDRONE, 4);
@@ -68,11 +76,11 @@ public class DroneFactory_Test {
         droFac.addDroneProducerExtension(Type.DEFAULTDRONE);
         System.out.println(droFac);
         droFac.activatedProducer();
-        DroneManagement.print();
+        System.out.println(droneManagement);
         for (int i = 0; i < 25; i++) {
             droFac.update();
             loadBuilding(droFac,5,5);
-            System.out.print(DroneManagement.print());
+            System.out.print(droneManagement);
             System.out.printf("%d: Die Factory ist am Produzieren: %s%n", i, droFac);
         }
     }

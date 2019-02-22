@@ -3,7 +3,12 @@ package Production.Factories.Connector;
 import ImportandEnums.Type;
 import Management.Resources.ResourceManagement;
 
+import javax.inject.Inject;
+
 public class DirectEnergyCon implements EnergyConnection {
+    @Inject
+    ResourceManagement resourceManagement;
+
     private int energyUse;
 
     public DirectEnergyCon(Type type) {
@@ -12,17 +17,17 @@ public class DirectEnergyCon implements EnergyConnection {
 
     @Override
     public boolean hasEnergy() {
-        return ResourceManagement.hasResources(energyUse);
+        return resourceManagement.hasResources(energyUse);
     }
 
     @Override
     public void useEnergy() {
-        ResourceManagement.useEnergy(energyUse);
+        resourceManagement.useEnergy(energyUse);
     }
 
     @Override
     public void transferEnergy(int amount) {
-        ResourceManagement.addEnergy(amount);
+        resourceManagement.addEnergy(amount);
     }
 
 }
