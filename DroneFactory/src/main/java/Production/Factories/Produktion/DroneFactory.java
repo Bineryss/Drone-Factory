@@ -1,6 +1,7 @@
 package Production.Factories.Produktion;
 
 import BuildingExtensions.DroneProducerExt;
+import ImportandEnums.DroneTypes;
 import Management.DroneManagement;
 import ImportandEnums.Type;
 import Production.Dronen.Drone;
@@ -21,7 +22,7 @@ public class DroneFactory extends Building {
     private int workStatus;
     private boolean isWorking;
 
-    private static List<Type> produceableDronesId;
+    private static List<DroneTypes> produceableDronesId;
     private Drone producedElement;
 
     private DroneProducerExt prod;
@@ -32,8 +33,8 @@ public class DroneFactory extends Building {
         super(Type.DRONEFACTORY);
         cc++;
         id = cc;
-        produceableDronesId = new LinkedList<>();
-        produceableDronesId.add(Type.DEFAULTDRONE);
+        produceableDronesId = new LinkedList<DroneTypes>();
+        produceableDronesId.add(DroneTypes.DEFAULTDRONE);
     }
 
     /**
@@ -56,7 +57,7 @@ public class DroneFactory extends Building {
         }
     }
 
-    public void addDroneProducerExtension(Type drone) {
+    public void addDroneProducerExtension(DroneTypes drone) {
         if (isReady()) {
             prod = new DroneProducerExt(drone);
         }
@@ -70,7 +71,7 @@ public class DroneFactory extends Building {
         }
     }
 
-    public void startProduction(Type drone) throws BuildingUnfinishedException {
+    public void startProduction(DroneTypes drone) throws BuildingUnfinishedException {
         if (isReady() && !activateProd) {
             startProductionAutomatic(drone);
         }else {
@@ -83,7 +84,7 @@ public class DroneFactory extends Building {
      *
      * @param drone: Typ der Drone
      */
-    private void startProductionAutomatic(Type drone) {
+    private void startProductionAutomatic(DroneTypes drone) {
         if (canBeBuild(drone)) {
             if (!isWorking && isReady()) {
                 if (storage.hasResources(drone.getCosts())) {
@@ -117,7 +118,7 @@ public class DroneFactory extends Building {
         }
     }
 
-    private boolean canBeBuild(Type tmp) {
+    private boolean canBeBuild(DroneTypes tmp) {
         return produceableDronesId.contains(tmp);
     }
 

@@ -1,8 +1,6 @@
 package Production.Factories;
 
-import ImportandEnums.EnergyConnectionEnum;
-import ImportandEnums.ResourceConnectionsEnum;
-import ImportandEnums.Type;
+import ImportandEnums.*;
 import Management.DroneManagement;
 import Management.Resources.Energy;
 import Management.Resources.ResourceManagement;
@@ -20,7 +18,6 @@ import java.util.List;
  * <p>
  * Speichert die Kosten, Bauzeit,
  * <p>
- * ID: 0 = Energy, 1 = Production; 2 = Research; 3 = Resources; 4 = Vault
  */
 public abstract class Building {
     protected Type type;
@@ -109,7 +106,7 @@ public abstract class Building {
      * <p>
      * Wenn Drone keine arbeitskraft mehr, dann wird bau gestopt, neu Drone muss uebergen werden.
      */
-    public void startConstruction(Type droneId, int droneCount) {
+    public void startConstruction(DroneTypes droneId, int droneCount) {
         if (!inConstruction()) {
             workers = DroneManagement.giveDronesWork(droneId, droneCount);
             if (!hasResources) {
@@ -141,7 +138,7 @@ public abstract class Building {
         }
     }
 
-    public void addMoreWorkers(Type droneType, int amount) {
+    public void addMoreWorkers(DroneTypes droneType, int amount) {
         if (workers != null) {
             workers.addAll(DroneManagement.giveDronesWork(droneType, amount));
         }
