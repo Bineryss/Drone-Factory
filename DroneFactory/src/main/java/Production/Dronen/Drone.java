@@ -1,35 +1,39 @@
 package Production.Dronen;
 
-import ImportandEnums.Type;
+import ImportandEnums.DroneTypes;
 import Management.Resources.Energy;
 import Management.Resources.Storage;
 
 /**
  * <h3>Drone</h3>
  * Eine Drone, verwaltet produktionskosten, erhaltungskosten, produktivität, lebensspanne und noch mehr.
- * Von Ihr koennen spezialisierte Dronen erben.
  * <p>
- * 0 = DefaultDrone
  */
-public abstract class Drone {
-    protected Type type;
-
-    //Kosten zum Dronen Produzieren
-    protected int costs;
-    //Produktivitaet der Drone
-    protected int efficiency;
-    protected boolean isOccupied;
+public class Drone {
+    private DroneTypes type;
+    private int costs;
+    private int productionTime;
+    private int efficiency;
+    private boolean isOccupied;
 
     //Energie Speicher
     protected Energy energy;
 
     //Resource Speicher
-    protected Storage resource;
-
-    protected int producetime;
+    private Storage resource;
 
 
-    //Gibt das Energie Level der Drone an
+    public Drone(DroneTypes type) {
+        this.type = type;
+        costs = type.getCosts();
+        efficiency = type.getEfficiency();
+        isOccupied = false;
+        energy = new Energy(type.getMaxCapacityEnergy(), type.getEnergyUse(), type.getMaxCapacity());
+        resource = new Storage(type.getMaxCapacity());
+        productionTime = type.getConstructionTime();
+    }
+
+
     public boolean hasEnergy() {
         return energy.hasEnergy();
     }
@@ -42,17 +46,15 @@ public abstract class Drone {
         return energy.hasMaxEnergy();
     }
 
-    public int getProducetime() {
-        return producetime;
+    public int getProductionTime() {
+        return productionTime;
     }
 
-    //Resourcenkosten um Drone zu produzieren
     public int getCosts() {
         return costs;
     }
 
-    //return die efficiency, mit der am gebauede gearbeitet wird
-    public int work() {
+    public int workEfficiency() {
         if (!isDead()) {
             if (hasEnergy()) {
                 energy.useEnergy();
@@ -65,6 +67,7 @@ public abstract class Drone {
     public void occupied() {
         isOccupied = true;
     }
+
     public boolean hasWorkToDo() {
         return isOccupied;
     }
@@ -82,7 +85,14 @@ public abstract class Drone {
         return energy.availableEnergy() == 0;
     }
 
-    public Type getType() {
+    public DroneTypes getType() {
         return type;
+    }
+
+    /**
+     * @return: " {D}: Symbol einer Drone und uebrige arbeitskraft.
+     */
+    public String toString() {
+        return type.getIcon() + " : " + energyLeft();
     }
 }

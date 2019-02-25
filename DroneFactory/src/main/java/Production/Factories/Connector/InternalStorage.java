@@ -25,7 +25,7 @@ public class InternalStorage implements ResourceConnection {
     public void storeResources(int amount) {
         if (transportDrone != null && !transportDrone.isDead()) {
             ResourceManagement.addResources(storage.empty());
-            transportDrone.work();
+            transportDrone.workEfficiency();
         } else {
             System.out.println("Keine Drone mehr!");
             transportDrone = null;

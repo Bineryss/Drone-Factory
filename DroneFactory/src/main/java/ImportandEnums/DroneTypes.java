@@ -1,23 +1,13 @@
 package ImportandEnums;
 
-public enum Type {
-
+public enum DroneTypes {
     /**
-     * Building Costs
+     * Drone Costs
      */
-    SOLARPANNEL("*~//", 10, 0, 5, 0, 0, 10),
+    BUILDINGDRONE("{B}",50,100,12,1,100, 5),
+    CARRIERDRONE("{C}",20,100,10,1,20, 0),
+    DEFAULTDRONE("{D}",10,10,4,1,10, 1);
 
-    DRONEFACTORY("[>%]", 50, 150, 20, 10, 200, 1),
-
-    LABORATORIUM("[*]O", 100, 20, 20, 20, 500, 2),
-
-    EXTRACTOR("[|-O", 20, 200, 10, 5, 100, 5),
-
-    VAULT("[__]", 40, 1000, 6, 1, 100, 0);
-
-    /**
-     * Forschungsprojekte kosten
-     */
 
     private final String ICON;
 
@@ -28,7 +18,7 @@ public enum Type {
     private int maxCapacityEnergy;
     private int efficiency;
 
-    Type(String ICON, int costs, int maxCapacity, int constructionTime, int energyUse, int maxCapacityEnergy, int efficiency) {
+    DroneTypes(String ICON, int costs, int maxCapacity, int constructionTime, int energyUse, int maxCapacityEnergy, int efficiency) {
         this.ICON = ICON;
         this.costs = costs;
         this.maxCapacity = maxCapacity;
@@ -66,4 +56,3 @@ public enum Type {
         return ICON;
     }
 }
-

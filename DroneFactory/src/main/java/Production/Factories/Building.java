@@ -2,16 +2,13 @@ package Production.Factories;
 
 import ImportandEnums.*;
 import Management.DroneManagement;
-import Management.Resources.Energy;
 import Management.Resources.ResourceManagement;
-import Management.Resources.Storage;
 import ImportandEnums.Type;
 import Production.Dronen.Drone;
 import Production.Factories.Connector.*;
 import SpecificExceptions.BuildingUnfinishedException;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Abstrakte Kalsse fuer Gebaeude
@@ -127,9 +124,9 @@ public abstract class Building {
     private void build() {
         for (Drone worker : workers) {
             if ((construction - worker.efficiency()) > 0) {
-                construction -= worker.work();
+                construction -= worker.workEfficiency();
             } else {
-                worker.work();
+                worker.workEfficiency();
                 construction = 0;
                 worker.hasFinishedWork();
                 workers = null;
