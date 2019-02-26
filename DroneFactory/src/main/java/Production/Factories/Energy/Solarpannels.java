@@ -1,6 +1,7 @@
 package Production.Factories.Energy;
 
-import ImportandEnums.Type;
+import ImportandEnums.BuildingTypes;
+import Management.ManagementSystems.ResourceManagement;
 import Production.Factories.Building;
 
 /**
@@ -12,19 +13,23 @@ public class Solarpannels extends Building {
     private static int cc = -1;
 
     public Solarpannels() {
-        super(Type.SOLARPANNEL);
+        super(BuildingTypes.SOLARPANNEL);
         cc++;
         id = cc;
     }
 
     @Override
-    public void updateBuilding() {
+    public void updateBuilding()  {
         if (isReady()) {
-            energy.transferEnergy(efficiency);
+            generateEnergy();
         }
     }
 
+    private void generateEnergy() {
+        ResourceManagement.addEnergy(efficiency);
+    }
+
     public String toString() {
-        return "[ " + type.getIcon() + " || Energy: " + efficiency + "||]" + constructionStatus();
+        return "[ " + buildingTypes.getIcon() + " || Energy: " + efficiency + "||]" + constructionStatus();
     }
 }

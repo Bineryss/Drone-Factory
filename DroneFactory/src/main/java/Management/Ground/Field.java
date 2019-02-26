@@ -1,8 +1,8 @@
 //package Management.Ground;
 //
-//import ImportandEnums.Type;
-//import Management.BuildingManagement;
-//import Management.DroneManagement;
+//import ImportandEnums.BuildingTypes;
+//import Management.ManagementSystems.BuildingManagement;
+//import Management.ManagementSystems.DroneManagement;
 //import Production.Dronen.Drone;
 //import Production.Factories.Building;
 //import Production.Factories.Energy.Solarpannels;
@@ -24,7 +24,7 @@
 //    public void placeBuilding(int id) {
 //
 //        //TODO: Durch eingaben ersetzten!
-//        Type droneID = Type.DEFAULTDRONE;
+//        BuildingTypes droneID = BuildingTypes.DEFAULTDRONE;
 //        int droneCount = 1;
 //
 //        switch (id) {
@@ -48,7 +48,7 @@
 //    }
 //
 //    public void addBulding(Building tmp, Drone drone, int count) {
-//        tmp.startConstruction(drone.getType(), count);
+//        tmp.startConstruction(drone.getBuildingTypes(), count);
 //        BuildingManagement.addBuilding(tmp);
 //    }
 //

@@ -1,20 +1,17 @@
 package Production.Factories;
 
-import ImportandEnums.DroneTypes;
-import ImportandEnums.EnergyConnectionEnum;
-import ImportandEnums.ResourceConnectionsEnum;
-import ImportandEnums.Type;
-import Management.DroneManagement;
-import Management.Resources.ResourceManagement;
-import Management.Resources.Storage;
-import ImportandEnums.Type;
+import ImportandEnums.*;
+import Management.ManagementSystems.DroneManagement;
+import Management.ManagementSystems.ResourceManagement;
+import ImportandEnums.BuildingTypes;
 import Production.Dronen.Drone;
 import Production.Factories.Connector.*;
 import SpecificExceptions.BuildingUnfinishedException;
-import org.springframework.context.annotation.ComponentScan;
+import SpecificExceptions.DroneNotEnoughEnergyException;
+import SpecificExceptions.NotEnoughEnergyException;
+import SpecificExceptions.NotEnoughResourceException;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Abstrakte Kalsse fuer Gebaeude
@@ -22,14 +19,8 @@ import java.util.List;
  * Speichert die Kosten, Bauzeit,
  * <p>
  */
-@ComponentScan("Management")
 public abstract class Building {
-    @Inject
-    DroneManagement droneManagement;
-    @Inject
-    ResourceManagement resourceManagement;
-
-    protected Type type;
+    protected BuildingTypes buildingTypes;
     //ID des speziellen Gebaeudes
     protected int id;
     protected EnergyConnection energy;
@@ -41,14 +32,15 @@ public abstract class Building {
     private boolean hasResources;
     private ArrayList<Drone> workers;
 
-    protected Building(Type type) {
-        this.type = type;
+    public Building(BuildingTypes type) {
+        this.buildingTypes = type;
         constructionCost = type.getCosts();
         construction = type.getConstructionTime();
         efficiency = type.getEfficiency();
+        energy = new EnergyConnection(type);
     }
 
-    public void update() {
+    public void update() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException {
         if (!isReady()) {
             build();
         } else {
@@ -56,25 +48,7 @@ public abstract class Building {
         }
     }
 
-    protected abstract void updateBuilding();
-
-
-    public void connectEnergy(EnergyConnectionEnum con) throws BuildingUnfinishedException {
-        if (isReady()) {
-            EnergyConnection tmp = null;
-            switch (con) {
-                case BATTERIES:
-                    tmp = new Batteries(type);
-                    break;
-                case DIRECTENERGYCONNECT:
-                    tmp = new DirectEnergyCon(type);
-                    break;
-            }
-            energy = tmp;
-        } else {
-            throw new BuildingUnfinishedException();
-        }
-    }
+    protected abstract void updateBuilding() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException;
 
     public EnergyConnection getEnergy() throws BuildingUnfinishedException {
         if (energy != null) {
@@ -89,10 +63,10 @@ public abstract class Building {
             ResourceConnection tmp = null;
             switch (con) {
                 case INTERNALSTORAGE:
-                    tmp = new InternalStorage(type);
+                    tmp = new InternalStorage(buildingTypes);
                     break;
                 case DIRECTRESOURCECONNECT:
-                    //tmp = new DirectResourceConnection(type);
+                    tmp = new DirectResourceCon();
                     break;
             }
             storage = tmp;
@@ -111,16 +85,16 @@ public abstract class Building {
     }
 
     /**
-     * droneType: zeigt den Dronen typ, der fuer das bauen genutzt werden soll
+     * droneId: zeigt den Dronen typ, der fuer das bauen genutzt werden soll
      * <p>
      * Wenn Drone keine arbeitskraft mehr, dann wird bau gestopt, neu Drone muss uebergen werden.
      */
-    public void startConstruction(DroneTypes droneType, int droneCount) {
+    public void startConstruction(DroneTypes droneId, int droneCount) throws NotEnoughResourceException {
         if (!inConstruction()) {
-            workers = droneManagement.giveDronesWork(droneType, droneCount);
+            workers = DroneManagement.giveDronesWork(droneId, droneCount);
             if (!hasResources) {
-                if (resourceManagement.hasResources(constructionCost)) {
-                    resourceManagement.removeResources(constructionCost);
+                if (ResourceManagement.hasResources(constructionCost)) {
+                    ResourceManagement.removeResources(constructionCost);
                     hasResources = true;
                 }
             }
@@ -133,12 +107,12 @@ public abstract class Building {
         return construction == 0;
     }
 
-    private void build() {
+    private void build() throws DroneNotEnoughEnergyException {
         for (Drone worker : workers) {
             if ((construction - worker.efficiency()) > 0) {
-                construction -= worker.work();
+                construction -= worker.workEfficiency();
             } else {
-                worker.work();
+                worker.workEfficiency();
                 construction = 0;
                 worker.hasFinishedWork();
                 workers = null;
@@ -149,31 +123,9 @@ public abstract class Building {
 
     public void addMoreWorkers(DroneTypes droneType, int amount) {
         if (workers != null) {
-            workers.addAll(droneManagement.giveDronesWork(droneType, amount));
+            workers.addAll(DroneManagement.giveDronesWork(droneType, amount));
         }
     }
-
-
-    public void loadEnergy(int amount) {
-        if (isReady()) {
-            if (energy.canStore(amount)) {
-                energy.loadEnergy(amount);
-            }else {
-                System.out.println("So viel Energie kann nicht gelagert werden!");
-            }
-        } else {
-            System.out.println("Gebaude nicht fertig!");
-        }
-    }
-
-    public void loadResources(int amount) {
-        if (storage.canStore(amount) && isReady()) {
-            storage.addResources(amount);
-        } else {
-            System.out.println("So viel kannst du nicht lagern!");
-        }
-    }
-
 
     protected String constructionStatus() {
         StringBuilder out = new StringBuilder();
@@ -189,7 +141,7 @@ public abstract class Building {
     }
 
     protected String printResource() {
-        return String.format("%s %S", energy, storage);
+        return String.format("%s%S", energy, storage);
     }
 
     protected boolean isReady() {
@@ -200,11 +152,11 @@ public abstract class Building {
         return id;
     }
 
-    public Type getType() {
-        return type;
+    public BuildingTypes getBuildingTypes() {
+        return buildingTypes;
     }
 
     public String getIcon() {
-        return type.getIcon();
+        return buildingTypes.getIcon();
     }
 }

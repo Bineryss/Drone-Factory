@@ -1,47 +1,42 @@
 package Production.Dronen;
 
 import ImportandEnums.DroneTypes;
-import ImportandEnums.Type;
 import Management.Resources.Energy;
 import Management.Resources.Storage;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import SpecificExceptions.DroneNotEnoughEnergyException;
+import SpecificExceptions.NotEnoughEnergyException;
 
 /**
  * <h3>Drone</h3>
  * Eine Drone, verwaltet produktionskosten, erhaltungskosten, produktivität, lebensspanne und noch mehr.
- * Von Ihr koennen spezialisierte Dronen erben.
  * <p>
  */
 public class Drone {
-    private final DroneTypes type;
-    private final String icon;
-
-    //Kosten zum Dronen Produzieren
+    private DroneTypes type;
     private int costs;
-    //Produktivitaet der Drone
+    private int productionTime;
     private int efficiency;
     private boolean isOccupied;
 
-    private Energy energy;
+    //Energie Speicher
+    protected Energy energy;
+
+    //Resource Speicher
     private Storage resource;
 
-    private int constructionTime;
 
-    public Drone(DroneTypes type, String icon, int costs, int efficiency, int energyUse, int energyCapacity, int resourceCapacity, int constructionTime) {
+    public Drone(DroneTypes type) {
         this.type = type;
-        this.icon = icon;
-        this.costs = costs;
-        this.efficiency = efficiency;
+        costs = type.getCosts();
+        efficiency = type.getEfficiency();
         isOccupied = false;
-        energy = new Energy(energyCapacity, energyUse);
-        resource = new Storage(resourceCapacity);
-        this.constructionTime = constructionTime;
+        energy = new Energy(type.getMaxCapacityEnergy(), type.getEnergyUse(), type.getMaxCapacity());
+        resource = new Storage(type.getMaxCapacity());
+        productionTime = type.getConstructionTime();
     }
 
 
-    //Gibt das Energie Level der Drone an
-    private boolean hasEnergy() {
+    public boolean hasEnergy() {
         return energy.hasEnergy();
     }
 
@@ -50,23 +45,25 @@ public class Drone {
     }
 
     public boolean hasMaxEnergy() {
-        return energy.hasMaxEnergy();
+        return energy.isFull();
     }
 
-    public int getConstructionTime() {
-        return constructionTime;
+    public int getProductionTime() {
+        return productionTime;
     }
 
-    //Resourcenkosten um Drone zu produzieren
     public int getCosts() {
         return costs;
     }
 
-    //return die efficiency, mit der am gebauede gearbeitet wird
-    public int work() {
+    public int workEfficiency() throws DroneNotEnoughEnergyException {
         if (!isDead()) {
             if (hasEnergy()) {
-                energy.useEnergy();
+                try {
+                    energy.useEnergy();
+                } catch (NotEnoughEnergyException e) {
+                    throw new DroneNotEnoughEnergyException();
+                }
             }
             return efficiency;
         }
@@ -98,12 +95,10 @@ public class Drone {
         return type;
     }
 
-    public String getIcon() {
-        return icon;
-    }
-
+    /**
+     * @return: " {D}: Symbol einer Drone und uebrige arbeitskraft.
+     */
     public String toString() {
-        return icon + ":" + energyLeft();
+        return type.getIcon() + " : " + energyLeft();
     }
-
 }

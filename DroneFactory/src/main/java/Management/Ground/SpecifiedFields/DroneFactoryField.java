@@ -1,7 +1,7 @@
 //package Management.Ground.SpecifiedFields;
 //
-//import ImportandEnums.Type;
-//import Management.BuildingManagement;
+//import ImportandEnums.BuildingTypes;
+//import Management.ManagementSystems.BuildingManagement;
 //import Management.Ground.Field;
 //import Production.Dronen.Drone;
 //import Production.Factories.Produktion.DroneFactory;
@@ -16,7 +16,7 @@
 //    }
 //
 //    public void addBulding(DroneFactory tmp, Drone drone, int count) {
-//        tmp.startConstruction(drone.getType(), count);
+//        tmp.startConstruction(drone.getBuildingTypes(), count);
 //        BuildingManagement.addBuilding(tmp);
 //    }
 //
@@ -27,7 +27,7 @@
 //                //placedBuilding.loadResources(intResources());
 //                break;
 //            case 1:
-//                placedBuilding.startProduction(Type.DEFAULTDRONE);
+//                placedBuilding.startProduction(BuildingTypes.DEFAULTDRONE);
 //                break;
 //        }
 //    }

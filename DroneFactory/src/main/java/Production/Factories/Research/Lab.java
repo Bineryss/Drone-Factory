@@ -1,6 +1,6 @@
 package Production.Factories.Research;
 
-import ImportandEnums.Type;
+import ImportandEnums.BuildingTypes;
 import Production.Factories.Building;
 
 /**
@@ -13,7 +13,7 @@ public class Lab extends Building {
 
 
     public Lab() {
-        super(Type.LABORATORIUM);
+        super(BuildingTypes.LABORATORIUM);
         cc++;
         id = cc;
     }
@@ -24,7 +24,7 @@ public class Lab extends Building {
     }
 
     public String toString() {
-        return "[ " + type.getIcon() + " ]" + constructionStatus();
+        return "[ " + buildingTypes.getIcon() + " ]" + constructionStatus();
     }
 
 }

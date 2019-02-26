@@ -1,13 +1,14 @@
 package Production.Factories.Connector;
 
 import ImportandEnums.DroneTypes;
-import ImportandEnums.Type;
-import Management.DroneManagement;
-import Management.Resources.ResourceManagement;
+import ImportandEnums.BuildingTypes;
+import Management.ManagementSystems.*;
 import Management.Resources.Storage;
 import Production.Dronen.Drone;
-
-import javax.inject.Inject;
+import SpecificExceptions.DroneNotEnoughEnergyException;
+import SpecificExceptions.MissingTransportDrone;
+import SpecificExceptions.NotEnoughResourceException;
+import SpecificExceptions.NotEnoughStorageException;
 
 /**
  * Die Grundanbindung, an das Resourcemanagement.
@@ -16,35 +17,47 @@ import javax.inject.Inject;
  *
  */
 public class InternalStorage implements ResourceConnection {
-    @Inject
-    ResourceManagement resourceManagement;
-    @Inject
-    DroneManagement droneManagement;
-
     private Storage storage;
     private Drone transportDrone;
 
-    public InternalStorage(Type type) {
+    public InternalStorage(BuildingTypes type) {
         this.storage = new Storage(type.getMaxCapacity());
         this.transportDrone = null;
     }
 
-    @Override
-    public void storeResources(int amount) {
+    /**
+     * Ausladen des Internen Lagers
+     * Resourcen werden ins Hauptlager geschoben
+     * Es wird Energy von der Drone verbraucht
+     * @param amount
+     */
+    public void storeResources(int amount) throws NotEnoughResourceException, DroneNotEnoughEnergyException {
         if (transportDrone != null && !transportDrone.isDead()) {
-            resourceManagement.addResources(storage.empty());
-            transportDrone.work();
+            ResourceManagement.addResources(storage.removeResources(amount));
+            transportDrone.workEfficiency();
         } else {
             System.out.println("Keine Drone mehr!");
             transportDrone = null;
         }
     }
 
-    public void loadResources(int amount) {
+    /**
+     * Laed das Interne Lager auf
+     * Resourcen werden aus dem Hauptlager genommen
+     * Es wird Energy von der Drone verbraucht
+     * @param amount
+     */
+    public void loadResources(int amount) throws NotEnoughStorageException, DroneNotEnoughEnergyException, NotEnoughResourceException, MissingTransportDrone {
         if (storage.canStore(amount)) {
-            storage.addResources(amount);
+            if(transportDrone != null && !transportDrone.isDead()) {
+            ResourceManagement.removeResources(amount);
+                storage.addResources(amount);
+                transportDrone.workEfficiency();
+            }else {
+                throw new MissingTransportDrone();
+            }
         } else {
-            System.out.println("So viel kannst du nicht lagern!");
+            throw new NotEnoughStorageException();
         }
     }
 
@@ -59,7 +72,7 @@ public class InternalStorage implements ResourceConnection {
     }
 
     @Override
-    public void removeResources(int amount) {
+    public void useResources(int amount) throws NotEnoughResourceException {
         storage.removeResources(amount);
     }
 
@@ -75,7 +88,7 @@ public class InternalStorage implements ResourceConnection {
      * @param drone: Typ der Drone
      */
     public void addTransportDrone(DroneTypes drone) {
-        transportDrone = droneManagement.getFullDrone(drone);
+        transportDrone = DroneManagement.getFullDrone(drone);
     }
 
     public String toString() {

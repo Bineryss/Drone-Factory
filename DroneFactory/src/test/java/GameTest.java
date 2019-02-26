@@ -1,68 +1,51 @@
 
+import ImportandEnums.BuildingTypes;
 import ImportandEnums.DroneTypes;
-import Management.BuildingManagement;
-import Management.DroneManagement;
-import Management.Resources.ResourceManagement;
+import Management.ManagementSystems.*;
 import Production.Dronen.Drone;
-import Production.Factories.Connector.Batteries;
 import Production.Factories.Building;
-import Production.Factories.Energy.Solarpannels;
-import Production.Factories.Connector.InternalStorage;
-import Production.Factories.Produktion.DroneFactory;
-import Production.Factories.Resources.Extractor;
-import SpecificExceptions.BuildingUnfinishedException;
-import org.springframework.context.annotation.ComponentScan;
+import Production.Factories.Energy.*;
+import Production.Factories.Connector.*;
+import Production.Factories.Produktion.*;
+import Production.Factories.Resources.*;
+import SpecificExceptions.*;
 
-import javax.inject.Inject;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
-@ComponentScan("Management")
 public class GameTest {
-    @Inject
-    BuildingManagement buildingManagement;
-    @Inject
-    DroneManagement droneManagement;
-    @Inject
-    ResourceManagement resourceManagement;
 
-    public GameTest() {
-        resourceManagement.addEnergy(200);
-        resourceManagement.addResources(800);
+    private static void addBulding(Building tmp, DroneTypes type, int count) throws NotEnoughResourceException {
+        tmp.startConstruction(type, count);
+        BuildingManagement.addBuilding(tmp);
     }
 
-    private void addBulding(Building tmp, Drone drone, int count) {
-        tmp.startConstruction(drone.getType(), count);
-        buildingManagement.addBuilding(tmp);
-    }
-
-    private void newDrones(int n) {
+    private static void newDrones(DroneTypes type, int n) {
         for (int i = 0; i < n; i++) {
-            droneManagement.addDrone(DroneManagement.getBlueprint(DroneTypes.DEFAULTDRONE));
+            Drone tmp = new Drone(type);
+            DroneManagement.addDrone(tmp);
         }
     }
 
     public static void main(String[] args) {
-        GameTest game = new GameTest();
-        game.getRes();
-        game.newDrones(10);
+        ResourceManagement.addEnergy(200);
+        ResourceManagement.addResources(800);
+
+        newDrones(DroneTypes.DEFAULTDRONE, 10);
         int zug = 0;
         while (true) {
-            game.zug(zug++);
+            zug(zug++);
         }
     }
 
-    private void getRes() {
-        System.out.println(resourceManagement);
-    }
-
-    private void zug(int zug) {
-        buildingManagement.update();
+    private static void zug(int zug) {
+        BuildingManagement.update();
         boolean run = true;
         do {
             System.out.println("-----------Zug: " + zug + "---------------");
-            System.out.println(droneManagement);
-            System.out.println(droneManagement);
-            System.out.println(buildingManagement);
+            System.out.println(ResourceManagement.print());
+            DroneManagement.print();
+            BuildingManagement.print();
             try {
                 run = runEingabe();
             } catch (Exception e) {
@@ -72,70 +55,82 @@ public class GameTest {
         zug++;
     }
 
-    private boolean runEingabe() {
+    private static boolean runEingabe() {
         int eingabe;
         try {
-            switch (intEingabe("Waehle Aktion")) {
+            switch (intEingabe()) {
                 case 0:
-                    addBulding(new Solarpannels(), droneManagement.getDrone(DroneTypes.DEFAULTDRONE), 1);
+                    addBulding(new Solarpannels(), DroneTypes.DEFAULTDRONE, 1);
                     break;
                 case 1:
-                    addBulding(new DroneFactory(), droneManagement.getDrone(DroneTypes.DEFAULTDRONE), 1);
+                    addBulding(new DroneFactory(), DroneTypes.DEFAULTDRONE, 1);
                     break;
                 case 2:
                     System.out.println("Labor kommt noch");
                     break;
                 case 3:
-                    addBulding(new Extractor(), droneManagement.getDrone(DroneTypes.DEFAULTDRONE), 1);
+                    addBulding(new Extractor(), DroneTypes.DEFAULTDRONE, 1);
                     break;
                 case 4:
                     System.out.println("Vault kommt noch");
                     break;
                 case 5:
-                    //Extractor aufladen
-                    eingabe = intEingabe("Waehle Extractor");
-                    Batteries tmp = (Batteries) buildingManagement.getBuilding(new int[]{3, eingabe}).getEnergy();
-                    tmp.loadEnergy(intEingabe("Anzahl an Energy"));
-                    InternalStorage tmpS = (InternalStorage) ((Extractor) buildingManagement.getBuilding(new int[]{3, eingabe})).getStorage();
+//                    Extractor aufladen
+                    eingabe = intEingabe();
+                    InternalStorage tmpS = (InternalStorage) ((Extractor) BuildingManagement.getBuilding(BuildingTypes.EXTRACTOR, eingabe)).getStorage();
                     tmpS.addTransportDrone(DroneTypes.DEFAULTDRONE);
                     break;
                 case 6:
-                    buildingManagement.getBuilding(new int[]{intEingabe("Waehle Gebaeude Typ"), intEingabe("Waehle Gebaeude")}).addMoreWorkers(DroneTypes.DEFAULTDRONE, intEingabe("Anzahl der Dronen"));
+                    BuildingManagement.getBuilding(idToBuilding(intEingabe()), intEingabe()).addMoreWorkers(DroneTypes.DEFAULTDRONE, intEingabe());
                     break;
                 case 7:
-                    //Dronefactory Laden
-                    eingabe = intEingabe("Waehle Droneactory");
-                    Batteries tmp2 = (Batteries) buildingManagement.getBuilding(new int[]{1, eingabe}).getEnergy();
-                    tmp2.loadEnergy(intEingabe("Anzahl an Energy"));
-                    InternalStorage tmp3 = (InternalStorage) buildingManagement.getBuilding(new int[]{1, eingabe}).getStorage();
+//                    Dronefactory Laden
+                    eingabe = intEingabe();
+
+                    InternalStorage tmp3 = (InternalStorage) BuildingManagement.getBuilding(BuildingTypes.DRONEFACTORY, eingabe).getStorage();
                     tmp3.loadResources(100);
                     break;
                 case 8:
-                    DroneFactory tmpD = ((DroneFactory) buildingManagement.getBuilding(new int[]{1, intEingabe("Waehle Dronefactory")}));
+                    DroneFactory tmpD = ((DroneFactory) BuildingManagement.getBuilding(BuildingTypes.DRONEFACTORY, intEingabe()));
                     tmpD.startProduction(DroneTypes.DEFAULTDRONE);
                     System.out.println("New Production!");
                     break;
                 case 9:
                     return false;
             }
-        }catch (BuildingUnfinishedException e) {
-            System.out.println(e.getMessage());
+        } catch (BuildingUnfinishedException | NotEnoughResourceException | NotEnoughStorageException | DroneNotEnoughEnergyException | MissingTransportDrone e) {
+            System.out.printf("%s%n",e.getMessage());
+        } catch (InputMismatchException e) {
+            System.out.printf("Gebe ein Existierendes Gabauede an!%n");
         }
         return true;
     }
 
 
-    private static int intEingabe(String text) {
+    private static int intEingabe() {
         Scanner sc = new Scanner(System.in);
         int ausgabe;
         while (true) {
             try {
-                System.out.printf("%s: ", text);
+                System.out.print("Zahl: ");
                 ausgabe = Integer.parseInt(sc.nextLine());
                 return ausgabe;
             } catch (NumberFormatException e) {
                 System.out.println("Bitte eine ganze Zahl eingeben!");
             }
+        }
+    }
+
+    private static BuildingTypes idToBuilding(int type) {
+        switch (type) {
+            case 0:
+                return BuildingTypes.SOLARPANNEL;
+            case 1:
+                return BuildingTypes.DRONEFACTORY;
+            case 3:
+                return BuildingTypes.EXTRACTOR;
+            default:
+                throw new InputMismatchException();
         }
     }
 }

@@ -11,10 +11,6 @@ public class Storage extends Resource{
         super("Resource",maxCapacity);
     }
 
-    public boolean isFull() {
-        return count == maxCapacity;
-    }
-
     public int empty() {
         int tmp = count;
         count = 0;

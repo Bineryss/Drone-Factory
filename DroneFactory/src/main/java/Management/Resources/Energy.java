@@ -1,25 +1,27 @@
 package Management.Resources;
 
+import SpecificExceptions.NotEnoughEnergyException;
+import SpecificExceptions.NotEnoughResourceException;
+
 public class Energy extends Resource {
     private int energyUse;
 
     public Energy(int maxCapacity, int energyUse) {
-        super("Energy", -1);
+        super("Energy", maxCapacity);
 
-        this.maxCapacity = maxCapacity;
         this.energyUse = energyUse;
     }
+
     /**
      * Special Constructor for Drones only!
      *
      * @param maxCapacity
      * @param energyUse
-     * @param count
+     * @param placebo
      */
-    public Energy(int maxCapacity, int energyUse, int count) {
-        super("Energy", -1);
+    public Energy(int maxCapacity, int energyUse, int placebo) {
+        super("Energy",maxCapacity);
 
-        this.maxCapacity = maxCapacity;
         this.count = maxCapacity;
         this.energyUse = energyUse;
     }
@@ -34,16 +36,16 @@ public class Energy extends Resource {
         return 0;
     }
 
-    public int useEnergy() {
-        return removeResources(energyUse);
+    public int useEnergy() throws NotEnoughEnergyException {
+        try {
+            return removeResources(energyUse);
+        }catch (NotEnoughResourceException e) {
+            throw new NotEnoughEnergyException();
+        }
     }
 
     public boolean hasEnergy() {
         return hasResources(energyUse);
-    }
-
-    public boolean hasMaxEnergy() {
-        return count == maxCapacity;
     }
 
     public int availableEnergy() {

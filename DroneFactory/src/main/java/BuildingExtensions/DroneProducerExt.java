@@ -1,7 +1,6 @@
 package BuildingExtensions;
 
 import ImportandEnums.DroneTypes;
-import Management.DroneManagement;
 import Production.Dronen.Drone;
 
 import java.util.LinkedList;
@@ -11,13 +10,13 @@ public class DroneProducerExt implements Extension{
     private static final String ICON = "(%s): %d";
     private static int maxDronestorable;
 
-    private Drone blueprint;
+    private DroneTypes factorisedDrone;
     private List<Drone> drones;
     private List<DroneTransferExt> transfers;
 
     public DroneProducerExt(DroneTypes factoricedDrone) {
         maxDronestorable = 5;
-        this.blueprint = DroneManagement.getBlueprint(factoricedDrone);
+        this.factorisedDrone = factoricedDrone;
         drones = new LinkedList<>();
         transfers = new LinkedList<>();
     }
@@ -32,7 +31,7 @@ public class DroneProducerExt implements Extension{
 
 
     public void setProducion(DroneTypes drone) {
-        blueprint = DroneManagement.getBlueprint(drone);
+        factorisedDrone = drone;
     }
 
     public void setTransfer(DroneTransferExt transfer) {
@@ -41,7 +40,7 @@ public class DroneProducerExt implements Extension{
 
 
     public DroneTypes getDroneType() {
-        return blueprint.getType();
+        return factorisedDrone;
     }
 
     public void addDrone(Drone drone) {
@@ -49,7 +48,7 @@ public class DroneProducerExt implements Extension{
     }
 
     public String toString() {
-        return String.format(ICON, blueprint.getIcon(),drones.size());
+        return String.format(ICON, factorisedDrone.getIcon(),drones.size());
     }
 
     public boolean isFull() {

@@ -1,30 +1,20 @@
 package ImportandEnums;
 
-import Production.Dronen.Drone;
-import Production.Dronen.Normal.DefaultDrone;
-
-public enum Type {
+public enum BuildingTypes {
 
     /**
      * Building Costs
      */
-    SOLARPANNEL("*~//", 10, 0, 5, 0, 0),
+    SOLARPANNEL("*~//", 10, 0, 5, 0, 0, 10),
+    ENERGISER("~||~",5,0,2,0,500,0),
 
-    DRONEFACTORY("[>%]", 50, 150, 20, 10, 200),
+    DRONEFACTORY("[>%]", 50, 150, 20, 10, 200, 1),
 
-    LABORATORIUM("[*]O", 100, 20, 20, 20, 500),
+    LABORATORIUM("[*]O", 100, 20, 20, 20, 500, 2),
 
-    EXTRACTOR("[|-O", 20, 200, 10, 5, 100),
+    EXTRACTOR("[|-O", 20, 200, 10, 5, 100, 5),
 
-    VAULT("[__]", 40, 1000, 6, 1, 100),
-
-    /**
-     * Drone Costs
-     */
-    DEFAULTDRONE("<|>", 10, 10, 4, 1, 10),
-
-    CARRIERDRONE("<_>", 20, 100, 10, 2, 10);
-
+    VAULT("[__]", 40, 1000, 6, 1, 100, 0);
 
     /**
      * Forschungsprojekte kosten
@@ -37,14 +27,16 @@ public enum Type {
     private int constructionTime;
     private int energyUse;
     private int maxCapacityEnergy;
+    private int efficiency;
 
-    Type(String ICON, int costs, int maxCapacity, int constructionTime, int energyUse, int maxCapacityEnergy) {
+    BuildingTypes(String ICON, int costs, int maxCapacity, int constructionTime, int energyUse, int maxCapacityEnergy, int efficiency) {
         this.ICON = ICON;
         this.costs = costs;
         this.maxCapacity = maxCapacity;
         this.constructionTime = constructionTime;
         this.energyUse = energyUse;
         this.maxCapacityEnergy = maxCapacityEnergy;
+        this.efficiency = efficiency;
     }
 
     public int getCosts() {
@@ -67,12 +59,12 @@ public enum Type {
         return maxCapacityEnergy;
     }
 
-    public String getIcon() {
-        return ICON;
+    public int getEfficiency() {
+        return efficiency;
     }
 
-    public Drone getInstance() {
-        return new DefaultDrone();
+    public String getIcon() {
+        return ICON;
     }
 }
 
