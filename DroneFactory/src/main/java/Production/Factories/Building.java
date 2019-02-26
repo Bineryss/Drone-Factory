@@ -3,7 +3,7 @@ package Production.Factories;
 import ImportandEnums.*;
 import Management.ManagementSystems.DroneManagement;
 import Management.ManagementSystems.ResourceManagement;
-import ImportandEnums.Type;
+import ImportandEnums.BuildingTypes;
 import Production.Dronen.Drone;
 import Production.Factories.Connector.*;
 import SpecificExceptions.BuildingUnfinishedException;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * <p>
  */
 public abstract class Building {
-    protected Type type;
+    protected BuildingTypes buildingTypes;
     //ID des speziellen Gebaeudes
     protected int id;
     protected EnergyConnection energy;
@@ -29,8 +29,8 @@ public abstract class Building {
     private boolean hasResources;
     private ArrayList<Drone> workers;
 
-    public Building(Type type) {
-        this.type = type;
+    public Building(BuildingTypes type) {
+        this.buildingTypes = type;
         constructionCost = type.getCosts();
         construction = type.getConstructionTime();
         efficiency = type.getEfficiency();
@@ -60,10 +60,10 @@ public abstract class Building {
             ResourceConnection tmp = null;
             switch (con) {
                 case INTERNALSTORAGE:
-                    tmp = new InternalStorage(type);
+                    tmp = new InternalStorage(buildingTypes);
                     break;
                 case DIRECTRESOURCECONNECT:
-                    //tmp = new DirectResourceConnection(type);
+                    tmp = new DirectResourceCon();
                     break;
             }
             storage = tmp;
@@ -149,11 +149,11 @@ public abstract class Building {
         return id;
     }
 
-    public Type getType() {
-        return type;
+    public BuildingTypes getBuildingTypes() {
+        return buildingTypes;
     }
 
     public String getIcon() {
-        return type.getIcon();
+        return buildingTypes.getIcon();
     }
 }

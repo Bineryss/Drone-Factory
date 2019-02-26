@@ -2,7 +2,7 @@ package Tests.FactoryTests;
 
 import org.junit.Before;
 
-public class EnergyDivider extends BuildingTest_Setup{
+public class Energise_Test extends BuildingTest_Setup{
 
     @Before
     public void intialize() {

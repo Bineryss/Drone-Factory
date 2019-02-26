@@ -1,14 +1,16 @@
 package Management.Resources;
 
+import SpecificExceptions.NotEnoughResourceException;
+
 public class Resource {
-    public final String NAME;
+    private String name;
 
     protected int maxCapacity;
     protected int count;
 
 
     public Resource(String name, int maxCapacity) {
-        NAME = name;
+        this.name = name;
         this.count = 0;
         //TODO: maxCapacity abhaengig von der anzahl an Lagern machen
         this.maxCapacity = maxCapacity;
@@ -24,14 +26,13 @@ public class Resource {
         }
     }
 
-    public int removeResources(int count) {
+    public int removeResources(int count) throws NotEnoughResourceException {
         if (hasResources(count)) {
             this.count -= count;
             return count;
         } else {
-            System.out.println("So viele Resourcen hast du nicht!");
+            throw new NotEnoughResourceException();
         }
-        return 0;
     }
 
     public boolean hasResources(int count) {
@@ -46,10 +47,6 @@ public class Resource {
         this.maxCapacity = maxCapacity;
     }
 
-    public int getMaxCapacity() {
-        return maxCapacity;
-    }
-
     public boolean canStore(int ammount) {
         if (maxCapacity >= (this.count + ammount)) {
             return true;
@@ -58,7 +55,11 @@ public class Resource {
         }
     }
 
+    public boolean isFull() {
+        return count == maxCapacity;
+    }
+
     public String toString() {
-        return String.format("| %s: %3d |", NAME, count);
+        return String.format("| %s: %3d |", name, count);
     }
 }

@@ -18,7 +18,7 @@
 //
 //    public static void addBuilding(Building building, int x, int y) {
 //        if (true) {
-//            switch (building.getType()) {
+//            switch (building.getBuildingTypes()) {
 //                case SOLARPANNEL:
 //                    ground[x][y] = new SolarpannelField((Solarpannels) building);
 //                    break;

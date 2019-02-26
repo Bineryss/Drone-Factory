@@ -1,12 +1,12 @@
 package ImportandEnums;
 
-public enum Type {
+public enum BuildingTypes {
 
     /**
      * Building Costs
      */
     SOLARPANNEL("*~//", 10, 0, 5, 0, 0, 10),
-    ENERGYDIVIDER("~||~",5,0,2,0,500,0),
+    ENERGISER("~||~",5,0,2,0,500,0),
 
     DRONEFACTORY("[>%]", 50, 150, 20, 10, 200, 1),
 
@@ -29,7 +29,7 @@ public enum Type {
     private int maxCapacityEnergy;
     private int efficiency;
 
-    Type(String ICON, int costs, int maxCapacity, int constructionTime, int energyUse, int maxCapacityEnergy, int efficiency) {
+    BuildingTypes(String ICON, int costs, int maxCapacity, int constructionTime, int energyUse, int maxCapacityEnergy, int efficiency) {
         this.ICON = ICON;
         this.costs = costs;
         this.maxCapacity = maxCapacity;

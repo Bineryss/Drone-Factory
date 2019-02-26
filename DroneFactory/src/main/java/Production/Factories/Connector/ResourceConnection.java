@@ -8,7 +8,7 @@ package Production.Factories.Connector;
  */
 public interface ResourceConnection {
 
-    void removeResources(int amount);
+    void useResources(int amount);
 
     boolean hasResources(int amount);
 
@@ -16,5 +16,4 @@ public interface ResourceConnection {
 
     boolean canStore(int amount);
 
-    void storeResources(int efficiency);
 }

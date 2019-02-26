@@ -43,7 +43,7 @@ public class Drone {
     }
 
     public boolean hasMaxEnergy() {
-        return energy.hasMaxEnergy();
+        return energy.isFull();
     }
 
     public int getProductionTime() {

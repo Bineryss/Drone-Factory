@@ -1,6 +1,6 @@
 package Production.Factories.Storage;
 
-import ImportandEnums.Type;
+import ImportandEnums.BuildingTypes;
 import Production.Factories.Building;
 
 public class Vault extends Building {
@@ -8,7 +8,7 @@ public class Vault extends Building {
 
 
     public Vault() {
-        super(Type.VAULT);
+        super(BuildingTypes.VAULT);
     }
 
     @Override

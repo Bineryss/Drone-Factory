@@ -47,5 +47,4 @@ public class ResourceManagement {
         str.append(resource.toString());
         return str.toString();
     }
-
 }

@@ -1,6 +1,6 @@
 package Production.Factories.Resources;
 
-import ImportandEnums.Type;
+import ImportandEnums.BuildingTypes;
 import Production.Factories.*;
 
 /**
@@ -13,7 +13,7 @@ public class Extractor extends Building {
     private static int cc = -1;
 
     public Extractor() {
-        super(Type.EXTRACTOR);
+        super(BuildingTypes.EXTRACTOR);
         cc++;
         id = cc;
     }
@@ -47,7 +47,7 @@ public class Extractor extends Building {
      * @return: Fertige Ausgabe
      */
     public String toString() {
-        return "[ " + type.getIcon() + " |" + printResource() + " ]" + constructionStatus();
+        return "[ " + buildingTypes.getIcon() + " |" + printResource() + " ]" + constructionStatus();
     }
 
 }

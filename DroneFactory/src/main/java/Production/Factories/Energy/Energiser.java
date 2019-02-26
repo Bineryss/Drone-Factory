@@ -1,6 +1,6 @@
 package Production.Factories.Energy;
 
-import ImportandEnums.Type;
+import ImportandEnums.BuildingTypes;
 import Management.ManagementSystems.ResourceManagement;
 import Production.Factories.Building;
 import Production.Factories.Connector.EnergyConnection;
@@ -10,11 +10,11 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class EnergyDivider extends Building {
+public class Energiser extends Building {
     private List<Building> connections;
 
-    public EnergyDivider() {
-        super(Type.ENERGYDIVIDER);
+    public Energiser() {
+        super(BuildingTypes.ENERGISER);
         connections = new LinkedList<>();
     }
 

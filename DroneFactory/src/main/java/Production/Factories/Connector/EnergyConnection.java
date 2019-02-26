@@ -1,12 +1,12 @@
 package Production.Factories.Connector;
 
-import ImportandEnums.Type;
+import ImportandEnums.BuildingTypes;
 import Management.Resources.Energy;
 
 public class EnergyConnection {
     private Energy energy;
 
-    public EnergyConnection(Type type) {
+    public EnergyConnection(BuildingTypes type) {
         energy = new Energy(type.getMaxCapacityEnergy(), type.getEnergyUse());
     }
 

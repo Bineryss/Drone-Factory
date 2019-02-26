@@ -42,10 +42,6 @@ public class Energy extends Resource {
         return hasResources(energyUse);
     }
 
-    public boolean hasMaxEnergy() {
-        return count == maxCapacity;
-    }
-
     public int availableEnergy() {
         return count;
     }

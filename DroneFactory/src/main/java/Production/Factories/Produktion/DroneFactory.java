@@ -3,7 +3,7 @@ package Production.Factories.Produktion;
 import BuildingExtensions.DroneProducerExt;
 import ImportandEnums.DroneTypes;
 import Management.ManagementSystems.DroneManagement;
-import ImportandEnums.Type;
+import ImportandEnums.BuildingTypes;
 import Production.Dronen.Drone;
 import Production.Factories.Building;
 import Production.Factories.Connector.InternalStorage;
@@ -31,7 +31,7 @@ public class DroneFactory extends Building {
 
 
     public DroneFactory() {
-        super(Type.DRONEFACTORY);
+        super(BuildingTypes.DRONEFACTORY);
         cc++;
         id = cc;
         produceableDronesId = new ArrayList<>();
@@ -94,7 +94,7 @@ public class DroneFactory extends Building {
                     isWorking = true;
                     producedElement = DroneManagement.typeToDrone(drone);
                     workStatus += drone.getConstructionTime();
-                    storage.removeResources(drone.getCosts());
+                    storage.useResources(drone.getCosts());
                 } else {
                     System.out.println("Du hast nicht genuegend Resourcen fuer diese Drone!");
                 }
@@ -126,7 +126,7 @@ public class DroneFactory extends Building {
     }
 
     public String toString() {
-        String print = "[ " + type.getIcon() + " |"+ printResource() + "| (";
+        String print = "[ " + buildingTypes.getIcon() + " |"+ printResource() + "| (";
         if (producedElement != null) {
             print += isWorkRemaining();
         }

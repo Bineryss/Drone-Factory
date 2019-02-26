@@ -1,9 +1,10 @@
 package Management.ManagementSystems;
 
-import ImportandEnums.Type;
+import ImportandEnums.BuildingTypes;
 import Production.Factories.Building;
 
 import java.util.HashMap;
+import java.util.InputMismatchException;
 
 /**
  * Speichert alle Fabriken, Labore, Energie dings in einer Liste.
@@ -11,10 +12,10 @@ import java.util.HashMap;
  */
 public class BuildingManagement {
     private static class BuildingKey {
-        Type type;
+        BuildingTypes type;
         static int number = 0;
 
-        BuildingKey(Type type) {
+        BuildingKey(BuildingTypes type) {
             this.type = type;
             number++;
         }
@@ -24,17 +25,17 @@ public class BuildingManagement {
 
     public static void addBuilding(Building... tmp) {
         for (Building building : tmp) {
-            buildings.put(new BuildingKey(building.getType()), building);
+            buildings.put(new BuildingKey(building.getBuildingTypes()), building);
         }
     }
 
-    public static Building getBuilding(Type type, int id) {
+    public static Building getBuilding(BuildingTypes type, int id) {
         for (BuildingKey key : buildings.keySet()) {
             if (key != null && key.type == type && buildings.get(key).getId() == id) {
                 return buildings.get(key);
             }
         }
-        return null;//TODO: Exception!
+        throw new InputMismatchException("No such id found!");
     }
 
     public static void print() {

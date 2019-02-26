@@ -1,6 +1,6 @@
 package Production.Factories.Energy;
 
-import ImportandEnums.Type;
+import ImportandEnums.BuildingTypes;
 import Production.Factories.Building;
 
 /**
@@ -12,7 +12,7 @@ public class Solarpannels extends Building {
     private static int cc = -1;
 
     public Solarpannels() {
-        super(Type.SOLARPANNEL);
+        super(BuildingTypes.SOLARPANNEL);
         cc++;
         id = cc;
     }
@@ -25,6 +25,6 @@ public class Solarpannels extends Building {
     }
 
     public String toString() {
-        return "[ " + type.getIcon() + " || Energy: " + efficiency + "||]" + constructionStatus();
+        return "[ " + buildingTypes.getIcon() + " || Energy: " + efficiency + "||]" + constructionStatus();
     }
 }

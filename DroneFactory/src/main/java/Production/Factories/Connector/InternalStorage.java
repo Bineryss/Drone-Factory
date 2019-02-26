@@ -1,7 +1,7 @@
 package Production.Factories.Connector;
 
 import ImportandEnums.DroneTypes;
-import ImportandEnums.Type;
+import ImportandEnums.BuildingTypes;
 import Management.ManagementSystems.*;
 import Management.Resources.Storage;
 import Production.Dronen.Drone;
@@ -16,15 +16,20 @@ public class InternalStorage implements ResourceConnection {
     private Storage storage;
     private Drone transportDrone;
 
-    public InternalStorage(Type type) {
+    public InternalStorage(BuildingTypes type) {
         this.storage = new Storage(type.getMaxCapacity());
         this.transportDrone = null;
     }
 
-    @Override
+    /**
+     * Ausladen des Internen Lagers
+     * Resourcen werden ins Hauptlager geschoben
+     * Es wird Energy von der Drone verbraucht
+     * @param amount
+     */
     public void storeResources(int amount) {
         if (transportDrone != null && !transportDrone.isDead()) {
-            ResourceManagement.addResources(storage.empty());
+            ResourceManagement.addResources(storage.removeResources(amount));
             transportDrone.workEfficiency();
         } else {
             System.out.println("Keine Drone mehr!");
@@ -32,9 +37,17 @@ public class InternalStorage implements ResourceConnection {
         }
     }
 
+    /**
+     * Laed das Interne Lager auf
+     * Resourcen werden aus dem Hauptlager genommen
+     * Es wird Energy von der Drone verbraucht
+     * @param amount
+     */
     public void loadResources(int amount) {
-        if (storage.canStore(amount)) {
+        if (storage.canStore(amount) && transportDrone != null && !transportDrone.isDead()) {
+            ResourceManagement.removeResources(amount);
             storage.addResources(amount);
+            transportDrone.workEfficiency();
         } else {
             System.out.println("So viel kannst du nicht lagern!");
         }
@@ -51,7 +64,7 @@ public class InternalStorage implements ResourceConnection {
     }
 
     @Override
-    public void removeResources(int amount) {
+    public void useResources(int amount) {
         storage.removeResources(amount);
     }
 

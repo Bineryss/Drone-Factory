@@ -5,6 +5,7 @@ import Production.Dronen.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 
 /**
  * Speichert alle Dronen, die Produziert wurden
@@ -59,7 +60,7 @@ public class DroneManagement {
                 return drones.get(key);
             }
         }
-        return null;
+        throw new InputMismatchException("no such id found!");
     }
 
     public static Drone getFullDrone(DroneTypes id) {
@@ -69,7 +70,7 @@ public class DroneManagement {
                 return full;
             }
         }
-        return null;//TODO: Exception
+        throw new InputMismatchException("no such id found!");
     }
 
     public static ArrayList<Drone> giveDronesWork(DroneTypes id, int droneCount) {
@@ -89,18 +90,6 @@ public class DroneManagement {
         return out;
     }
 
-//    private static int availableEnergy(DroneTypes id) {
-//        int availableEnergy = 0;
-//        ArrayList<Drone> search = cleanDroneList(id);
-//        for (Drone tmp : search) {
-//            availableEnergy += tmp.energyLeft();
-//        }
-//        return availableEnergy;
-//    }
-//
-//    private static String getIcon(DroneTypes id) {
-//        return id.getIcon();
-//    }
 
     private static ArrayList<Drone> cleanDroneList(DroneTypes id) {
         removeDead();
@@ -131,6 +120,19 @@ public class DroneManagement {
             }
         }
         System.out.printf("%s%n", out);
+    }
+
+    private static String getIcon(DroneTypes id) {
+        return id.getIcon();
+    }
+
+    private static int availableEnergy(DroneTypes id) {
+        int availableEnergy = 0;
+        ArrayList<Drone> search = cleanDroneList(id);
+        for (Drone tmp : search) {
+            availableEnergy += tmp.energyLeft();
+        }
+        return availableEnergy;
     }
 
 
