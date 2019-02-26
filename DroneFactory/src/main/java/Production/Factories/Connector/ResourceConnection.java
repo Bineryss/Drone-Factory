@@ -1,5 +1,8 @@
 package Production.Factories.Connector;
 
+import SpecificExceptions.DroneNotEnoughEnergyException;
+import SpecificExceptions.NotEnoughResourceException;
+
 /**
  * Die Resourcenverwaltung kann mit upgrades errsetzt werde.
  * So ist auf der ersten Stufe jedes Gebäude selbstverantwortlich
@@ -8,7 +11,7 @@ package Production.Factories.Connector;
  */
 public interface ResourceConnection {
 
-    void useResources(int amount);
+    void useResources(int amount) throws NotEnoughResourceException;
 
     boolean hasResources(int amount);
 
@@ -16,4 +19,5 @@ public interface ResourceConnection {
 
     boolean canStore(int amount);
 
+    void storeResources(int amount) throws NotEnoughResourceException, DroneNotEnoughEnergyException;
 }

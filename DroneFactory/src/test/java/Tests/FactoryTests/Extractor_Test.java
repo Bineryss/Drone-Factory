@@ -5,12 +5,15 @@ import Management.ManagementSystems.ResourceManagement;
 import Production.Factories.Connector.InternalStorage;
 import Production.Factories.Resources.Extractor;
 import SpecificExceptions.BuildingUnfinishedException;
+import SpecificExceptions.DroneNotEnoughEnergyException;
+import SpecificExceptions.NotEnoughEnergyException;
+import SpecificExceptions.NotEnoughResourceException;
 import org.junit.Test;
 
 public class Extractor_Test extends BuildingTest_Setup{
 
     @Test
-    public void testUpdateExtractor() {
+    public void testUpdateExtractor() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException {
         Extractor extr = new Extractor();
         extr.startConstruction(DroneTypes.DEFAULTDRONE, 2);
         for (int i = 0; i < 6; i++) {

@@ -3,6 +3,7 @@ package Tests;
 import ImportandEnums.DroneTypes;
 import Management.ManagementSystems.DroneManagement;
 import Production.Dronen.Drone;
+import SpecificExceptions.DroneNotEnoughEnergyException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,7 +24,7 @@ public class DroneManagement_Test {
     }
 
     @Test
-    public void testGetFullDrone() {
+    public void testGetFullDrone() throws DroneNotEnoughEnergyException {
         Drone testDroneHalf = new Drone(DroneTypes.DEFAULTDRONE);
         testDroneHalf.workEfficiency();
         DroneManagement.addDrone(testDroneHalf);

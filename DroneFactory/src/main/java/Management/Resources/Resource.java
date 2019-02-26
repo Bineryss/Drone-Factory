@@ -62,4 +62,8 @@ public class Resource {
     public String toString() {
         return String.format("| %s: %3d |", name, count);
     }
+
+    public String getName() {
+        return name;
+    }
 }

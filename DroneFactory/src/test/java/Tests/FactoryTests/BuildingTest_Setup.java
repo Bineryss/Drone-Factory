@@ -5,7 +5,7 @@ import Management.ManagementSystems.*;
 import Production.Dronen.Drone;
 import Production.Factories.Building;
 import Production.Factories.Connector.InternalStorage;
-import SpecificExceptions.BuildingUnfinishedException;
+import SpecificExceptions.*;
 import org.junit.Before;
 
 public class BuildingTest_Setup {
@@ -28,7 +28,7 @@ public class BuildingTest_Setup {
         try {
             InternalStorage tmp = (InternalStorage) building.getStorage();
             tmp.loadResources(resources);
-        } catch (BuildingUnfinishedException e) {
+        } catch (BuildingUnfinishedException | NotEnoughStorageException | DroneNotEnoughEnergyException | NotEnoughResourceException | MissingTransportDrone e) {
             System.out.println(e.getMessage());
         }
     }

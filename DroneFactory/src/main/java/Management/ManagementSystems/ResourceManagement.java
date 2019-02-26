@@ -1,6 +1,8 @@
 package Management.ManagementSystems;
 
 import Management.Resources.Resource;
+import SpecificExceptions.NotEnoughEnergyException;
+import SpecificExceptions.NotEnoughResourceException;
 
 public class ResourceManagement {
 
@@ -12,7 +14,7 @@ public class ResourceManagement {
         return resource;
     }
 
-    public static int removeResources(int cost) {
+    public static int removeResources(int cost) throws NotEnoughResourceException {
         resource.removeResources(cost);
         return cost;
     }
@@ -29,8 +31,12 @@ public class ResourceManagement {
         return energy;
     }
 
-    public static int useEnergy(int ammount) {
-        return energy.removeResources(ammount);
+    public static int useEnergy(int ammount) throws NotEnoughEnergyException {
+        try {
+            return energy.removeResources(ammount);
+        } catch (NotEnoughResourceException e) {
+            throw new NotEnoughEnergyException();
+        }
     }
 
     public static void addEnergy(int ammount) {
@@ -38,7 +44,7 @@ public class ResourceManagement {
     }
 
     public static String resourceName() {
-        return resource.NAME;
+        return resource.getName();
     }
 
     public static String print() {

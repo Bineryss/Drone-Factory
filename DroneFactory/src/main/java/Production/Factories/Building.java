@@ -7,6 +7,9 @@ import ImportandEnums.BuildingTypes;
 import Production.Dronen.Drone;
 import Production.Factories.Connector.*;
 import SpecificExceptions.BuildingUnfinishedException;
+import SpecificExceptions.DroneNotEnoughEnergyException;
+import SpecificExceptions.NotEnoughEnergyException;
+import SpecificExceptions.NotEnoughResourceException;
 
 import java.util.ArrayList;
 
@@ -37,7 +40,7 @@ public abstract class Building {
         energy = new EnergyConnection(type);
     }
 
-    public void update() {
+    public void update() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException {
         if (!isReady()) {
             build();
         } else {
@@ -45,7 +48,7 @@ public abstract class Building {
         }
     }
 
-    protected abstract void updateBuilding();
+    protected abstract void updateBuilding() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException;
 
     public EnergyConnection getEnergy() throws BuildingUnfinishedException {
         if (energy != null) {
@@ -86,7 +89,7 @@ public abstract class Building {
      * <p>
      * Wenn Drone keine arbeitskraft mehr, dann wird bau gestopt, neu Drone muss uebergen werden.
      */
-    public void startConstruction(DroneTypes droneId, int droneCount) {
+    public void startConstruction(DroneTypes droneId, int droneCount) throws NotEnoughResourceException {
         if (!inConstruction()) {
             workers = DroneManagement.giveDronesWork(droneId, droneCount);
             if (!hasResources) {
@@ -104,7 +107,7 @@ public abstract class Building {
         return construction == 0;
     }
 
-    private void build() {
+    private void build() throws DroneNotEnoughEnergyException {
         for (Drone worker : workers) {
             if ((construction - worker.efficiency()) > 0) {
                 construction -= worker.workEfficiency();

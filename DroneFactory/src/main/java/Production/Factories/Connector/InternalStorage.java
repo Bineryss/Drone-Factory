@@ -5,6 +5,10 @@ import ImportandEnums.BuildingTypes;
 import Management.ManagementSystems.*;
 import Management.Resources.Storage;
 import Production.Dronen.Drone;
+import SpecificExceptions.DroneNotEnoughEnergyException;
+import SpecificExceptions.MissingTransportDrone;
+import SpecificExceptions.NotEnoughResourceException;
+import SpecificExceptions.NotEnoughStorageException;
 
 /**
  * Die Grundanbindung, an das Resourcemanagement.
@@ -27,7 +31,7 @@ public class InternalStorage implements ResourceConnection {
      * Es wird Energy von der Drone verbraucht
      * @param amount
      */
-    public void storeResources(int amount) {
+    public void storeResources(int amount) throws NotEnoughResourceException, DroneNotEnoughEnergyException {
         if (transportDrone != null && !transportDrone.isDead()) {
             ResourceManagement.addResources(storage.removeResources(amount));
             transportDrone.workEfficiency();
@@ -43,13 +47,17 @@ public class InternalStorage implements ResourceConnection {
      * Es wird Energy von der Drone verbraucht
      * @param amount
      */
-    public void loadResources(int amount) {
-        if (storage.canStore(amount) && transportDrone != null && !transportDrone.isDead()) {
+    public void loadResources(int amount) throws NotEnoughStorageException, DroneNotEnoughEnergyException, NotEnoughResourceException, MissingTransportDrone {
+        if (storage.canStore(amount)) {
+            if(transportDrone != null && !transportDrone.isDead()) {
             ResourceManagement.removeResources(amount);
-            storage.addResources(amount);
-            transportDrone.workEfficiency();
+                storage.addResources(amount);
+                transportDrone.workEfficiency();
+            }else {
+                throw new MissingTransportDrone();
+            }
         } else {
-            System.out.println("So viel kannst du nicht lagern!");
+            throw new NotEnoughStorageException();
         }
     }
 
@@ -64,7 +72,7 @@ public class InternalStorage implements ResourceConnection {
     }
 
     @Override
-    public void useResources(int amount) {
+    public void useResources(int amount) throws NotEnoughResourceException {
         storage.removeResources(amount);
     }
 

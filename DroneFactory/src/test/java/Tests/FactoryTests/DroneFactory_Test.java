@@ -2,11 +2,11 @@ package Tests.FactoryTests;
 
 import ImportandEnums.DroneTypes;
 import ImportandEnums.ResourceConnectionsEnum;
-import Management.ManagementSystems.BuildingManagement;
 import Management.ManagementSystems.DroneManagement;
 import Management.ManagementSystems.ResourceManagement;
+import Production.Factories.Connector.InternalStorage;
 import Production.Factories.Produktion.DroneFactory;
-import SpecificExceptions.BuildingUnfinishedException;
+import SpecificExceptions.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +14,10 @@ public class DroneFactory_Test extends BuildingTest_Setup {
     private DroneFactory droFac;
 
     @Before
-    public void start() {
+    public void start() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException, MissingTransportDrone {
+        ResourceManagement.addEnergy(1000);
+        ResourceManagement.addResources(1000);
+
         addDrones(DroneTypes.DEFAULTDRONE, 5);
 
         droFac = new DroneFactory();
@@ -26,8 +29,12 @@ public class DroneFactory_Test extends BuildingTest_Setup {
         droFac.update();
         try {
             droFac.connectStorage(ResourceConnectionsEnum.INTERNALSTORAGE);
-            droFac.getEnergy().transferEnergy(100);
-        } catch (BuildingUnfinishedException e) {
+            InternalStorage connection = (InternalStorage) droFac.getStorage();
+            connection.addTransportDrone(DroneTypes.DEFAULTDRONE);
+            droFac.loadResources(50);
+            droFac.getEnergy().loadEnergy(100);
+        } catch (BuildingUnfinishedException | NotEnoughStorageException e) {
+            System.out.printf("%s%n",e.getMessage());
             assert false;
         }
         System.out.printf("Vor den Tests: %s%n", droFac);
@@ -37,7 +44,7 @@ public class DroneFactory_Test extends BuildingTest_Setup {
     }
 
     @Test
-    public void teteDroneFactoryProduce() {
+    public void teteDroneFactoryProduce() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException {
         try {
             droFac.startProduction(DroneTypes.DEFAULTDRONE);
         } catch (BuildingUnfinishedException e) {
@@ -53,7 +60,7 @@ public class DroneFactory_Test extends BuildingTest_Setup {
     }
 
     @Test
-    public void testFactoryExtension() {
+    public void testFactoryExtension() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException {
         droFac.addDroneProducerExtension(DroneTypes.DEFAULTDRONE);
         System.out.println(droFac);
         droFac.activatedProducer();
@@ -67,7 +74,7 @@ public class DroneFactory_Test extends BuildingTest_Setup {
     }
 
     @Test
-    public void testUpdateDroneFactory() {
+    public void testUpdateDroneFactory() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException {
         DroneManagement.print();
         System.out.println();
 

@@ -6,8 +6,9 @@ import Management.ManagementSystems.DroneManagement;
 import ImportandEnums.BuildingTypes;
 import Production.Dronen.Drone;
 import Production.Factories.Building;
+import Production.Factories.Connector.DirectResourceCon;
 import Production.Factories.Connector.InternalStorage;
-import SpecificExceptions.BuildingUnfinishedException;
+import SpecificExceptions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,7 @@ public class DroneFactory extends Building {
      * Ist keine Energie mehr vorhanden, wird nicht weitergearbeitet
      */
     @Override
-    protected void updateBuilding() {
+    protected void updateBuilding() throws NotEnoughResourceException, NotEnoughEnergyException {
         if (isReady()) {
             if (isWorking && energy.hasEnergy()) {
                 energy.useEnergy();
@@ -66,7 +67,7 @@ public class DroneFactory extends Building {
         }
     }
 
-    private void droneExtension() {
+    private void droneExtension() throws NotEnoughResourceException {
         if (prod != null) {
             if (!isWorking && !prod.isFull()) {
                 startProductionAutomatic(prod.getDroneType());
@@ -74,7 +75,7 @@ public class DroneFactory extends Building {
         }
     }
 
-    public void startProduction(DroneTypes drone) throws BuildingUnfinishedException {
+    public void startProduction(DroneTypes drone) throws BuildingUnfinishedException, NotEnoughResourceException {
         if (isReady() && !activateProd) {
             startProductionAutomatic(drone);
         } else {
@@ -87,7 +88,7 @@ public class DroneFactory extends Building {
      *
      * @param drone: Typ der Drone
      */
-    private void startProductionAutomatic(DroneTypes drone) {
+    private void startProductionAutomatic(DroneTypes drone) throws NotEnoughResourceException {
         if (canBeBuild(drone)) {
             if (!isWorking && isReady()) {
                 if (storage.hasResources(drone.getCosts())) {
@@ -126,7 +127,7 @@ public class DroneFactory extends Building {
     }
 
     public String toString() {
-        String print = "[ " + buildingTypes.getIcon() + " |"+ printResource() + "| (";
+        String print = "[ " + buildingTypes.getIcon() + " |" + printResource() + "| (";
         if (producedElement != null) {
             print += isWorkRemaining();
         }
@@ -157,12 +158,13 @@ public class DroneFactory extends Building {
         activateProd = false;
     }
 
-    public void loadResources(int amount) {
-//        if(!storage instanceof DirectResourceConnection) {
-        if (storage.canStore(amount) && isReady()) {
-            ((InternalStorage) storage).loadResources(amount);
-        } else {
-            System.out.println("So viel kannst du nicht lagern!");
+    public void loadResources(int amount) throws NotEnoughStorageException, DroneNotEnoughEnergyException, NotEnoughResourceException, MissingTransportDrone, BuildingUnfinishedException {
+        if (!(storage instanceof DirectResourceCon)) {
+            if (isReady()) {
+                ((InternalStorage) storage).loadResources(amount);
+            }else {
+                throw new BuildingUnfinishedException();
+            }
         }
     }
 }

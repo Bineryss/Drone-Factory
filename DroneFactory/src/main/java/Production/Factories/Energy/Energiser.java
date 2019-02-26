@@ -5,6 +5,7 @@ import Management.ManagementSystems.ResourceManagement;
 import Production.Factories.Building;
 import Production.Factories.Connector.EnergyConnection;
 import SpecificExceptions.BuildingUnfinishedException;
+import SpecificExceptions.NotEnoughEnergyException;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -19,20 +20,20 @@ public class Energiser extends Building {
     }
 
     @Override
-    protected void updateBuilding() {
+    protected void updateBuilding() throws NotEnoughEnergyException {
         int dividableEnergy = connections.size() / energy.availableEnergy();
         for (Building tmp : connections) {
             try {
                 EnergyConnection en = tmp.getEnergy();
-                en.transferEnergy(dividableEnergy);
+                en.loadEnergy(dividableEnergy);
             } catch (BuildingUnfinishedException ignored){
 
             }
         }
     }
 
-    public void loadEnergyInDivider(int amount) {
-        ResourceManagement.useEnergy(energy.transferEnergy(amount));
+    public void loadEnergyInDivider(int amount) throws NotEnoughEnergyException {
+        ResourceManagement.useEnergy(energy.loadEnergy(amount));
     }
 
     public void addBuilding(Building ...buildings) {

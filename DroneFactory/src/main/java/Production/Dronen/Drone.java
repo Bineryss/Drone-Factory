@@ -3,6 +3,8 @@ package Production.Dronen;
 import ImportandEnums.DroneTypes;
 import Management.Resources.Energy;
 import Management.Resources.Storage;
+import SpecificExceptions.DroneNotEnoughEnergyException;
+import SpecificExceptions.NotEnoughEnergyException;
 
 /**
  * <h3>Drone</h3>
@@ -54,10 +56,14 @@ public class Drone {
         return costs;
     }
 
-    public int workEfficiency() {
+    public int workEfficiency() throws DroneNotEnoughEnergyException {
         if (!isDead()) {
             if (hasEnergy()) {
-                energy.useEnergy();
+                try {
+                    energy.useEnergy();
+                } catch (NotEnoughEnergyException e) {
+                    throw new DroneNotEnoughEnergyException();
+                }
             }
             return efficiency;
         }

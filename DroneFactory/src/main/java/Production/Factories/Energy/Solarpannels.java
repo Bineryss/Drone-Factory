@@ -1,6 +1,7 @@
 package Production.Factories.Energy;
 
 import ImportandEnums.BuildingTypes;
+import Management.ManagementSystems.ResourceManagement;
 import Production.Factories.Building;
 
 /**
@@ -18,10 +19,14 @@ public class Solarpannels extends Building {
     }
 
     @Override
-    public void updateBuilding() {
+    public void updateBuilding()  {
         if (isReady()) {
-            energy.transferEnergy(efficiency);
+            generateEnergy();
         }
+    }
+
+    private void generateEnergy() {
+        ResourceManagement.addEnergy(efficiency);
     }
 
     public String toString() {

@@ -3,6 +3,9 @@ package Tests;
 import ImportandEnums.DroneTypes;
 import Management.ManagementSystems.ResourceManagement;
 import Production.Factories.Energy.Solarpannels;
+import SpecificExceptions.DroneNotEnoughEnergyException;
+import SpecificExceptions.NotEnoughEnergyException;
+import SpecificExceptions.NotEnoughResourceException;
 import Tests.FactoryTests.BuildingTest_Setup;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +21,7 @@ public class Building_Test extends BuildingTest_Setup {
     }
 
     @Test
-    public void testMultipleBuildings() {
+    public void testMultipleBuildings() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException {
         Solarpannels sol1 = new Solarpannels();
         Solarpannels sol2 = new Solarpannels();
         Solarpannels sol3 = new Solarpannels();

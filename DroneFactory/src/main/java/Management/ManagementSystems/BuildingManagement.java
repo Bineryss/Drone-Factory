@@ -2,6 +2,9 @@ package Management.ManagementSystems;
 
 import ImportandEnums.BuildingTypes;
 import Production.Factories.Building;
+import SpecificExceptions.DroneNotEnoughEnergyException;
+import SpecificExceptions.NotEnoughEnergyException;
+import SpecificExceptions.NotEnoughResourceException;
 
 import java.util.HashMap;
 import java.util.InputMismatchException;
@@ -49,6 +52,14 @@ public class BuildingManagement {
     }
 
     public static void update() {
-        buildings.forEach((key, building) -> building.update());
+        //TODO: try catch temporally until user interface gets implemented!
+        buildings.forEach((key, building) -> {
+            try {
+                building.update();
+            } catch (NotEnoughResourceException | NotEnoughEnergyException | DroneNotEnoughEnergyException e) {
+                System.out.printf("%s%n",e.getMessage());
+            }
+        });
+
     }
 }
