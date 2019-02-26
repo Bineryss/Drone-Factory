@@ -15,7 +15,6 @@ public class DroneFactory_Test extends BuildingTest_Setup {
 
     @Before
     public void start() {
-        BuildingManagement.start();
         addDrones(DroneTypes.DEFAULTDRONE, 5);
 
         droFac = new DroneFactory();

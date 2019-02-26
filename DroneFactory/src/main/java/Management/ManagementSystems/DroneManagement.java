@@ -12,27 +12,25 @@ import java.util.HashMap;
 public class DroneManagement {
     private static class DroneKey {
         DroneTypes type;
-        int number;
+        static int number = 0;
 
-        DroneKey(DroneTypes type, int number) {
+        DroneKey(DroneTypes type) {
             this.type = type;
-            this.number = number;
+            number++;
         }
     }
 
-    private static int droneCount;
     private static HashMap<DroneKey, Drone> drones = new HashMap<>();
 
 
     /**
      * fuegt die Drone anhand ihrer ID in die Richitge Stelle an.
      *
-     * @param drones
+     * @param tmp
      */
-    public static void addDrone(Drone... drones) {
-        for (Drone drone : drones) {
-            DroneManagement.drones.put(new DroneKey(drone.getType(), droneCount), drone);
-            droneCount++;
+    public static void addDrone(Drone... tmp) {
+        for (Drone drone : tmp) {
+            drones.put(new DroneKey(drone.getType()), drone);
         }
     }
 
@@ -71,7 +69,7 @@ public class DroneManagement {
                 return full;
             }
         }
-        return null;
+        return null;//TODO: Exception
     }
 
     public static ArrayList<Drone> giveDronesWork(DroneTypes id, int droneCount) {
@@ -116,13 +114,13 @@ public class DroneManagement {
     }
 
     public static void removeDrone(Drone remove) {
-        for (DroneKey key : drones.keySet()) {
+        drones.forEach((key, drone) -> {
             if (key != null && key.type == remove.getType()) {
-                if (drones.get(key).equals(remove)) {
+                if (drone.equals(remove)) {
                     drones.remove(key);
                 }
             }
-        }
+        });
     }
 
     public static void print() {

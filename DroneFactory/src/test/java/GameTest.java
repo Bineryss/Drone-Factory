@@ -29,7 +29,6 @@ public class GameTest {
         ResourceManagement.addEnergy(200);
         ResourceManagement.addResources(800);
 
-        BuildingManagement.start();
         newDrones(DroneTypes.DEFAULTDRONE, 10);
         int zug = 0;
         while (true) {
@@ -44,7 +43,7 @@ public class GameTest {
             System.out.println("-----------Zug: " + zug + "---------------");
             System.out.println(ResourceManagement.print());
             DroneManagement.print();
-            System.out.println(BuildingManagement.print());
+BuildingManagement.print();
             try {
                 run = runEingabe();
             } catch (Exception e) {
@@ -56,7 +55,7 @@ public class GameTest {
 
     private static boolean runEingabe() {
         int eingabe;
-        try {
+//        try {
             switch (intEingabe()) {
                 case 0:
                     addBulding(new Solarpannels(), DroneTypes.DEFAULTDRONE, 1);
@@ -75,31 +74,31 @@ public class GameTest {
                     break;
                 case 5:
                     //Extractor aufladen
-                    eingabe = intEingabe();
-                    InternalStorage tmpS = (InternalStorage) ((Extractor) BuildingManagement.getBuilding(new int[]{3, eingabe})).getStorage();
-                    tmpS.addTransportDrone(DroneTypes.DEFAULTDRONE);
-                    break;
-                case 6:
-                    BuildingManagement.getBuilding(new int[]{intEingabe(), intEingabe()}).addMoreWorkers(DroneTypes.DEFAULTDRONE, intEingabe());
-                    break;
-                case 7:
-                    //Dronefactory Laden
-                    eingabe = intEingabe();
-
-                    InternalStorage tmp3 = (InternalStorage) BuildingManagement.getBuilding(new int[]{1, eingabe}).getStorage();
-                    tmp3.loadResources(100);
-                    break;
-                case 8:
-                    DroneFactory tmpD = ((DroneFactory) BuildingManagement.getBuilding(new int[]{1, intEingabe()}));
-                    tmpD.startProduction(DroneTypes.DEFAULTDRONE);
+//                    eingabe = intEingabe();
+//                    InternalStorage tmpS = (InternalStorage) ((Extractor) BuildingManagement.getBuilding(new int[]{3, eingabe})).getStorage();
+//                    tmpS.addTransportDrone(DroneTypes.DEFAULTDRONE);
+//                    break;
+//                case 6:
+//                    BuildingManagement.getBuilding(new int[]{intEingabe(), intEingabe()}).addMoreWorkers(DroneTypes.DEFAULTDRONE, intEingabe());
+//                    break;
+//                case 7:
+//                    //Dronefactory Laden
+//                    eingabe = intEingabe();
+//
+//                    InternalStorage tmp3 = (InternalStorage) BuildingManagement.getBuilding(new int[]{1, eingabe}).getStorage();
+//                    tmp3.loadResources(100);
+//                    break;
+//                case 8:
+//                    DroneFactory tmpD = ((DroneFactory) BuildingManagement.getBuilding(new int[]{1, intEingabe()}));
+//                    tmpD.startProduction(DroneTypes.DEFAULTDRONE);
                     System.out.println("New Production!");
                     break;
                 case 9:
                     return false;
             }
-        } catch (BuildingUnfinishedException e) {
-            System.out.println(e.getMessage());
-        }
+//        } catch (BuildingUnfinishedException e) {
+//            System.out.println(e.getMessage());
+//        }
         return true;
     }
 
