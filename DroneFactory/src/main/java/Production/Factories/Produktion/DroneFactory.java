@@ -6,6 +6,7 @@ import Management.ManagementSystems.DroneManagement;
 import ImportandEnums.Type;
 import Production.Dronen.Drone;
 import Production.Factories.Building;
+import Production.Factories.Connector.InternalStorage;
 import SpecificExceptions.BuildingUnfinishedException;
 
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class DroneFactory extends Building {
     public void startProduction(DroneTypes drone) throws BuildingUnfinishedException {
         if (isReady() && !activateProd) {
             startProductionAutomatic(drone);
-        }else {
+        } else {
             throw new BuildingUnfinishedException();
         }
     }
@@ -125,13 +126,15 @@ public class DroneFactory extends Building {
     }
 
     public String toString() {
-        String print = "[ " + type.getIcon() + " || " + printResource() + " (";
+        String print = "[ " + type.getIcon() + " |"+ printResource() + "| (";
         if (producedElement != null) {
             print += isWorkRemaining();
         }
         print += ") ";
-        print += prod;
-        print += " ]" + constructionStatus();
+        if (prod != null) {
+            print += prod + " ";
+        }
+        print += "]" + constructionStatus();
         return print;
     }
 
@@ -152,5 +155,14 @@ public class DroneFactory extends Building {
 
     public void deactivatedProducer() {
         activateProd = false;
+    }
+
+    public void loadResources(int amount) {
+//        if(!storage instanceof DirectResourceConnection) {
+        if (storage.canStore(amount) && isReady()) {
+            ((InternalStorage) storage).loadResources(amount);
+        } else {
+            System.out.println("So viel kannst du nicht lagern!");
+        }
     }
 }

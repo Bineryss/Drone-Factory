@@ -1,20 +1,13 @@
 package Tests;
 
 import Management.ManagementSystems.ResourceManagement;
-import org.junit.Before;
 import org.junit.Test;
 
 public class ResourceManagement_Test {
 
-    @Before
-    public void start() {
-        ResourceManagement.start();
-    }
-
     @Test
     public void testuseResource() {
         int testadd = 1000;
-
         ResourceManagement.addResources(testadd);
         ResourceManagement.removeResources(200);
 

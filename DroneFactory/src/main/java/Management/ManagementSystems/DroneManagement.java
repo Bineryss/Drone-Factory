@@ -91,20 +91,21 @@ public class DroneManagement {
         return out;
     }
 
-    public static int availableEnergy(DroneTypes id) {
-        int availableEnergy = 0;
-        ArrayList<Drone> search = cleanDroneList(id);
-        for (Drone tmp : search) {
-            availableEnergy += tmp.energyLeft();
-        }
-        return availableEnergy;
-    }
-
-    private static String getIcon(DroneTypes id) {
-        return id.getIcon();
-    }
+//    private static int availableEnergy(DroneTypes id) {
+//        int availableEnergy = 0;
+//        ArrayList<Drone> search = cleanDroneList(id);
+//        for (Drone tmp : search) {
+//            availableEnergy += tmp.energyLeft();
+//        }
+//        return availableEnergy;
+//    }
+//
+//    private static String getIcon(DroneTypes id) {
+//        return id.getIcon();
+//    }
 
     private static ArrayList<Drone> cleanDroneList(DroneTypes id) {
+        removeDead();
         ArrayList<Drone> search = new ArrayList<>();
         for (DroneKey key : drones.keySet()) {
             if (key != null && key.type == id) {
@@ -124,14 +125,14 @@ public class DroneManagement {
         }
     }
 
-    public static String print() {
+    public static void print() {
         String out = "";
         for (DroneKey key : drones.keySet()) {
             if (key != null) {
-                out += drones.get(key);
+                out += drones.get(key) + "; ";
             }
         }
-        return out;
+        System.out.printf("%s%n", out);
     }
 
 

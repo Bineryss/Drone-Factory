@@ -34,6 +34,7 @@ public abstract class Building {
         constructionCost = type.getCosts();
         construction = type.getConstructionTime();
         efficiency = type.getEfficiency();
+        energy = new EnergyConnection(type);
     }
 
     public void update() {
@@ -123,16 +124,6 @@ public abstract class Building {
         }
     }
 
-//    public void loadResources(int amount) {
-//        if(!storage instanceof DirectResourceConnection) {
-//        if (storage.canStore(amount) && isReady()) {
-//            storage.addResources(amount);
-//        } else {
-//            System.out.println("So viel kannst du nicht lagern!");
-//        }
-//    }
-
-
     protected String constructionStatus() {
         StringBuilder out = new StringBuilder();
         for (int i = construction; i > 0; i--) {
@@ -147,7 +138,7 @@ public abstract class Building {
     }
 
     protected String printResource() {
-        return String.format("%s %S", energy, storage);
+        return String.format("%s%S", energy, storage);
     }
 
     protected boolean isReady() {

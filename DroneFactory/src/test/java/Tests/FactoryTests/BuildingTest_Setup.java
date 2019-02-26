@@ -1,11 +1,12 @@
 package Tests.FactoryTests;
 
 import ImportandEnums.DroneTypes;
-import Management.ManagementSystems.DroneManagement;
-import Management.ManagementSystems.ResourceManagement;
+import Management.ManagementSystems.*;
 import Production.Dronen.Drone;
+import Production.Factories.Building;
+import Production.Factories.Connector.InternalStorage;
+import SpecificExceptions.BuildingUnfinishedException;
 import org.junit.Before;
-import org.junit.Test;
 
 public class BuildingTest_Setup {
 
@@ -17,14 +18,22 @@ public class BuildingTest_Setup {
 
     }
 
-    @Test
-    public void printRescuers() {
-
-    }
-
     protected void addDrones(DroneTypes droneTypes, int amount) {
         for (int i = 0; i < amount; i++) {
             DroneManagement.addDrone(new Drone(droneTypes));
         }
+    }
+
+    void loadBuilding(Building building, int resources) {
+        try {
+            InternalStorage tmp = (InternalStorage) building.getStorage();
+            tmp.loadResources(resources);
+        } catch (BuildingUnfinishedException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    void loadBuilding(Building building) {
+        loadBuilding(building, 100);
     }
 }

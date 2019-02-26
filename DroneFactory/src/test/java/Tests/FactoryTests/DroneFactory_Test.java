@@ -4,20 +4,19 @@ import ImportandEnums.DroneTypes;
 import ImportandEnums.ResourceConnectionsEnum;
 import Management.ManagementSystems.BuildingManagement;
 import Management.ManagementSystems.DroneManagement;
-import Production.Factories.Building;
-import Production.Factories.Connector.InternalStorage;
+import Management.ManagementSystems.ResourceManagement;
 import Production.Factories.Produktion.DroneFactory;
 import SpecificExceptions.BuildingUnfinishedException;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DroneFactory_Test extends BuildingTest_Setup{
+public class DroneFactory_Test extends BuildingTest_Setup {
     private DroneFactory droFac;
 
     @Before
     public void start() {
         BuildingManagement.start();
-        addDrones(DroneTypes.DEFAULTDRONE,5);
+        addDrones(DroneTypes.DEFAULTDRONE, 5);
 
         droFac = new DroneFactory();
         droFac.startConstruction(DroneTypes.DEFAULTDRONE, 4);
@@ -28,8 +27,9 @@ public class DroneFactory_Test extends BuildingTest_Setup{
         droFac.update();
         try {
             droFac.connectStorage(ResourceConnectionsEnum.INTERNALSTORAGE);
+            droFac.getEnergy().transferEnergy(100);
         } catch (BuildingUnfinishedException e) {
-            System.out.println(e.getMessage());
+            assert false;
         }
         System.out.printf("Vor den Tests: %s%n", droFac);
 
@@ -61,23 +61,39 @@ public class DroneFactory_Test extends BuildingTest_Setup{
         DroneManagement.print();
         for (int i = 0; i < 25; i++) {
             droFac.update();
-            loadBuilding(droFac,5);
-            System.out.print(DroneManagement.print());
+            loadBuilding(droFac, 5);
+            DroneManagement.print();
             System.out.printf("%d: Die Factory ist am Produzieren: %s%n", i, droFac);
         }
     }
 
-    private void loadBuilding(Building building, int resources) {
-        try {
-            InternalStorage tmp = (InternalStorage) building.getStorage();
-            tmp.loadResources(resources);
-        } catch (BuildingUnfinishedException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+    @Test
+    public void testUpdateDroneFactory() {
+        DroneManagement.print();
+        System.out.println();
 
-    private void loadBuilding(Building building) {
-        loadBuilding(building, 100);
+        droFac.startConstruction(DroneTypes.DEFAULTDRONE, 4);
+        System.out.println(ResourceManagement.print());
+        DroneManagement.print();
+        System.out.println();
+        System.out.println(droFac);
+
+        for (int i = 0; i < 5; i++) {
+            droFac.update();
+        }
+        DroneManagement.print();
+        loadBuilding(droFac);
+
+        for (int i = 0; i < 3; i++) {
+            System.out.println();
+            System.out.println(ResourceManagement.print());
+            System.out.println(i + ": " + droFac);
+            droFac.update();
+        }
+        System.out.println();
+        DroneManagement.print();
+        System.out.println(droFac);
+        System.out.println();
     }
 
 }

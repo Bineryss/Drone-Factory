@@ -2,8 +2,7 @@ package Production.Factories.Connector;
 
 import ImportandEnums.DroneTypes;
 import ImportandEnums.Type;
-import Management.ManagementSystems.DroneManagement;
-import Management.ManagementSystems.ResourceManagement;
+import Management.ManagementSystems.*;
 import Management.Resources.Storage;
 import Production.Dronen.Drone;
 

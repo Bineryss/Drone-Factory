@@ -27,4 +27,7 @@ public class EnergyConnection {
         return energy.availableEnergy();
     }
 
+    public String toString() {
+        return energy.toString();
+    }
 }
