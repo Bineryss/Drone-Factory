@@ -1,11 +1,10 @@
 
-import Management.BuildingManagement;
-import Management.DroneManagement;
-import Management.Resources.ResourceManagement;
+import Management.ManagementSystems.BuildingManagement;
+import Management.ManagementSystems.DroneManagement;
+import Management.ManagementSystems.ResourceManagement;
 import ImportandEnums.Type;
 import Production.Dronen.Drone;
 import Production.Dronen.Normal.DefaultDrone;
-import Production.Factories.Connector.Batteries;
 import Production.Factories.Building;
 import Production.Factories.Energy.Solarpannels;
 import Production.Factories.Connector.InternalStorage;
@@ -15,7 +14,7 @@ import SpecificExceptions.BuildingUnfinishedException;
 
 import java.util.Scanner;
 
-public class TestV2 {
+public class GameTest {
 
     private static void addBulding(Building tmp, Drone drone, int count) {
         tmp.startConstruction(drone.getType(), count);

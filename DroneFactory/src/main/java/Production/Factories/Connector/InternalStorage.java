@@ -1,8 +1,9 @@
 package Production.Factories.Connector;
 
+import ImportandEnums.DroneTypes;
 import ImportandEnums.Type;
-import Management.DroneManagement;
-import Management.Resources.ResourceManagement;
+import Management.ManagementSystems.DroneManagement;
+import Management.ManagementSystems.ResourceManagement;
 import Management.Resources.Storage;
 import Production.Dronen.Drone;
 
@@ -66,7 +67,7 @@ public class InternalStorage implements ResourceConnection {
      *
      * @param drone: Typ der Drone
      */
-    public void addTransportDrone(Type drone) {
+    public void addTransportDrone(DroneTypes drone) {
         transportDrone = DroneManagement.getFullDrone(drone);
     }
 

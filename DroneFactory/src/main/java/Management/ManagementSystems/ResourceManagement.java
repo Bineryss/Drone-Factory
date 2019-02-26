@@ -1,18 +1,12 @@
-package Management.Resources;
+package Management.ManagementSystems;
+
+import Management.Resources.Resource;
 
 public class ResourceManagement {
 
-    private static Resource energy;
-    private static Resource resource;
+    private static final Resource energy = new Resource("Energy", 1000);
+    private static final Resource resource = new Resource("Carbon", 1000);
 
-
-    public static void start() {
-        energy = new Resource("Energy", 1000);
-        //mehr Resorce Typen hinzufuegen
-        resource = new Resource("Carbon", 1000);
-
-
-    }
 
     public static Resource getResource() {
         return resource;

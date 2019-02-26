@@ -1,42 +1,32 @@
-import ImportandEnums.EnergyConnectionEnum;
+package Tests.FactoryTests;
+
+import ImportandEnums.DroneTypes;
 import ImportandEnums.ResourceConnectionsEnum;
-import ImportandEnums.Type;
-import Management.BuildingManagement;
-import Management.DroneManagement;
-import Management.Resources.ResourceManagement;
-import Production.Dronen.Normal.DefaultDrone;
+import Management.ManagementSystems.BuildingManagement;
+import Management.ManagementSystems.DroneManagement;
 import Production.Factories.Building;
-import Production.Factories.Connector.Batteries;
 import Production.Factories.Connector.InternalStorage;
 import Production.Factories.Produktion.DroneFactory;
 import SpecificExceptions.BuildingUnfinishedException;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DroneFactory_Test {
+public class DroneFactory_Test extends BuildingTest_Setup{
     private DroneFactory droFac;
 
     @Before
     public void start() {
-        DroneManagement.start();
-        ResourceManagement.start();
-        ResourceManagement.addResources(1000);
-        ResourceManagement.addEnergy(1000);
         BuildingManagement.start();
-        DroneManagement.addDrone(new DefaultDrone());
-        DroneManagement.addDrone(new DefaultDrone());
-        DroneManagement.addDrone(new DefaultDrone());
-        DroneManagement.addDrone(new DefaultDrone());
+        addDrones(DroneTypes.DEFAULTDRONE,5);
 
         droFac = new DroneFactory();
-        droFac.startConstruction(Type.DEFAULTDRONE, 4);
+        droFac.startConstruction(DroneTypes.DEFAULTDRONE, 4);
         droFac.update();
         droFac.update();
         droFac.update();
         droFac.update();
         droFac.update();
         try {
-            droFac.connectEnergy(EnergyConnectionEnum.BATTERIES);
             droFac.connectStorage(ResourceConnectionsEnum.INTERNALSTORAGE);
         } catch (BuildingUnfinishedException e) {
             System.out.println(e.getMessage());
@@ -50,7 +40,7 @@ public class DroneFactory_Test {
     @Test
     public void teteDroneFactoryProduce() {
         try {
-            droFac.startProduction(Type.DEFAULTDRONE);
+            droFac.startProduction(DroneTypes.DEFAULTDRONE);
         } catch (BuildingUnfinishedException e) {
             assert false;
         }
@@ -65,32 +55,29 @@ public class DroneFactory_Test {
 
     @Test
     public void testFactoryExtension() {
-        droFac.addDroneProducerExtension(Type.DEFAULTDRONE);
+        droFac.addDroneProducerExtension(DroneTypes.DEFAULTDRONE);
         System.out.println(droFac);
         droFac.activatedProducer();
         DroneManagement.print();
         for (int i = 0; i < 25; i++) {
             droFac.update();
-            loadBuilding(droFac,5,5);
+            loadBuilding(droFac,5);
             System.out.print(DroneManagement.print());
             System.out.printf("%d: Die Factory ist am Produzieren: %s%n", i, droFac);
         }
     }
 
-    private void loadBuilding(Building building, int energy, int resources) {
+    private void loadBuilding(Building building, int resources) {
         try {
             InternalStorage tmp = (InternalStorage) building.getStorage();
             tmp.loadResources(resources);
-            Batteries bat = (Batteries) building.getEnergy();
-            bat.loadEnergy(energy);
         } catch (BuildingUnfinishedException e) {
             System.out.println(e.getMessage());
         }
     }
 
     private void loadBuilding(Building building) {
-        loadBuilding(building, 100, 100);
+        loadBuilding(building, 100);
     }
-
 
 }

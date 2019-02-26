@@ -1,29 +1,24 @@
+package Tests;
+
+import ImportandEnums.DroneTypes;
 import ImportandEnums.Type;
-import Management.*;
-import Management.Resources.ResourceManagement;
-import Production.Dronen.Normal.DefaultDrone;
+import Management.ManagementSystems.DroneManagement;
+import Management.ManagementSystems.ResourceManagement;
 import Production.Factories.Building;
-import Production.Factories.Connector.Batteries;
 import Production.Factories.Connector.InternalStorage;
 import Production.Factories.Energy.Solarpannels;
 import Production.Factories.Produktion.DroneFactory;
 import Production.Factories.Resources.Extractor;
 import SpecificExceptions.BuildingUnfinishedException;
+import Tests.FactoryTests.BuildingTest_Setup;
 import org.junit.Before;
 import org.junit.Test;
 
-public class Building_Test {
+public class Building_Test extends BuildingTest_Setup {
 
     @Before
     public void start() {
-        ResourceManagement.start();
-        ResourceManagement.addEnergy(500);
-        ResourceManagement.addResources(500);
-        DroneManagement.start();
-        DroneManagement.addDrone(new DefaultDrone());
-        DroneManagement.addDrone(new DefaultDrone());
-        DroneManagement.addDrone(new DefaultDrone());
-        DroneManagement.addDrone(new DefaultDrone());
+        addDrones(DroneTypes.DEFAULTDRONE,5);
         System.out.println(ResourceManagement.print());
         System.out.println();
 
@@ -53,22 +48,6 @@ public class Building_Test {
         }
         System.out.println(ResourceManagement.print());
         System.out.println(extr);
-        System.out.println();
-    }
-
-    @Test
-    public void testUpdateSolarpannels() {
-        Solarpannels sol = new Solarpannels();
-        sol.startConstruction(Type.DEFAULTDRONE, 2);
-        System.out.println(ResourceManagement.print());
-        System.out.println(sol);
-
-        for (int i = 0; i < 5; i++) {
-            sol.update();
-            System.out.println(ResourceManagement.print());
-            System.out.printf("%2d: %s%n", i, sol);
-        }
-        System.out.println(sol);
         System.out.println();
     }
 

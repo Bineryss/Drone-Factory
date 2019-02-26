@@ -1,4 +1,4 @@
-package Management;
+package Management.ManagementSystems;
 
 /**
  * Maget die Erforschten Sachen

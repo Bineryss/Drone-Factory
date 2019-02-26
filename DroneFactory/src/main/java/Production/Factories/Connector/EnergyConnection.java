@@ -1,14 +1,30 @@
 package Production.Factories.Connector;
 
-public interface EnergyConnection {
+import ImportandEnums.Type;
+import Management.Resources.Energy;
 
-    /**
-     *
-     * @return
-     */
-    boolean hasEnergy();
+public class EnergyConnection {
+    private Energy energy;
 
-    void useEnergy();
+    public EnergyConnection(Type type) {
+        energy = new Energy(type.getMaxCapacityEnergy(), type.getEnergyUse());
+    }
 
-    void transferEnergy(int amount);
+    public boolean hasEnergy() {
+        return energy.hasEnergy();
+    }
+
+    public void useEnergy() {
+        energy.useEnergy();
+    }
+
+    public int transferEnergy(int amount) {
+        energy.loadEnergy(amount);
+        return amount;
+    }
+
+    public int availableEnergy() {
+        return energy.availableEnergy();
+    }
+
 }

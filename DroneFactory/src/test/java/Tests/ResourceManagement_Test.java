@@ -1,4 +1,6 @@
-import Management.Resources.ResourceManagement;
+package Tests;
+
+import Management.ManagementSystems.ResourceManagement;
 import org.junit.Before;
 import org.junit.Test;
 

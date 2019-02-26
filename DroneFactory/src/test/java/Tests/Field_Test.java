@@ -1,15 +1,15 @@
-//import Management.DroneManagement;
+package Tests;
+//import Management.ManagementSystems.DroneManagement;
 //import Management.Ground.FieldManager;
 //import Management.Ground.SpecifiedFields.DroneFactoryField;
-//import Management.Resources.ResourceManagement;
-//import Production.Dronen.Normal.DefaultDrone;
+//import Management.ManagementSystems.ResourceManagement;
 //import Production.Factories.Energy.Solarpannels;
 //import Production.Factories.Produktion.DroneFactory;
 //import Production.Factories.Resources.Extractor;
 //import org.junit.Before;
-//import org.junit.Test;
+import org.junit.Test;
 //
-//public class Field_Test {
+public class Field_Test {
 //    @Before
 //    public void start() {
 //        ResourceManagement.start();
@@ -35,8 +35,8 @@
 //        }
 //    }
 //
-//    @Test
-//    public void fieldPrintTest() {
+    @Test
+    public void fieldPrintTest() {
 //        FieldManager.addBuilding(new Solarpannels(), 0, 0);
 //        FieldManager.addBuilding(new Solarpannels(),0,1);
 //        FieldManager.addBuilding(new DroneFactory(), 1,0);
@@ -44,5 +44,5 @@
 //
 //
 //        System.out.println(FieldManager.print());
-//    }
-//}
+    }
+}

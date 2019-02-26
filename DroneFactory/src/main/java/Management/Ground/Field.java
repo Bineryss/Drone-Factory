@@ -1,8 +1,8 @@
 //package Management.Ground;
 //
 //import ImportandEnums.Type;
-//import Management.BuildingManagement;
-//import Management.DroneManagement;
+//import Management.ManagementSystems.BuildingManagement;
+//import Management.ManagementSystems.DroneManagement;
 //import Production.Dronen.Drone;
 //import Production.Factories.Building;
 //import Production.Factories.Energy.Solarpannels;

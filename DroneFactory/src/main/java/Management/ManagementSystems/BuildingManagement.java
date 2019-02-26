@@ -1,4 +1,4 @@
-package Management;
+package Management.ManagementSystems;
 
 import ImportandEnums.Type;
 import Production.Factories.Building;

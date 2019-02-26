@@ -1,8 +1,8 @@
 package Production.Factories;
 
 import ImportandEnums.*;
-import Management.DroneManagement;
-import Management.Resources.ResourceManagement;
+import Management.ManagementSystems.DroneManagement;
+import Management.ManagementSystems.ResourceManagement;
 import ImportandEnums.Type;
 import Production.Dronen.Drone;
 import Production.Factories.Connector.*;
@@ -45,24 +45,6 @@ public abstract class Building {
     }
 
     protected abstract void updateBuilding();
-
-
-    public void connectEnergy(EnergyConnectionEnum con) throws BuildingUnfinishedException {
-        if (isReady()) {
-            EnergyConnection tmp = null;
-            switch (con) {
-                case BATTERIES:
-                    tmp = new Batteries(type);
-                    break;
-                case DIRECTENERGYCONNECT:
-                    tmp = new DirectEnergyCon(type);
-                    break;
-            }
-            energy = tmp;
-        } else {
-            throw new BuildingUnfinishedException();
-        }
-    }
 
     public EnergyConnection getEnergy() throws BuildingUnfinishedException {
         if (energy != null) {
@@ -141,27 +123,14 @@ public abstract class Building {
         }
     }
 
-
-    public void loadEnergy(int amount) {
-        if (isReady()) {
-            //FIXME: repariere mal die Connection
-            if (energy.canStore(amount)) {
-                energy.loadEnergy(amount);
-            }else {
-                System.out.println("So viel Energie kann nicht gelagert werden!");
-            }
-        } else {
-            System.out.println("Gebaude nicht fertig!");
-        }
-    }
-
-    public void loadResources(int amount) {
-        if (storage.canStore(amount) && isReady()) {
-            storage.addResources(amount);
-        } else {
-            System.out.println("So viel kannst du nicht lagern!");
-        }
-    }
+//    public void loadResources(int amount) {
+//        if(!storage instanceof DirectResourceConnection) {
+//        if (storage.canStore(amount) && isReady()) {
+//            storage.addResources(amount);
+//        } else {
+//            System.out.println("So viel kannst du nicht lagern!");
+//        }
+//    }
 
 
     protected String constructionStatus() {

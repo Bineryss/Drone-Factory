@@ -1,8 +1,7 @@
-package Management;
+package Management.ManagementSystems;
 
 import ImportandEnums.DroneTypes;
 import Production.Dronen.*;
-import Production.Dronen.Normal.DefaultDrone;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,20 +27,22 @@ public class DroneManagement {
     /**
      * fuegt die Drone anhand ihrer ID in die Richitge Stelle an.
      *
-     * @param tmp
+     * @param drones
      */
-    public static void addDrone(Drone tmp) {
-        drones.put(new DroneKey(tmp.getType(), droneCount), tmp);
-        droneCount++;
+    public static void addDrone(Drone... drones) {
+        for (Drone drone : drones) {
+            DroneManagement.drones.put(new DroneKey(drone.getType(), droneCount), drone);
+            droneCount++;
+        }
     }
 
     /**
      * entfernt die 1. Drone, wenn sie keine Energie mehr hat
      */
     private static void removeDead() {
-        for (DroneKey key: drones.keySet()) {
-            if(key != null) {
-                if(drones.get(key).isDead()) {
+        for (DroneKey key : drones.keySet()) {
+            if (key != null) {
+                if (drones.get(key).isDead()) {
                     drones.remove(key);
                 }
             }
@@ -55,15 +56,15 @@ public class DroneManagement {
      * @return
      */
     public static Drone getDrone(DroneTypes id) {
-        for (DroneKey key: drones.keySet()) {
-            if(key != null && key.type == id) {
+        for (DroneKey key : drones.keySet()) {
+            if (key != null && key.type == id) {
                 return drones.get(key);
             }
         }
         return null;
     }
 
-    public Drone getFullDrone(DroneTypes id) {
+    public static Drone getFullDrone(DroneTypes id) {
         ArrayList<Drone> search = cleanDroneList(id);
         for (Drone full : search) {
             if (full.hasMaxEnergy()) {
@@ -105,8 +106,8 @@ public class DroneManagement {
 
     private static ArrayList<Drone> cleanDroneList(DroneTypes id) {
         ArrayList<Drone> search = new ArrayList<>();
-        for (DroneKey key: drones.keySet()) {
-            if(key != null && key.type == id) {
+        for (DroneKey key : drones.keySet()) {
+            if (key != null && key.type == id) {
                 search.add(drones.get(key));
             }
         }
@@ -114,9 +115,9 @@ public class DroneManagement {
     }
 
     public static void removeDrone(Drone remove) {
-        for (DroneKey key: drones.keySet()) {
-            if(key != null && key.type == remove.getType()) {
-                if(drones.get(key).equals(remove)) {
+        for (DroneKey key : drones.keySet()) {
+            if (key != null && key.type == remove.getType()) {
+                if (drones.get(key).equals(remove)) {
                     drones.remove(key);
                 }
             }
@@ -125,8 +126,8 @@ public class DroneManagement {
 
     public static String print() {
         String out = "";
-        for (DroneKey key: drones.keySet()) {
-            if(key != null) {
+        for (DroneKey key : drones.keySet()) {
+            if (key != null) {
                 out += drones.get(key);
             }
         }
@@ -134,14 +135,7 @@ public class DroneManagement {
     }
 
 
-    public static final Drone typeToDrone(DroneTypes type) {
-        switch (type) {
-            case DEFAULTDRONE:
-                return new DefaultDrone();
-            case CARRIERDRONE:
-                //return new CarrierDrone();
-            default:
-                return null;
-        }
+    public static Drone typeToDrone(DroneTypes type) {
+        return new Drone(type);
     }
 }

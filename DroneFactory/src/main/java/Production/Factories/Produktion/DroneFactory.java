@@ -2,13 +2,13 @@ package Production.Factories.Produktion;
 
 import BuildingExtensions.DroneProducerExt;
 import ImportandEnums.DroneTypes;
-import Management.DroneManagement;
+import Management.ManagementSystems.DroneManagement;
 import ImportandEnums.Type;
 import Production.Dronen.Drone;
 import Production.Factories.Building;
 import SpecificExceptions.BuildingUnfinishedException;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +33,9 @@ public class DroneFactory extends Building {
         super(Type.DRONEFACTORY);
         cc++;
         id = cc;
-        produceableDronesId = new LinkedList<DroneTypes>();
+        produceableDronesId = new ArrayList<>();
+        produceableDronesId.add(DroneTypes.BUILDINGDRONE);
+        produceableDronesId.add(DroneTypes.CARRIERDRONE);
         produceableDronesId.add(DroneTypes.DEFAULTDRONE);
     }
 

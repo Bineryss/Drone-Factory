@@ -6,6 +6,7 @@ public enum Type {
      * Building Costs
      */
     SOLARPANNEL("*~//", 10, 0, 5, 0, 0, 10),
+    ENERGYDIVIDER("~||~",5,0,2,0,500,0),
 
     DRONEFACTORY("[>%]", 50, 150, 20, 10, 200, 1),
 
