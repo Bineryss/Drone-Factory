@@ -144,6 +144,7 @@ public abstract class Building {
 
     public void loadEnergy(int amount) {
         if (isReady()) {
+            //FIXME: repariere mal die Connection
             if (energy.canStore(amount)) {
                 energy.loadEnergy(amount);
             }else {

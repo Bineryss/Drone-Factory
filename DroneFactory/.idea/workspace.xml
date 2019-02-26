@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dc0b14ce-42a6-412a-8c62-b37407a83f57" name="Default Changelist" comment="unfinished! further refined the new &quot;Connections&quot;">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ImportandEnums/DroneTypes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/DroneConfig.xml" afterDir="false" />
+    <list default="true" id="dc0b14ce-42a6-412a-8c62-b37407a83f57" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BuildingExtensions/DroneProducerExt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BuildingExtensions/DroneProducerExt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ImportandEnums/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ImportandEnums/Type.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Production/Dronen/Drone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Production/Dronen/Drone.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Production/Dronen/Normal/BuildingDrone.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Production/Dronen/Normal/DefaultDrone.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Production/Factories/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Production/Factories/Building.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Production/Factories/Connector/InternalStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Production/Factories/Connector/InternalStorage.java" afterDir="false" />
     </list>
     <list id="6bbddb5b-8cb0-466e-940c-e81062610e47" name="switched storage and energy to a &quot;Connection&quot;" comment="in future updates the System can be switched as needed" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -69,8 +60,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/Production/Factories/Building.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="945">
-                  <caret line="53" column="31" selection-start-line="53" selection-start-column="31" selection-end-line="53" selection-end-column="31" />
+                <state relative-caret-position="777">
+                  <caret line="146" column="49" selection-start-line="146" selection-start-column="49" selection-end-line="146" selection-end-column="49" />
                 </state>
               </provider>
             </entry>
@@ -259,13 +250,13 @@
         <option value="$PROJECT_DIR$/src/main/java/ImportandEnums/Type.java" />
         <option value="$PROJECT_DIR$/src/main/java/BuildingExtensions/DroneProducerExt.java" />
         <option value="$PROJECT_DIR$/src/main/java/Production/Factories/Produktion/DroneFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Production/Factories/Building.java" />
         <option value="$PROJECT_DIR$/src/main/java/Spring/Config.java" />
         <option value="$PROJECT_DIR$/src/main/resources/DroneConfig.xml" />
         <option value="$PROJECT_DIR$/src/main/java/ImportandEnums/DroneTypes.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/Production/Dronen/Normal/DefaultDrone.java" />
         <option value="$PROJECT_DIR$/src/main/java/Production/Dronen/Drone.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Production/Factories/Building.java" />
       </list>
     </option>
   </component>
@@ -435,7 +426,7 @@
     <property name="TODO_SCOPE" value="All Places" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551108340769" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551108730220" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -721,7 +712,14 @@
       <option name="project" value="LOCAL" />
       <updated>1551108234184</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Drone isn't abstract anymore">
+      <created>1551108786336</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1551108786336</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -757,7 +755,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="197750000" />
+    <option name="totallyTimeSpent" value="197827000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -770,7 +768,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="3456" height="1416" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="Capture Tool" order="1" />
@@ -908,7 +905,8 @@
     <MESSAGE value="unfinished! further refined the new &quot;Connections&quot;" />
     <MESSAGE value="Repaired most of the code and first switched DroneManagement to HashMap" />
     <MESSAGE value="removed Spring" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed Spring" />
+    <MESSAGE value="Drone isn't abstract anymore" />
+    <option name="LAST_COMMIT_MESSAGE" value="Drone isn't abstract anymore" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1719,8 +1717,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Production/Factories/Building.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="945">
-          <caret line="53" column="31" selection-start-line="53" selection-start-column="31" selection-end-line="53" selection-end-column="31" />
+        <state relative-caret-position="777">
+          <caret line="146" column="49" selection-start-line="146" selection-start-column="49" selection-end-line="146" selection-end-column="49" />
         </state>
       </provider>
     </entry>
