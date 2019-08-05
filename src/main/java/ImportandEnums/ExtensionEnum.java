@@ -1,0 +1,11 @@
+package ImportandEnums;
+
+public enum ExtensionEnum {
+
+    DRONEPRODUCER,
+    DRONETRANSFER,
+    ENERGYBOOSTER,
+    ENERGYTRANSFER,
+    RESOURCETRANSFER,
+    RESOURCEDELOADER
+}
