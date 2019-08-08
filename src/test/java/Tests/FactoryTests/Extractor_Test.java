@@ -1,13 +1,13 @@
 package Tests.FactoryTests;
 
 import ImportandEnums.DroneTypes;
-import Management.ManagementSystems.ResourceManagement;
-import Production.Factories.Connector.InternalStorage;
-import Production.Factories.Resources.Extractor;
-import SpecificExceptions.BuildingUnfinishedException;
-import SpecificExceptions.DroneNotEnoughEnergyException;
-import SpecificExceptions.NotEnoughEnergyException;
-import SpecificExceptions.NotEnoughResourceException;
+import management.ManagementSystems.ResourceManagement;
+import production.Factories.Connector.InternalStorage;
+import production.Factories.Resources.Extractor;
+import specificexceptions.BuildingUnfinishedException;
+import specificexceptions.DroneNotEnoughEnergyException;
+import specificexceptions.NotEnoughEnergyException;
+import specificexceptions.NotEnoughResourceException;
 import org.junit.Test;
 
 public class Extractor_Test extends BuildingTest_Setup{

@@ -1,11 +1,11 @@
 package Tests.FactoryTests;
 
 import ImportandEnums.DroneTypes;
-import Management.ManagementSystems.*;
-import Production.Dronen.Drone;
-import Production.Factories.Building;
-import Production.Factories.Connector.InternalStorage;
-import SpecificExceptions.*;
+import management.ManagementSystems.*;
+import production.Dronen.Drone;
+import production.Factories.Building;
+import production.Factories.Connector.InternalStorage;
+import specificexceptions.*;
 import org.junit.Before;
 
 public class BuildingTest_Setup {

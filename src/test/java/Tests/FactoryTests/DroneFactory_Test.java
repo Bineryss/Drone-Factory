@@ -2,11 +2,11 @@ package Tests.FactoryTests;
 
 import ImportandEnums.DroneTypes;
 import ImportandEnums.ResourceConnectionsEnum;
-import Management.ManagementSystems.DroneManagement;
-import Management.ManagementSystems.ResourceManagement;
-import Production.Factories.Connector.InternalStorage;
-import Production.Factories.Produktion.DroneFactory;
-import SpecificExceptions.*;
+import management.ManagementSystems.DroneManagement;
+import management.ManagementSystems.ResourceManagement;
+import production.Factories.Connector.InternalStorage;
+import production.Factories.Produktion.Dronefactory.DroneFactory;
+import specificexceptions.*;
 import org.junit.Before;
 import org.junit.Test;
 
