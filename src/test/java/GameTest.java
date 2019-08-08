@@ -1,14 +1,14 @@
 
 import ImportandEnums.BuildingTypes;
 import ImportandEnums.DroneTypes;
-import Management.ManagementSystems.*;
-import Production.Dronen.Drone;
-import Production.Factories.Building;
-import Production.Factories.Energy.*;
-import Production.Factories.Connector.*;
-import Production.Factories.Produktion.*;
-import Production.Factories.Resources.*;
-import SpecificExceptions.*;
+import management.ManagementSystems.*;
+import production.Dronen.Drone;
+import production.Factories.Building;
+import production.Factories.Energy.*;
+import production.Factories.Connector.*;
+import production.Factories.Produktion.Dronefactory.DroneFactory;
+import production.Factories.Resources.*;
+import specificexceptions.*;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -93,7 +93,7 @@ public class GameTest {
                 case 8:
                     DroneFactory tmpD = ((DroneFactory) BuildingManagement.getBuilding(BuildingTypes.DRONEFACTORY, intEingabe()));
                     tmpD.startProduction(DroneTypes.DEFAULTDRONE);
-                    System.out.println("New Production!");
+                    System.out.println("New production!");
                     break;
                 case 9:
                     return false;

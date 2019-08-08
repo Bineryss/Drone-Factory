@@ -1,9 +1,9 @@
 package Tests;
 
 import ImportandEnums.DroneTypes;
-import Management.ManagementSystems.DroneManagement;
-import Production.Dronen.Drone;
-import SpecificExceptions.DroneNotEnoughEnergyException;
+import management.ManagementSystems.DroneManagement;
+import production.Dronen.Drone;
+import specificexceptions.DroneNotEnoughEnergyException;
 import org.junit.Before;
 import org.junit.Test;
 

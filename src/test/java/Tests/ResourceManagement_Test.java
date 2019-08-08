@@ -1,7 +1,7 @@
 package Tests;
 
-import Management.ManagementSystems.ResourceManagement;
-import SpecificExceptions.NotEnoughResourceException;
+import management.ManagementSystems.ResourceManagement;
+import specificexceptions.NotEnoughResourceException;
 import org.junit.Test;
 
 public class ResourceManagement_Test {

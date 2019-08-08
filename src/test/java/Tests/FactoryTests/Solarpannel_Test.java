@@ -1,11 +1,11 @@
 package Tests.FactoryTests;
 
 import ImportandEnums.DroneTypes;
-import Management.ManagementSystems.ResourceManagement;
-import Production.Factories.Energy.Solarpannels;
-import SpecificExceptions.DroneNotEnoughEnergyException;
-import SpecificExceptions.NotEnoughEnergyException;
-import SpecificExceptions.NotEnoughResourceException;
+import management.ManagementSystems.ResourceManagement;
+import production.Factories.Energy.Solarpannels;
+import specificexceptions.DroneNotEnoughEnergyException;
+import specificexceptions.NotEnoughEnergyException;
+import specificexceptions.NotEnoughResourceException;
 import org.junit.Before;
 import org.junit.Test;
 
