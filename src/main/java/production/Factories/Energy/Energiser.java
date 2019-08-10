@@ -22,7 +22,7 @@ public class Energiser extends Building {
 
     @Override
     protected void updateBuilding() throws NotEnoughEnergyException {
-        int dividableEnergy = connections.size() / energy.availableEnergy();
+        int dividableEnergy = connections.size() / dataEntity.getEnergy().availableEnergy();
         for (Building tmp : connections) {
             try {
                 EnergyConnection en = tmp.getEnergy();
@@ -33,16 +33,16 @@ public class Energiser extends Building {
         }
     }
 
-    @Override
-    public BuildingInformationElement inform() {
-        return null;
-    }
-
     public void loadEnergyInDivider(int amount) throws NotEnoughEnergyException {
-        ResourceManagement.useEnergy(energy.loadEnergy(amount));
+        ResourceManagement.useEnergy(dataEntity.getEnergy().loadEnergy(amount));
     }
 
     public void addBuilding(Building ...buildings) {
         connections.addAll(Arrays.asList(buildings));
+    }
+
+    @Override
+    public BuildingInformationElement getInformation() {
+        return null;
     }
 }

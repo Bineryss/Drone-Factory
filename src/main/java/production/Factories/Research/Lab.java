@@ -25,8 +25,7 @@ public class Lab extends Building {
     }
 
     @Override
-    public BuildingInformationElement inform() {
+    public BuildingInformationElement getInformation() {
         return null;
     }
-
 }

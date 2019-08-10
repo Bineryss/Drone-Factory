@@ -1,4 +1,4 @@
-package production.Factories.Energy;
+package production.Factories.Energy.Solarpannel;
 
 import ImportandEnums.BuildingTypes;
 import management.ManagementSystems.ResourceManagement;
@@ -20,22 +20,19 @@ public class Solarpannels extends Building {
     }
 
     @Override
-    public void updateBuilding()  {
-        if (isReady()) {
+    public void updateBuilding() {
+        if (!dataEntity.inConstruction()) {
             generateEnergy();
         }
     }
 
-    @Override
-    public BuildingInformationElement inform() {
-        return null;
-    }
-
     private void generateEnergy() {
-        ResourceManagement.addEnergy(efficiency);
+        ResourceManagement.addEnergy(dataEntity.getEfficiency());
     }
 
-//    public String toString() {
-//        return "[ " + buildingTypes.getIcon() + " || Energy: " + efficiency + "||]" + constructionStatus();
-//    }
+    @Override
+    public BuildingInformationElement getInformation() {
+        return new BuildingInformationElement(dataEntity);
+    }
+
 }

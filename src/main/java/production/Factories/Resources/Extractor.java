@@ -23,35 +23,34 @@ public class Extractor extends Building {
 
     @Override
     public void updateBuilding() throws NotEnoughEnergyException, NotEnoughResourceException, DroneNotEnoughEnergyException {
-        if (isReady()) {
+        if (!dataEntity.inConstruction()) {
             produceResources();
         }
     }
 
-    @Override
-    public BuildingInformationElement inform() {
-        return null;
-    }
-
     private void produceResources() throws NotEnoughEnergyException, NotEnoughResourceException, DroneNotEnoughEnergyException {
-        if (!storage.isFull()) {
-                energy.useEnergy();
+        if (!dataEntity.getStorage().isFull()) {
+                dataEntity.getEnergy().useEnergy();
                 extractResource();
         }
     }
 
     private void extractResource() throws NotEnoughResourceException, DroneNotEnoughEnergyException {
-        if (storage.canStore(efficiency)) {
-            storage.storeResources(efficiency);
+        if (dataEntity.getStorage().canStore(dataEntity.getEfficiency())) {
+            dataEntity.getStorage().storeResources(dataEntity.getEfficiency());
         }
     }
 
+    @Override
+    public BuildingInformationElement getInformation() {
+        return null;
+    }
 
     /**
      * @return: Fertige Ausgabe
      */
 //    public String toString() {
-//        return "[ " + buildingTypes.getIcon() + " |" + printResource() + " ]" + constructionStatus();
+//        return "[ " + buildingType.getIcon() + " |" + printResource() + " ]" + constructionStatus();
 //    }
 
 }

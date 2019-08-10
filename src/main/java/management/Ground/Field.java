@@ -5,7 +5,7 @@
 //import management.ManagementSystems.DroneManagement;
 //import production.Dronen.Drone;
 //import production.Factories.Building;
-//import production.Factories.Energy.Solarpannels;
+//import production.Factories.Energy.Solarpannel.Solarpannels;
 //import production.Factories.Produktion.Dronefactory.DroneFactory;
 //import production.Factories.Resources.Extractor;
 //
@@ -48,7 +48,7 @@
 //    }
 //
 //    public void addBulding(Building tmp, Drone drone, int count) {
-//        tmp.startConstruction(drone.getBuildingTypes(), count);
+//        tmp.startConstruction(drone.getBuildingType(), count);
 //        BuildingManagement.addBuilding(tmp);
 //    }
 //

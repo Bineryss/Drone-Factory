@@ -1,26 +1,17 @@
 package production.Factories.Produktion.Dronefactory;
 
 import ImportandEnums.BuildingTypes;
-import management.ManagementSystems.BuildingManagement;
+import production.Factories.BuildingUi;
 
-import java.util.Optional;
-
-public class DronefactoryUi {
+public class DronefactoryUi extends BuildingUi<DronefactoryDataEntity> {
     private static final String icon = "[>%]";
-    public static final String DIVIDERLINE = "------------------------";
 
-    private DroneFactoryInformationElement information;
-
-    public void loadInformation(int id) {
-        information = ((DroneFactory) BuildingManagement.getBuilding(BuildingTypes.DRONEFACTORY, id)).inform();
-    }
-
-    public String icon() {
-        String print = "[ " + icon + " |" + printResource() + "| (";
+    public String drawIcon() {
+        String print = "[ " + icon + " |" + printResource() + "|(";
         if (information.getProducedElement() != null) {
             print += isWorkRemaining();
         }
-        print += ") ";
+        print += ")";
         if (information.getProd() != null) {
             print += information.getProd() + " ";
         }
@@ -28,62 +19,50 @@ public class DronefactoryUi {
         return print;
     }
 
-    public String openWindow() {
+    @Override
+    protected BuildingTypes getType() {
+        return BuildingTypes.DRONEFACTORY;
+    }
+
+    protected String drawWindow() {
         StringBuilder out = new StringBuilder();
-        out.append(DIVIDERLINE + icon + DIVIDERLINE + String.format("%n%n"));
         out.append("Internal Energy   Storage: ");
-        out.append(String.format("%4d", information.getEnergy()));
-        out.append(String.format("E%n"));
+        out.append(String.format("%3dE / %3dE", information.getEnergy().availableEnergy(),
+                BuildingTypes.DRONEFACTORY.getMaxCapacityEnergy()));
+        out.append(String.format("%n"));
         out.append("Internal Resource Storage: ");
-        out.append(String.format("%4d", information.getStorage()));
-        out.append(String.format("R%n%n"));
+        if (information.getStorage() == null) {
+            out.append("No connection!");
+        } else {
+            out.append(String.format("%3dR / %3dR", information.getStorage().inStorage(),
+                    BuildingTypes.DRONEFACTORY.getMaxCapacity()));
+        }
+        out.append(String.format("%n%n"));
         out.append("Current Drone in Production: ");
         if (information.getProducedElement() != null) {
-            out.append(information.getProducedElement());
+            out.append(String.format("[%s]",information.getProducedElement().getType().getIcon()));
+            out.append(String.format(" | Turns until finished: %d%n%n", information.getProductionStatus()));
         } else {
-            out.append("[   ]");
+            out.append(String.format("[   ]%n%n"));
         }
-        out.append(" | Status: " + information.getWorkStatus() + String.format("%n%n"));
-        out.append("Available Drones for Production: " + information.getProducibleDrones() + String.format("%n"));
-        out.append(DIVIDERLINE + "----" + DIVIDERLINE);
+        out.append("Available Drones for Production: " + information.convertProducibleDrones() + String.format("%n"));
 
         return out.toString();
+    }
+
+    @Override
+    protected String getIcon() {
+        return icon;
     }
 
     private String isWorkRemaining() {
         StringBuilder str = new StringBuilder(information.getProducedElement().getType().getIcon());
-        if (information.isWorking()) {
+        if (information.isProducing()) {
             str.append(": ");
-            for (int i = 0; i < information.getWorkStatus(); i++) {
+            for (int i = 0; i < information.getProductionStatus(); i++) {
                 str.append("|");
             }
         }
         return str.toString();
-    }
-
-    private String printResource() {
-        StringBuilder str = new StringBuilder();
-        try {
-            str.append(information.getEnergy());
-            str.append("E|");
-            str.append(information.getStorage() + "R");
-            return str.toString();
-
-        } catch (NullPointerException e) {
-            return " Energy: 0 | Resources: 0 ";
-        }
-    }
-
-    private String constructionStatus() {
-        StringBuilder out = new StringBuilder();
-        for (int i = information.getConstruction(); i > 0; i--) {
-            if (i >= 5) {
-                out.append("X");
-                i -= 4;
-            } else {
-                out.append("|");
-            }
-        }
-        return out.toString();
     }
 }

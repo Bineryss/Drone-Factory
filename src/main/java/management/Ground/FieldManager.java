@@ -4,7 +4,7 @@
 //import management.Ground.SpecifiedFields.ExtractorField;
 //import management.Ground.SpecifiedFields.SolarpannelField;
 //import production.Factories.Building;
-//import production.Factories.Energy.Solarpannels;
+//import production.Factories.Energy.Solarpannel.Solarpannels;
 //import production.Factories.Produktion.Dronefactory.DroneFactory;
 //import production.Factories.Resources.Extractor;
 //
@@ -18,7 +18,7 @@
 //
 //    public static void addBuilding(Building building, int x, int y) {
 //        if (true) {
-//            switch (building.getBuildingTypes()) {
+//            switch (building.getBuildingType()) {
 //                case SOLARPANNEL:
 //                    ground[x][y] = new SolarpannelField((Solarpannels) building);
 //                    break;

@@ -15,74 +15,62 @@ import specificexceptions.DroneNotEnoughEnergyException;
 import specificexceptions.NotEnoughEnergyException;
 import specificexceptions.NotEnoughResourceException;
 
-import java.util.ArrayList;
-
 /**
  * Abstrakte Klasse fuer Gebaeude
  * <p>
- * Speichert die Kosten, Bauzeit,
+ * Speichert die Kosten, Bauzeit, etc.
  * <p>
  */
-public abstract class Building {
-    protected final BuildingTypes buildingTypes;
+public abstract class Building <T extends BuildingDataEntity> implements UIWatchable {
+    protected final BuildingTypes buildingType;
     //ID des speziellen Gebaeudes
     protected int id;
-    protected final EnergyConnection energy;
-    protected ResourceConnection storage;
-    protected final int efficiency;
+    protected T dataEntity;
 
-    protected ArrayList<Drone> workers;
-    protected int construction;
-    private final int constructionCost;
-    private boolean hasResources;
 
     protected Building(BuildingTypes type) {
-        this.buildingTypes = type;
-        constructionCost = type.getCosts();
-        construction = type.getConstructionTime();
-        efficiency = type.getEfficiency();
-        energy = new EnergyConnection(type);
+        this.buildingType = type;
+        dataEntity = (T) new BuildingDataEntity(type);
     }
 
     public void update() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException {
-        if (!isReady()) {
+        if (dataEntity.inConstruction()) {
             build();
         } else {
             updateBuilding();
         }
-        inform();
     }
 
     protected abstract void updateBuilding() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException;
 
     public EnergyConnection getEnergy() throws BuildingUnfinishedException {
-        if (energy != null) {
-            return energy;
+        if (dataEntity.getEnergy() != null) {
+            return dataEntity.getEnergy();
         } else {
             throw new BuildingUnfinishedException();
         }
     }
 
     public void connectStorage(ResourceConnectionsEnum con) throws BuildingUnfinishedException {
-        if (isReady()) {
+        if (!dataEntity.inConstruction()) {
             ResourceConnection tmp = null;
             switch (con) {
                 case INTERNALSTORAGE:
-                    tmp = new InternalStorage(buildingTypes);
+                    tmp = new InternalStorage(buildingType);
                     break;
                 case DIRECTRESOURCECONNECT:
                     tmp = new DirectResourceCon();
                     break;
             }
-            storage = tmp;
+            dataEntity.setStorage(tmp);
         } else {
             throw new BuildingUnfinishedException();
         }
     }
 
     public ResourceConnection getStorage() throws BuildingUnfinishedException {
-        if (storage != null) {
-            return storage;
+        if (dataEntity.getStorage() != null) {
+            return dataEntity.getStorage();
 
         } else {
             throw new BuildingUnfinishedException();
@@ -95,12 +83,12 @@ public abstract class Building {
      * Wenn Drone keine arbeitskraft mehr, dann wird bau gestopt, neu Drone muss uebergen werden.
      */
     public void startConstruction(DroneTypes droneId, int droneCount) throws NotEnoughResourceException {
-        if (!inConstruction()) {
-            workers = DroneManagement.giveDronesWork(droneId, droneCount);
-            if (!hasResources) {
-                if (ResourceManagement.hasResources(constructionCost)) {
-                    ResourceManagement.removeResources(constructionCost);
-                    hasResources = true;
+        if (dataEntity.inConstruction()) {
+            dataEntity.addWorkers(DroneManagement.giveDronesWork(droneId, droneCount));
+            if (!dataEntity.hasResourcesForConstruction()) {
+                if (ResourceManagement.hasResources(dataEntity.getConstructionCost())) {
+                    ResourceManagement.removeResources(dataEntity.getConstructionCost());
+                    dataEntity.setResourcesForBuildingAvailable(true);
                 }
             }
         } else {
@@ -108,42 +96,30 @@ public abstract class Building {
         }
     }
 
-    public boolean inConstruction() {
-        return construction == 0;
-    }
-
     private void build() throws DroneNotEnoughEnergyException {
-        for (Drone worker : workers) {
-            if ((construction - worker.efficiency()) > 0) {
-                construction -= worker.workEfficiency();
+        for (Drone worker : dataEntity.getWorkers()) {
+            if (dataEntity.wontBeFinshed(worker)) {
+                dataEntity.work(worker.workEfficiency());
             } else {
                 worker.workEfficiency();
-                construction = 0;
+                dataEntity.setConstruction(0);
                 worker.hasFinishedWork();
-                workers = null;
+                dataEntity.clearWorkers();
                 break;
             }
         }
     }
 
     public void addMoreWorkers(DroneTypes droneType, int amount) {
-        if (workers != null) {
-            workers.addAll(DroneManagement.giveDronesWork(droneType, amount));
-        }
-    }
-
-
-    protected boolean isReady() {
-        return construction == 0;
+        dataEntity.addWorkers(DroneManagement.giveDronesWork(droneType, amount));
     }
 
     public int getId() {
         return id;
     }
 
-    public BuildingTypes getBuildingTypes() {
-        return buildingTypes;
+    public BuildingTypes getBuildingType() {
+        return buildingType;
     }
 
-    public abstract BuildingInformationElement inform();
 }
