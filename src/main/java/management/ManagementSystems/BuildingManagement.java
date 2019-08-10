@@ -2,6 +2,7 @@ package management.ManagementSystems;
 
 import ImportandEnums.BuildingTypes;
 import production.Factories.Building;
+import production.Factories.BuildingDataEntity;
 import specificexceptions.DroneNotEnoughEnergyException;
 import specificexceptions.NotEnoughEnergyException;
 import specificexceptions.NotEnoughResourceException;
@@ -30,7 +31,7 @@ public class BuildingManagement {
 
     public static void addBuilding(Building... tmp) {
         for (Building building : tmp) {
-            buildings.put(new BuildingKey(building.getBuildingTypes()), building);
+            buildings.put(new BuildingKey(building.getBuildingType()), building);
         }
     }
 

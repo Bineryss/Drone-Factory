@@ -4,7 +4,6 @@ import ImportandEnums.DroneTypes;
 import ImportandEnums.ResourceConnectionsEnum;
 import Tests.FactoryTests.BuildingTest_Setup;
 import management.ManagementSystems.BuildingManagement;
-import management.ManagementSystems.ResourceManagement;
 import org.junit.Before;
 import org.junit.Test;
 import production.Factories.Connector.InternalStorage;
@@ -23,6 +22,7 @@ public class DronefactoryUiTest extends BuildingTest_Setup {
 
     @Before
     public void setup() {
+        super.setup();
         droFac = new DroneFactory();
         BuildingManagement.addBuilding(droFac);
         ui = new DronefactoryUi();
@@ -31,7 +31,7 @@ public class DronefactoryUiTest extends BuildingTest_Setup {
 
     @Test
     public void print() {
-        System.out.println(ui.icon());
+        System.out.println(ui.drawIcon());
     }
 
     @Test
@@ -41,20 +41,43 @@ public class DronefactoryUiTest extends BuildingTest_Setup {
 
     @Test
     public void printInteraction() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException, BuildingUnfinishedException, MissingTransportDrone, NotEnoughStorageException {
-        ResourceManagement.addEnergy(1000);
-        ResourceManagement.addResources(1000);
         addDrones(DroneTypes.DEFAULTDRONE, 5);
         droFac.startConstruction(DroneTypes.DEFAULTDRONE, 4);
         for (int i = 0; i < 5; i++) {
-            System.out.println(ui.icon());
+            System.out.println(ui.drawIcon());
             droFac.update();
         }
-        System.out.println(ui.icon());
+        System.out.println(ui.drawIcon());
         droFac.connectStorage(ResourceConnectionsEnum.INTERNALSTORAGE);
-        ((InternalStorage)droFac.getStorage()).addTransportDrone(DroneTypes.DEFAULTDRONE);
+        ((InternalStorage) droFac.getStorage()).addTransportDrone(DroneTypes.DEFAULTDRONE);
         droFac.loadResources(100);
+        droFac.getEnergy().loadEnergy(100);
         droFac.update();
         System.out.println(ui.openWindow());
-        System.out.println(ui.icon());
+        droFac.startProduction(DroneTypes.DEFAULTDRONE);
+        System.out.println(ui.openWindow());
+        for (int i = 0; i < 4; i++) {
+            System.out.println(ui.openWindow());
+            droFac.update();
+        }
+        System.out.println(ui.openWindow());
+    }
+
+    @Test
+    public void switchFactory() throws NotEnoughEnergyException, NotEnoughResourceException, DroneNotEnoughEnergyException {
+        addDrones(DroneTypes.DEFAULTDRONE, 5);
+        droFac.startConstruction(DroneTypes.DEFAULTDRONE, 5);
+        for (int i = 0; i < 5; i++) {
+            System.out.println(ui.drawIcon());
+            droFac.update();
+        }
+        System.out.println(ui.drawIcon());
+
+        BuildingManagement.addBuilding(new DroneFactory());
+        ui.loadInformation(1);
+        System.out.println(ui.drawIcon());
+        ui.loadInformation(0);
+        System.out.println(ui.drawIcon());
+
     }
 }

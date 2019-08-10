@@ -6,6 +6,7 @@ import production.Dronen.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.List;
 
 /**
  * Speichert alle Dronen, die Produziert wurden
@@ -73,7 +74,7 @@ public class DroneManagement {
         throw new InputMismatchException("no such id found!");
     }
 
-    public static ArrayList<Drone> giveDronesWork(DroneTypes id, int droneCount) {
+    public static List<Drone> giveDronesWork(DroneTypes id, int droneCount) {
         ArrayList<Drone> search = cleanDroneList(id);
         ArrayList<Drone> out = new ArrayList<>();
         if (droneCount <= search.size()) {

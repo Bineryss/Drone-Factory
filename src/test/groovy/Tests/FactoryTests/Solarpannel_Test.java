@@ -2,7 +2,7 @@ package Tests.FactoryTests;
 
 import ImportandEnums.DroneTypes;
 import management.ManagementSystems.ResourceManagement;
-import production.Factories.Energy.Solarpannels;
+import production.Factories.Energy.Solarpannel.Solarpannels;
 import specificexceptions.DroneNotEnoughEnergyException;
 import specificexceptions.NotEnoughEnergyException;
 import specificexceptions.NotEnoughResourceException;
@@ -37,6 +37,5 @@ public class Solarpannel_Test extends BuildingTest_Setup{
         for (int i = 0; i < 5; i++) {
             sol.update();
         }
-        assert (!sol.inConstruction());
     }
 }

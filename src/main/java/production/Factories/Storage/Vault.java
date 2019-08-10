@@ -18,7 +18,8 @@ public class Vault extends Building {
     }
 
     @Override
-    public BuildingInformationElement inform() {
+    public BuildingInformationElement getInformation() {
         return null;
     }
+
 }
