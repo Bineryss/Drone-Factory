@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Speichert alle Dronen, die Produziert wurden
@@ -40,12 +41,14 @@ public class DroneManagement {
      * entfernt die 1. Drone, wenn sie keine Energie mehr hat
      */
     private static void removeDead() {
+        List<DroneKey> deleteKeys = new ArrayList<>();
         for (DroneKey key : drones.keySet()) {
-            if (key != null) {
+            deleteKeys.add(key);
+        }
+        for (DroneKey key : deleteKeys) {
                 if (drones.get(key).isDead()) {
                     drones.remove(key);
                 }
-            }
         }
     }
 
@@ -113,14 +116,14 @@ public class DroneManagement {
         });
     }
 
-    public static void print() {
+    public static String print() {
         StringBuilder out = new StringBuilder();
         for (DroneKey key : drones.keySet()) {
             if (key != null) {
                 out.append(drones.get(key)).append("; ");
             }
         }
-        System.out.printf("%s%n", out.toString());
+        return out.toString();
     }
 
     private static String getIcon(DroneTypes id) {

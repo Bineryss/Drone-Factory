@@ -12,9 +12,8 @@ import specificexceptions.NotEnoughStorageException;
 
 /**
  * Die Grundanbindung, an das Resourcemanagement.
- *
+ * <p>
  * Es benötigt eine Drone zum aufladen und entladen des Lagers
- *
  */
 public class InternalStorage implements ResourceConnection {
     private final Storage storage;
@@ -29,9 +28,14 @@ public class InternalStorage implements ResourceConnection {
      * Ausladen des Internen Lagers
      * Resourcen werden ins Hauptlager geschoben
      * Es wird Energy von der Drone verbraucht
+     *
      * @param amount
      */
-    public void storeResources(int amount) throws NotEnoughResourceException, DroneNotEnoughEnergyException {
+    public void storeResources(int amount) throws NotEnoughStorageException {
+        storage.addResources(amount);
+    }
+
+    public void unloadResources(int amount) throws DroneNotEnoughEnergyException, NotEnoughResourceException, NotEnoughStorageException {
         if (transportDrone != null && !transportDrone.isDead()) {
             ResourceManagement.addResources(storage.removeResources(amount));
             transportDrone.workEfficiency();
@@ -43,22 +47,23 @@ public class InternalStorage implements ResourceConnection {
 
     @Override
     public int inStorage() {
-        return storage.getResources();
+        return storage.getAmount();
     }
 
     /**
      * Laed das Interne Lager auf
      * Resourcen werden aus dem Hauptlager genommen
      * Es wird Energy von der Drone verbraucht
+     *
      * @param amount
      */
     public void loadResources(int amount) throws NotEnoughStorageException, DroneNotEnoughEnergyException, NotEnoughResourceException, MissingTransportDrone {
         if (storage.canStore(amount)) {
-            if(transportDrone != null && !transportDrone.isDead()) {
-            ResourceManagement.removeResources(amount);
+            if (transportDrone != null && !transportDrone.isDead()) {
+                ResourceManagement.removeResources(amount);
                 storage.addResources(amount);
                 transportDrone.workEfficiency();
-            }else {
+            } else {
                 throw new MissingTransportDrone();
             }
         } else {
@@ -96,15 +101,7 @@ public class InternalStorage implements ResourceConnection {
         transportDrone = DroneManagement.getFullDrone(drone);
     }
 
-    public String toString() {
-        return storage + printDrone();
-    }
-
-    private String printDrone() {
-        if (transportDrone != null) {
-            return "(" + transportDrone.toString() + " )";
-        } else {
-            return "";
-        }
+    public Drone getTransportDrone() {
+        return transportDrone;
     }
 }

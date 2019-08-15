@@ -5,6 +5,7 @@ import management.ManagementSystems.ResourceManagement;
 import management.Resources.Energy;
 import specificexceptions.NotEnoughEnergyException;
 import specificexceptions.NotEnoughResourceException;
+import specificexceptions.NotEnoughStorageException;
 
 public class EnergyConnection {
     private final Energy energy;
@@ -27,7 +28,7 @@ public class EnergyConnection {
         return amount;
     }
 
-    public void transferEnergy(int amount) throws NotEnoughEnergyException {
+    public void transferEnergy(int amount) throws NotEnoughEnergyException, NotEnoughStorageException {
         try {
             energy.removeResources(amount);
         }catch (NotEnoughResourceException e) {

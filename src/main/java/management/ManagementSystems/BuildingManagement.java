@@ -15,7 +15,6 @@ import java.util.InputMismatchException;
  * Speichert alle Fabriken, Labore, Energie dings in einer Liste.
  * Speichert alle Dronen Typen in einern Liste.
  */
-@Slf4j
 public class BuildingManagement {
     private static class BuildingKey {
         final BuildingTypes type;
@@ -44,23 +43,13 @@ public class BuildingManagement {
         throw new InputMismatchException("No such id found!");
     }
 
-    public static void print() {
-        StringBuilder out = new StringBuilder();
-        for (BuildingKey key : buildings.keySet()) {
-            if (key != null) {
-                out.append(buildings.get(key)).append("; ");
-            }
-        }
-        log.info("{}", out.toString());
-    }
-
     public static void update() {
         //TODO: try catch temporally until user interface gets implemented!
         buildings.forEach((key, building) -> {
             try {
                 building.update();
-            } catch (NotEnoughResourceException | NotEnoughEnergyException | DroneNotEnoughEnergyException e) {
-                log.error(e.getMessage());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 

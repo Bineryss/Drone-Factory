@@ -12,8 +12,10 @@ import production.Factories.Connector.InternalStorage;
 import production.Factories.Connector.ResourceConnection;
 import specificexceptions.BuildingUnfinishedException;
 import specificexceptions.DroneNotEnoughEnergyException;
+import specificexceptions.NoResourceConnection;
 import specificexceptions.NotEnoughEnergyException;
 import specificexceptions.NotEnoughResourceException;
+import specificexceptions.NotEnoughStorageException;
 
 /**
  * Abstrakte Klasse fuer Gebaeude
@@ -33,7 +35,7 @@ public abstract class Building <T extends BuildingDataEntity> implements UIWatch
         dataEntity = (T) new BuildingDataEntity(type);
     }
 
-    public void update() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException {
+    public void update() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException, NotEnoughStorageException {
         if (dataEntity.inConstruction()) {
             build();
         } else {
@@ -41,7 +43,7 @@ public abstract class Building <T extends BuildingDataEntity> implements UIWatch
         }
     }
 
-    protected abstract void updateBuilding() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException;
+    protected abstract void updateBuilding() throws NotEnoughResourceException, NotEnoughEnergyException, DroneNotEnoughEnergyException, NotEnoughStorageException;
 
     public EnergyConnection getEnergy() throws BuildingUnfinishedException {
         if (dataEntity.getEnergy() != null) {
@@ -68,12 +70,11 @@ public abstract class Building <T extends BuildingDataEntity> implements UIWatch
         }
     }
 
-    public ResourceConnection getStorage() throws BuildingUnfinishedException {
+    public ResourceConnection getStorage() throws NoResourceConnection {
         if (dataEntity.getStorage() != null) {
             return dataEntity.getStorage();
-
         } else {
-            throw new BuildingUnfinishedException();
+            throw new NoResourceConnection();
         }
     }
 

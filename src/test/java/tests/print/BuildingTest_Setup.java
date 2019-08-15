@@ -1,4 +1,4 @@
-package Tests.FactoryTests;
+package tests.print;
 
 import ImportandEnums.DroneTypes;
 import management.ManagementSystems.*;
@@ -12,9 +12,15 @@ public class BuildingTest_Setup {
 
     @Before
     public void setup() {
-        ResourceManagement.addEnergy(1000);
-        ResourceManagement.addResources(1000);
-        ResourceManagement.print();
+        try {
+            ResourceManagement.addEnergy(1000);
+            ResourceManagement.addResources(1000);
+        } catch (NotEnoughStorageException e) {
+            e.printStackTrace();
+        }
+        addDrones(DroneTypes.DEFAULTDRONE, 5);
+        System.out.println(ResourceManagement.print());
+        System.out.println(DroneManagement.print());
 
     }
 
@@ -24,16 +30,16 @@ public class BuildingTest_Setup {
         }
     }
 
-    void loadBuilding(Building building, int resources) {
+    public void loadBuilding(Building building, int resources) {
         try {
             InternalStorage tmp = (InternalStorage) building.getStorage();
             tmp.loadResources(resources);
-        } catch (BuildingUnfinishedException | NotEnoughStorageException | DroneNotEnoughEnergyException | NotEnoughResourceException | MissingTransportDrone e) {
+        } catch (NotEnoughStorageException | DroneNotEnoughEnergyException | NotEnoughResourceException | MissingTransportDrone | NoResourceConnection e) {
             System.out.println(e.getMessage());
         }
     }
 
-    void loadBuilding(Building building) {
+    public void loadBuilding(Building building) {
         loadBuilding(building, 100);
     }
 }

@@ -2,6 +2,7 @@ package production.Factories.Connector;
 
 import specificexceptions.DroneNotEnoughEnergyException;
 import specificexceptions.NotEnoughResourceException;
+import specificexceptions.NotEnoughStorageException;
 
 /**
  * Die Resourcenverwaltung kann mit upgrades errsetzt werde.
@@ -19,7 +20,7 @@ public interface ResourceConnection {
 
     boolean canStore(int amount);
 
-    void storeResources(int amount) throws NotEnoughResourceException, DroneNotEnoughEnergyException;
+    void storeResources(int amount) throws NotEnoughResourceException, DroneNotEnoughEnergyException, NotEnoughStorageException;
 
     int inStorage();
 }

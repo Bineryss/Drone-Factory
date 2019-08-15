@@ -1,7 +1,7 @@
 package production.Factories;
 
 import ImportandEnums.BuildingTypes;
-import lombok.Getter;
+import lombok.Data;
 import production.Dronen.Drone;
 import production.Factories.Connector.EnergyConnection;
 import production.Factories.Connector.ResourceConnection;
@@ -10,7 +10,7 @@ import specificexceptions.NotEnoughEnergyException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
+@Data
 public class BuildingDataEntity {
     protected int efficiency;
     protected int constructionCost;

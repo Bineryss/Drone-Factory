@@ -4,6 +4,7 @@ import ImportandEnums.BuildingTypes;
 import management.ManagementSystems.ResourceManagement;
 import production.Factories.Building;
 import production.Factories.BuildingInformationElement;
+import specificexceptions.NotEnoughStorageException;
 
 /**
  * Solarpannel - Produziert Energie
@@ -20,13 +21,13 @@ public class Solarpannels extends Building {
     }
 
     @Override
-    public void updateBuilding() {
+    public void updateBuilding() throws NotEnoughStorageException {
         if (!dataEntity.inConstruction()) {
             generateEnergy();
         }
     }
 
-    private void generateEnergy() {
+    private void generateEnergy() throws NotEnoughStorageException {
         ResourceManagement.addEnergy(dataEntity.getEfficiency());
     }
 

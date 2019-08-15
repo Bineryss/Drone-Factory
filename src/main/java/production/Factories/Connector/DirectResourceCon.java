@@ -2,6 +2,7 @@ package production.Factories.Connector;
 
 import management.ManagementSystems.ResourceManagement;
 import specificexceptions.NotEnoughResourceException;
+import specificexceptions.NotEnoughStorageException;
 
 public class DirectResourceCon implements ResourceConnection {
 
@@ -21,7 +22,7 @@ public class DirectResourceCon implements ResourceConnection {
     }
 
     @Override
-    public void storeResources(int amount) {
+    public void storeResources(int amount) throws NotEnoughStorageException {
         ResourceManagement.addResources(amount);
     }
 

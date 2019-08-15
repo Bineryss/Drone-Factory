@@ -1,6 +1,7 @@
 package management.Resources;
 
 import specificexceptions.NotEnoughResourceException;
+import specificexceptions.NotEnoughStorageException;
 
 public class Resource {
     private final String name;
@@ -16,13 +17,15 @@ public class Resource {
         this.maxCapacity = maxCapacity;
     }
 
-    public int getResources() {
+    public int getAmount() {
         return count;
     }
 
-    public void addResources(int count) {
+    public void addResources(int count) throws NotEnoughStorageException {
         if (canStore(count)) {
             this.count += count;
+        } else {
+            throw new NotEnoughStorageException();
         }
     }
 

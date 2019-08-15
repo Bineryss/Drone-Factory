@@ -1,6 +1,5 @@
-package Tests.FactoryTests.uiTest;
+package tests.print;
 
-import Tests.FactoryTests.BuildingTest_Setup;
 import management.ManagementSystems.BuildingManagement;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,12 +15,16 @@ public class SolarpannelUiTest extends BuildingTest_Setup {
         super.setup();
         sol = new Solarpannels();
         BuildingManagement.addBuilding(sol);
-        ui = new SolarpannelUi();
-        ui.loadInformation(0);
+        ui = new SolarpannelUi(0);
     }
 
     @Test
     public void testIcon() {
-        System.out.println(ui.drawIcon());
+        System.out.println(ui.printIcon());
+    }
+
+    @Test
+    public void testWindow() {
+        System.out.println(ui.openWindow());
     }
 }

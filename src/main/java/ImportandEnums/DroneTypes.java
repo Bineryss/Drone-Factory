@@ -4,9 +4,9 @@ public enum DroneTypes {
     /**
      * Drone Costs
      */
-    BUILDINGDRONE("{B}",50,100,12,1,100, 5),
+    BUILDINGDRONE("{B}",50,100,15,1,100, 5),
     CARRIERDRONE("{C}",20,100,10,1,20, 0),
-    DEFAULTDRONE("{D}",10,10,4,1,10, 1);
+    DEFAULTDRONE("{D}",10,10,5,1,10, 1);
 
 
     private final String ICON;

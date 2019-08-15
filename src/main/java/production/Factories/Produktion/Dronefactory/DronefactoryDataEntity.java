@@ -6,12 +6,13 @@ import ImportandEnums.DroneTypes;
 import lombok.Data;
 import production.Dronen.Drone;
 import production.Factories.BuildingDataEntity;
+import specificexceptions.NotEnoughEnergyException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-class DronefactoryDataEntity extends BuildingDataEntity {
+public class DronefactoryDataEntity extends BuildingDataEntity {
     private int productionStatus;
     private boolean isProducing;
 
@@ -41,8 +42,9 @@ class DronefactoryDataEntity extends BuildingDataEntity {
         return out.toString().substring(0, out.length() - 2);
     }
 
-    void factorise() {
+    void factorise() throws NotEnoughEnergyException {
         productionStatus -= efficiency;
+        useEnergy();
     }
 
     boolean isProducing() {

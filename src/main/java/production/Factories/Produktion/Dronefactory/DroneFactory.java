@@ -1,15 +1,19 @@
 package production.Factories.Produktion.Dronefactory;
 
 import BuildingExtensions.DroneProducerExt;
-import ImportandEnums.DroneTypes;
-import lombok.Getter;
-import management.ManagementSystems.DroneManagement;
 import ImportandEnums.BuildingTypes;
+import ImportandEnums.DroneTypes;
+import management.ManagementSystems.DroneManagement;
 import production.Factories.Building;
 import production.Factories.BuildingInformationElement;
 import production.Factories.Connector.DirectResourceCon;
 import production.Factories.Connector.InternalStorage;
-import specificexceptions.*;
+import specificexceptions.BuildingUnfinishedException;
+import specificexceptions.DroneNotEnoughEnergyException;
+import specificexceptions.MissingTransportDrone;
+import specificexceptions.NotEnoughEnergyException;
+import specificexceptions.NotEnoughResourceException;
+import specificexceptions.NotEnoughStorageException;
 
 /**
  * Dronefactory - Produziert Dronen aller art.
@@ -21,10 +25,10 @@ public class DroneFactory extends Building<DronefactoryDataEntity> {
 
     public DroneFactory() {
         super(BuildingTypes.DRONEFACTORY);
+        dataEntity = new DronefactoryDataEntity(buildingType);
+
         cc++;
         id = cc;
-
-        dataEntity = new DronefactoryDataEntity(buildingType);
     }
 
     /**
@@ -36,7 +40,6 @@ public class DroneFactory extends Building<DronefactoryDataEntity> {
     @Override
     protected void updateBuilding() throws NotEnoughResourceException, NotEnoughEnergyException {
         if (dataEntity.isProducing() && dataEntity.hasEnergy()) {
-            dataEntity.useEnergy();
             dataEntity.factorise();
             finishDrone();
         }
@@ -60,7 +63,7 @@ public class DroneFactory extends Building<DronefactoryDataEntity> {
     }
 
     public void startProduction(DroneTypes drone) throws BuildingUnfinishedException, NotEnoughResourceException {
-        if (!dataEntity.inConstruction() && !dataEntity.prodIsActive()) {
+        if (!dataEntity.inConstruction() && !dataEntity.prodIsActive() && canBeBuild(drone)) {
             startProductionAutomatic(drone);
         } else {
             throw new BuildingUnfinishedException();
@@ -81,7 +84,7 @@ public class DroneFactory extends Building<DronefactoryDataEntity> {
                     dataEntity.addProductionTime(drone.getConstructionTime());
                     dataEntity.getStorage().useResources(drone.getCosts());
                 } else {
-                    System.out.println("Du hast nicht genuegend Resourcen fuer diese Drone!");
+                    throw new NotEnoughResourceException();
                 }
             } else {
                 System.out.println("Es wird bereits eine Drone Produziert!");
@@ -130,9 +133,7 @@ public class DroneFactory extends Building<DronefactoryDataEntity> {
 
     @Override
     public BuildingInformationElement getInformation() {
-        BuildingInformationElement<DronefactoryDataEntity> out =
-                new BuildingInformationElement<>(dataEntity);
-        return out;
+        return new BuildingInformationElement<>(dataEntity);
     }
 
 }

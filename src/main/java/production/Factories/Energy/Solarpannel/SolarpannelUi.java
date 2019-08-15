@@ -5,28 +5,24 @@ import production.Factories.BuildingDataEntity;
 import production.Factories.BuildingUi;
 
 public class SolarpannelUi extends BuildingUi<BuildingDataEntity> {
-    private static final String ICON = "*~//";
 
-    @Override
-    protected BuildingTypes getType() {
-        return BuildingTypes.SOLARPANNEL;
+    public SolarpannelUi(int id) {
+        super(BuildingTypes.SOLARPANNEL, id);
     }
 
     @Override
-    public String drawIcon() {
-        StringBuilder out = new StringBuilder();
-        out.append("[" + ICON + "|");
-        out.append("Energy: " + information.getEfficiency() + "]");
-        return out.toString();
+    protected String drawResoucreSpace() {
+        return String.format("Energy: %s", information.getEfficiency());
+
+    }
+
+    @Override
+    protected String drawInformationSpace() {
+        return "";
     }
 
     @Override
     protected String drawWindow() {
         return null;
-    }
-
-    @Override
-    protected String getIcon() {
-        return ICON;
     }
 }

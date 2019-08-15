@@ -2,6 +2,7 @@ package management.Resources;
 
 import specificexceptions.NotEnoughEnergyException;
 import specificexceptions.NotEnoughResourceException;
+import specificexceptions.NotEnoughStorageException;
 
 public class Energy extends Resource {
     private final int energyUse;
@@ -20,24 +21,28 @@ public class Energy extends Resource {
      * @param placebo
      */
     public Energy(int maxCapacity, int energyUse, int placebo) {
-        super("Energy",maxCapacity);
+        super("Energy", maxCapacity);
 
         this.count = maxCapacity;
         this.energyUse = energyUse;
     }
 
     public void loadEnergy(int amount) {
-        if ((amount + count) > maxCapacity) {
-            addResources(maxCapacity);
-        } else {
-            addResources(amount);
+        try {
+            if ((amount + count) > maxCapacity) {
+                addResources(maxCapacity);
+            } else {
+                addResources(amount);
+            }
+        } catch (NotEnoughStorageException e) {
+            e.printStackTrace();
         }
     }
 
     public void useEnergy() throws NotEnoughEnergyException {
         try {
             removeResources(energyUse);
-        }catch (NotEnoughResourceException e) {
+        } catch (NotEnoughResourceException e) {
             throw new NotEnoughEnergyException();
         }
     }

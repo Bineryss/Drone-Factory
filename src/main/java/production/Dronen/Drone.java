@@ -18,10 +18,8 @@ public class Drone {
     private final int efficiency;
     private boolean isOccupied;
 
-    //Energie Speicher
     private final Energy energy;
 
-    //Resource Speicher
     private Storage resource;
 
 
@@ -99,6 +97,6 @@ public class Drone {
      * @return: " {D}: Symbol einer Drone und uebrige arbeitskraft.
      */
     public String toString() {
-        return type.getIcon() + " : " + energyLeft();
+        return type.getIcon() + ":" + energyLeft();
     }
 }

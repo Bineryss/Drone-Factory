@@ -3,11 +3,12 @@ package management.ManagementSystems;
 import management.Resources.Resource;
 import specificexceptions.NotEnoughEnergyException;
 import specificexceptions.NotEnoughResourceException;
+import specificexceptions.NotEnoughStorageException;
 
 public class ResourceManagement {
 
     private static final Resource energy = new Resource("Energy", 1000);
-    private static final Resource resource = new Resource("Carbon", 1000);
+    private static final Resource resource = new Resource("Iron", 1000);
 
 
     public static Resource getResource() {
@@ -19,7 +20,7 @@ public class ResourceManagement {
         return cost;
     }
 
-    public static void addResources(int added) {
+    public static void addResources(int added) throws NotEnoughStorageException {
         resource.addResources(added);
     }
 
@@ -39,7 +40,7 @@ public class ResourceManagement {
         }
     }
 
-    public static void addEnergy(int ammount) {
+    public static void addEnergy(int ammount) throws NotEnoughStorageException {
         energy.addResources(ammount);
     }
 

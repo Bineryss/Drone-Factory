@@ -5,6 +5,7 @@ import production.Factories.*;
 import specificexceptions.DroneNotEnoughEnergyException;
 import specificexceptions.NotEnoughEnergyException;
 import specificexceptions.NotEnoughResourceException;
+import specificexceptions.NotEnoughStorageException;
 
 /**
  * <h3>Extractor</h3>
@@ -22,7 +23,7 @@ public class Extractor extends Building {
     }
 
     @Override
-    public void updateBuilding() throws NotEnoughEnergyException, NotEnoughResourceException, DroneNotEnoughEnergyException {
+    protected void updateBuilding() throws NotEnoughEnergyException, NotEnoughResourceException, DroneNotEnoughEnergyException {
         if (!dataEntity.inConstruction()) {
             produceResources();
         }
@@ -30,27 +31,27 @@ public class Extractor extends Building {
 
     private void produceResources() throws NotEnoughEnergyException, NotEnoughResourceException, DroneNotEnoughEnergyException {
         if (!dataEntity.getStorage().isFull()) {
-                dataEntity.getEnergy().useEnergy();
-                extractResource();
+            dataEntity.getEnergy().useEnergy();
+            extractResource();
         }
     }
 
     private void extractResource() throws NotEnoughResourceException, DroneNotEnoughEnergyException {
-        if (dataEntity.getStorage().canStore(dataEntity.getEfficiency())) {
+        try {
             dataEntity.getStorage().storeResources(dataEntity.getEfficiency());
+        } catch (NotEnoughStorageException e) {
+            try {
+            dataEntity.getStorage().storeResources(
+                    BuildingTypes.EXTRACTOR.getMaxCapacity() - dataEntity.getStorage().inStorage());
+            } catch (NotEnoughStorageException f) {
+                f.printStackTrace();
+            }
         }
     }
 
     @Override
     public BuildingInformationElement getInformation() {
-        return null;
+        BuildingInformationElement<BuildingDataEntity> out = new BuildingInformationElement<>(dataEntity);
+        return out;
     }
-
-    /**
-     * @return: Fertige Ausgabe
-     */
-//    public String toString() {
-//        return "[ " + buildingType.getIcon() + " |" + printResource() + " ]" + constructionStatus();
-//    }
-
 }

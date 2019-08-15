@@ -1,0 +1,5 @@
+package ManagementTest
+
+class DroneManagementTest {
+
+}
