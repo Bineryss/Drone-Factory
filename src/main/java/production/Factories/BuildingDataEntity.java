@@ -1,7 +1,6 @@
 package production.Factories;
 
 import ImportandEnums.BuildingTypes;
-import lombok.Data;
 import production.Dronen.Drone;
 import production.Factories.Connector.EnergyConnection;
 import production.Factories.Connector.ResourceConnection;
@@ -10,7 +9,6 @@ import specificexceptions.NotEnoughEnergyException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 public class BuildingDataEntity {
     protected int efficiency;
     protected int constructionCost;
@@ -63,5 +61,61 @@ public class BuildingDataEntity {
 
     public void useEnergy() throws NotEnoughEnergyException {
         energy.useEnergy();
+    }
+
+    public int getEfficiency() {
+        return efficiency;
+    }
+
+    public void setEfficiency(int efficiency) {
+        this.efficiency = efficiency;
+    }
+
+    public int getConstructionCost() {
+        return constructionCost;
+    }
+
+    public void setConstructionCost(int constructionCost) {
+        this.constructionCost = constructionCost;
+    }
+
+    public int getConstruction() {
+        return construction;
+    }
+
+    public void setConstruction(int construction) {
+        this.construction = construction;
+    }
+
+    public boolean isResourcesForBuildingAvailable() {
+        return resourcesForBuildingAvailable;
+    }
+
+    public void setResourcesForBuildingAvailable(boolean resourcesForBuildingAvailable) {
+        this.resourcesForBuildingAvailable = resourcesForBuildingAvailable;
+    }
+
+    public ResourceConnection getStorage() {
+        return storage;
+    }
+
+    public void setStorage(ResourceConnection storage) {
+        this.storage = storage;
+    }
+
+    public EnergyConnection getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(EnergyConnection energy) {
+        this.energy = energy;
+    }
+
+    public List<Drone> getWorkers() {
+        return workers;
+    }
+
+    public void setWorkers(List<Drone> workers) {
+        this.workers = workers;
     }
 }

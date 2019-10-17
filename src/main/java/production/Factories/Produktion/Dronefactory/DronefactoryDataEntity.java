@@ -3,7 +3,6 @@ package production.Factories.Produktion.Dronefactory;
 import BuildingExtensions.DroneProducerExt;
 import ImportandEnums.BuildingTypes;
 import ImportandEnums.DroneTypes;
-import lombok.Data;
 import production.Dronen.Drone;
 import production.Factories.BuildingDataEntity;
 import specificexceptions.NotEnoughEnergyException;
@@ -11,7 +10,6 @@ import specificexceptions.NotEnoughEnergyException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 public class DronefactoryDataEntity extends BuildingDataEntity {
     private int productionStatus;
     private boolean isProducing;
@@ -77,5 +75,45 @@ public class DronefactoryDataEntity extends BuildingDataEntity {
 
     void addProductionTime(int amount) {
         productionStatus += amount;
+    }
+
+    public int getProductionStatus() {
+        return productionStatus;
+    }
+
+    public void setProductionStatus(int productionStatus) {
+        this.productionStatus = productionStatus;
+    }
+
+    public void setProducing(boolean producing) {
+        isProducing = producing;
+    }
+
+    public static void setProducibleDrones(List<DroneTypes> producibleDrones) {
+        DronefactoryDataEntity.producibleDrones = producibleDrones;
+    }
+
+    public Drone getProducedElement() {
+        return producedElement;
+    }
+
+    public void setProducedElement(Drone producedElement) {
+        this.producedElement = producedElement;
+    }
+
+    public DroneProducerExt getProd() {
+        return prod;
+    }
+
+    public void setProd(DroneProducerExt prod) {
+        this.prod = prod;
+    }
+
+    public boolean isActivateProd() {
+        return activateProd;
+    }
+
+    public void setActivateProd(boolean activateProd) {
+        this.activateProd = activateProd;
     }
 }
