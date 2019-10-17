@@ -1,6 +1,7 @@
 package production.Factories;
 
 import ImportandEnums.BuildingTypes;
+import com.sun.istack.internal.NotNull;
 import production.Dronen.Drone;
 import production.Factories.Connector.EnergyConnection;
 import production.Factories.Connector.ResourceConnection;
@@ -33,7 +34,7 @@ public class BuildingDataEntity {
         workers = null;
     }
 
-    public void addWorkers(List<Drone> workers) {
+    public void addWorkers(@NotNull List<Drone> workers) {
         if (workers != null) {
             this.workers.addAll(workers);
         }
